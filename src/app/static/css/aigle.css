@@ -1,0 +1,9 @@
+tr th:nth-of-type(1), tr th:nth-of-type(2) {display:none;}
+tr td:nth-of-type(1), tr td:nth-of-type(2) {display:none;}
+
+#message {display:none;}
+.my-4 {display:none;}
+p:nth-of-type(2) {display:none;}
+p:nth-of-type(3) {display:none;}
+
+pre {border: 0px;}

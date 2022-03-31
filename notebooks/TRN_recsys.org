@@ -1,0 +1,390 @@
+💈 Développez un moteur de recommandation de films
+#+PROPERTY: header-args:jupyter-python :session *Py* :results raw drawer :cache no :async yes :exports results :eval yes
+
+#+SUBTITLE: Model building
+#+AUTHOR: Laurent Siksous
+#+EMAIL: siksous@gmail.com
+# #+DATE: 
+#+DESCRIPTION: 
+#+KEYWORDS: 
+#+LANGUAGE:  fr
+
+# specifying the beamer startup gives access to a number of
+# keybindings which make configuring individual slides and components
+# of slides easier.  See, for instance, C-c C-b on a frame headline.
+#+STARTUP: beamer
+
+#+STARTUP: oddeven
+
+# we tell the exporter to use a specific LaTeX document class, as
+# defined in org-latex-classes.  By default, this does not include a
+# beamer entry so this needs to be defined in your configuration (see
+# the tutorial).
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [bigger] 
+
+#+LATEX_HEADER: \usepackage{listings}
+
+#+LATEX_HEADER: \definecolor{UBCblue}{rgb}{0.04706, 0.13725, 0.26667} % UBC Blue (primary)
+#+LATEX_HEADER: \usecolortheme[named=UBCblue]{structure}
+
+# Beamer supports alternate themes.  Choose your favourite here
+#+BEAMER_COLOR_THEME: dolphin
+#+BEAMER_FONT_THEME:  default
+#+BEAMER_INNER_THEME: [shadow]rounded
+#+BEAMER_OUTER_THEME: infolines
+
+# the beamer exporter expects to be told which level of headlines
+# defines the frames.  We use the first level headlines for sections
+# and the second (hence H:2) for frames.
+#+OPTIONS: ^:nil H:2 toc:nil
+
+# the following allow us to selectively choose headlines to export or not
+#+SELECT_TAGS: export
+#+EXCLUDE_TAGS: noexport
+
+# for a column view of options and configurations for the individual
+# frames
+#+COLUMNS: %20ITEM %13BEAMER_env(Env) %6BEAMER_envargs(Args) %4BEAMER_col(Col) %7BEAMER_extra(Extra)
+
+# #+BEAMER_HEADER: \usebackgroundtemplate{\includegraphics[width=\paperwidth,height=\paperheight,opacity=.01]{img/bg2.jpeg}}
+# #+BEAMER_HEADER: \logo{\includegraphics[height=.5cm,keepaspectratio]{img/bti_logo2.png}\vspace{240pt}}
+# #+BEAMER_HEADER: \setbeamertemplate{background canvas}{\begin{tikzpicture}\node[opacity=.1]{\includegraphics [width=\paperwidth,height=\paperheight]{img/background.jpg}};\end{tikzpicture}}
+# #+BEAMER_HEADER: \logo{\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{img/background.jpg}}
+#+BEAMER_HEADER: \titlegraphic{\includegraphics[width=50]{img/logo.png}}
+# #+BEAMER_HEADER: \definecolor{ft}{RGB}{255, 241, 229}
+#+BEAMER_HEADER: \setbeamercolor{background canvas}{bg=ft}
+
+* Preamble
+** Emacs Setup                                                    :noexport:
+
+#+begin_src emacs-lisp
+(setq org-src-fontify-natively t)
+
+(setq lsp-semantic-tokens-enable t)
+(setq lsp-enable-symbol-highlighting t)
+
+(setq lsp-enable-file-watchers nil
+      read-process-output-max (* 1024 1024)
+      gc-cons-threshold 100000000
+      lsp-idle-delay 0.5
+      ;;
+      lsp-eldoc-hook nil
+      lsp-eldoc-enable-hover nil
+
+      ;;pas de fil d'ariane
+      lsp-headerline-breadcrumb-enable nil
+      ;; pas de imenu voir menu-list
+      lsp-enable-imenu nil
+      ;; lentille
+      lsp-lens-enable t
+ 
+      lsp-semantic-highlighting t
+      lsp-modeline-code-actions-enable t
+      )
+  
+(setq lsp-completion-provider :company
+      lsp-completion-show-detail t
+      lsp-completion-show-kind t)
+
+(setq lsp-ui-doc-enable t
+      lsp-ui-doc-show-with-mouse nil
+      lsp-ui-doc-show-with-cursor t
+      lsp-ui-doc-use-childframe t
+      
+      lsp-ui-sideline-diagnostic-max-line-length 80
+
+      ;; lsp-ui-imenu
+      lsp-ui-imenu-enable nil
+      ;; lsp-ui-peek
+      lsp-ui-peek-enable t
+      ;; lsp-ui-sideline
+      lsp-ui-sideline-enable t
+      lsp-ui-sideline-ignore-duplicate t
+      lsp-ui-sideline-show-symbol t
+      lsp-ui-sideline-show-hover t
+      lsp-ui-sideline-show-diagnostics t
+      lsp-ui-sideline-show-code-actions t
+      )
+
+(setq lsp-diagnostics-provider :none
+      lsp-modeline-diagnostics-enable nil
+      lsp-signature-auto-activate nil ;; you could manually request them via `lsp-signature-activate`
+      lsp-signature-render-documentation nil)
+#+end_src
+
+#+RESULTS:
+
+** Imports
+
+#+begin_src jupyter-python
+%matplotlib inline
+%load_ext autoreload
+%autoreload 2
+
+import sys
+import os
+import warnings
+warnings.filterwarnings("ignore")
+import pickle
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# for loading/processing the images  
+from keras.preprocessing.image import load_img 
+from keras.preprocessing.image import img_to_array 
+from keras.applications.vgg16 import preprocess_input 
+
+# models 
+from keras.applications.vgg16 import VGG16 
+from keras.models import Model
+
+# clustering and dimension reduction
+from sklearn.cluster import KMeans
+from sklearn.decomposition import PCA
+
+from random import randint
+import pickle
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[1]:
+:end:
+
+** Functions
+
+#+begin_src jupyter-python
+# Display all
+def display_all(df):
+    with pd.option_context("display.max_rows", 100, "display.max_columns", 100): 
+        display(df)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[2]:
+:end:
+
+** Org                                                            :noexport:
+
+#+begin_src jupyter-python
+# Org-mode table formatter
+import IPython
+import tabulate
+
+class OrgFormatter(IPython.core.formatters.BaseFormatter):
+    format_type = IPython.core.formatters.Unicode('text/org')
+    print_method = IPython.core.formatters.ObjectName('_repr_org_')
+
+def pd_dataframe_to_org(df):
+    return tabulate.tabulate(df, headers='keys', tablefmt='orgtbl', showindex='always')
+
+ip = get_ipython()
+ip.display_formatter.formatters['text/org'] = OrgFormatter()
+
+f = ip.display_formatter.formatters['text/org']
+f.for_type_by_name('pandas.core.frame', 'DataFrame', pd_dataframe_to_org)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[2]:
+:end:
+
+* The Data
+** Load Data
+
+#+begin_src jupyter-python
+df = pd.read_csv('/Users/lss/Sites/simplon.ai/briefs/recsys/data/movie_metadata_prepared.csv')
+#+end_src
+
+#+RESULTS:
+:results:
+0 - 06c3c7bc-1cc7-4984-a890-a11f3ea59b05
+:end:
+
+** Glimpse at the data
+
+#+begin_src jupyter-python
+display_all(df.describe(include='all').T)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[7]:
+|                           |   count |   unique | top                                                  |   freq |            mean |              std |     min |            25% |             50% |             75% |              max |
+|---------------------------+---------+----------+------------------------------------------------------+--------+-----------------+------------------+---------+----------------+-----------------+-----------------+------------------|
+| color                     |    5024 |        2 | Color                                                |   4815 |   nan           |    nan           |  nan    |  nan           |   nan           |   nan           |    nan           |
+| director_name             |    4939 |     2398 | Steven Spielberg                                     |     26 |   nan           |    nan           |  nan    |  nan           |   nan           |   nan           |    nan           |
+| num_critic_for_reviews    |    4993 |      nan | nan                                                  |    nan |   140.194       |    121.602       |    1    |   50           |   110           |   195           |    813           |
+| duration                  |    5028 |      nan | nan                                                  |    nan |   107.201       |     25.1974      |    7    |   93           |   103           |   118           |    511           |
+| director_facebook_likes   |    4939 |      nan | nan                                                  |    nan |   686.509       |   2813.33        |    0    |    7           |    49           |   194.5         |  23000           |
+| actor_3_facebook_likes    |    5020 |      nan | nan                                                  |    nan |   645.01        |   1665.04        |    0    |  133           |   371.5         |   636           |  23000           |
+| actor_2_name              |    5030 |     3032 | Morgan Freeman                                       |     20 |   nan           |    nan           |  nan    |  nan           |   nan           |   nan           |    nan           |
+| actor_1_facebook_likes    |    5036 |      nan | nan                                                  |    nan |  6560.05        |  15020.8         |    0    |  614           |   988           | 11000           | 640000           |
+| gross                     |    4159 |      nan | nan                                                  |    nan |     4.84684e+07 |      6.8453e+07  |  162    |    5.34099e+06 |     2.55175e+07 |     6.23094e+07 |      7.60506e+08 |
+| genres                    |    5043 |      914 | Drama                                                |    236 |   nan           |    nan           |  nan    |  nan           |   nan           |   nan           |    nan           |
+| actor_1_name              |    5036 |     2097 | Robert De Niro                                       |     49 |   nan           |    nan           |  nan    |  nan           |   nan           |   nan           |    nan           |
+| movie_title               |    5043 |     4917 | Ben-Hur                                              |      3 |   nan           |    nan           |  nan    |  nan           |   nan           |   nan           |    nan           |
+| num_voted_users           |    5043 |      nan | nan                                                  |    nan | 83668.2         | 138485           |    5    | 8593.5         | 34359           | 96309           |      1.68976e+06 |
+| cast_total_facebook_likes |    5043 |      nan | nan                                                  |    nan |  9699.06        |  18163.8         |    0    | 1411           |  3090           | 13756.5         | 656730           |
+| actor_3_name              |    5020 |     3521 | John Heard                                           |      8 |   nan           |    nan           |  nan    |  nan           |   nan           |   nan           |    nan           |
+| facenumber_in_poster      |    5030 |      nan | nan                                                  |    nan |     1.37117     |      2.01358     |    0    |    0           |     1           |     2           |     43           |
+| plot_keywords             |    4890 |     4760 | based on novel                                       |      4 |   nan           |    nan           |  nan    |  nan           |   nan           |   nan           |    nan           |
+| movie_imdb_link           |    5043 |     4919 | http://www.imdb.com/title/tt0232500/?ref_=fn_tt_tt_1 |      3 |   nan           |    nan           |  nan    |  nan           |   nan           |   nan           |    nan           |
+| num_user_for_reviews      |    5022 |      nan | nan                                                  |    nan |   272.771       |    377.983       |    1    |   65           |   156           |   326           |   5060           |
+| language                  |    5031 |       47 | English                                              |   4704 |   nan           |    nan           |  nan    |  nan           |   nan           |   nan           |    nan           |
+| country                   |    5038 |       65 | USA                                                  |   3807 |   nan           |    nan           |  nan    |  nan           |   nan           |   nan           |    nan           |
+| content_rating            |    4740 |       18 | R                                                    |   2118 |   nan           |    nan           |  nan    |  nan           |   nan           |   nan           |    nan           |
+| budget                    |    4551 |      nan | nan                                                  |    nan |     3.97526e+07 |      2.06115e+08 |  218    |    6e+06       |     2e+07       |     4.5e+07     |      1.22155e+10 |
+| title_year                |    4935 |      nan | nan                                                  |    nan |  2002.47        |     12.4746      | 1916    | 1999           |  2005           |  2011           |   2016           |
+| actor_2_facebook_likes    |    5030 |      nan | nan                                                  |    nan |  1651.75        |   4042.44        |    0    |  281           |   595           |   918           | 137000           |
+| imdb_score                |    5043 |      nan | nan                                                  |    nan |     6.44214     |      1.12512     |    1.6  |    5.8         |     6.6         |     7.2         |      9.5         |
+| aspect_ratio              |    4714 |      nan | nan                                                  |    nan |     2.2204      |      1.38511     |    1.18 |    1.85        |     2.35        |     2.35        |     16           |
+| movie_facebook_likes      |    5043 |      nan | nan                                                  |    nan |  7525.96        |  19320.4         |    0    |    0           |   166           |  3000           | 349000           |
+:end:
+
+
+#+begin_src jupyter-python :results output
+numerical = df_raw.select_dtypes(include='number').columns
+categorical = df_raw.select_dtypes(exclude='number').columns
+
+print(f"categorical columns are : {', '.join(str(x) for x in categorical)}")
+print(f"numerical columns are : {', '.join(str(x) for x in numerical)}")
+#+end_src
+
+categorical columns are : color, director_name, actor_2_name, genres,
+actor_1_name, movie_title, actor_3_name, plot_keywords, movie_imdb_link,
+language, country, content_rating
+
+numerical columns are : num_critic_for_reviews, duration,
+director_facebook_likes, actor_3_facebook_likes, actor_1_facebook_likes, gross,
+num_voted_users, cast_total_facebook_likes, facenumber_in_poster,
+num_user_for_reviews, budget, title_year, actor_2_facebook_likes, imdb_score,
+aspect_ratio, movie_facebook_likes
+
+
+#+begin_src jupyter-python
+path = "/Users/lss//Sites/simplon.ai/briefs/recsys/data/posters"
+# change the working directory to the path where the images are located
+os.chdir(path)
+
+# this list holds all the image filename
+posters = []
+
+# creates a ScandirIterator aliased as files
+with os.scandir(path) as files:
+  # loops through each file in the directory
+    for file in files:
+        if file.name.endswith('.jpg'):
+          # adds only the image files to the flowers list
+            posters.append(file.name)
+       
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[2]:
+:end:
+
+
+#+begin_src jupyter-python
+# load the image as a 224x224 array
+img = load_img(posters[0], target_size=(224,224))
+# convert from 'PIL.Image.Image' to numpy array
+img = np.array(img)
+
+print(img.shape)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[3]:
+:end:
+
+#+begin_src jupyter-python
+reshaped_img = img.reshape(1,224,224,3)
+print(reshaped_img.shape)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[5]:
+:end:
+
+
+** Preprocessing
+
+#+begin_src jupyter-python
+x = preprocess_input(reshaped_img)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[6]:
+:end:
+
+* The Model
+** Architecture
+
+Nous pouvons maintenant charger le modèle VGG et supprimer la couche de sortie
+manuellement. Cela signifie que la nouvelle couche finale est une couche
+entièrement connectée avec 4 096 nœuds de sortie. Ce vecteur de 4 096 nombres
+est le vecteur de caractéristiques que nous utiliserons pour regrouper les
+images.
+
+#+begin_src jupyter-python
+# load model
+model = VGG16()
+# remove the output layer
+model = Model(inputs=model.inputs, outputs=model.layers[-2].output)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[4]:
+:end:
+
+
+#+begin_src jupyter-python
+features = model.predict(x, use_multiprocessing=True)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[7]:
+:end:
+
+#+begin_src jupyter-python
+print(features.shape)
+features
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[9]:
+#+BEGIN_EXAMPLE
+  array([[0.4690976, 0.       , 0.       , ..., 0.       , 0.       ,
+  3.0501497]], dtype=float32)
+#+END_EXAMPLE
+:end:
+
+
+* Bibliography
+** References
+:PROPERTIES:
+:BEAMER_opt: shrink=10
+:END:
+
+bibliographystyle:unsrt
+bibliography:recsys.bib
+
+* Local Variables                                                  :noexport:
+# Local Variables:
+# eval: (setenv "PATH" "/Library/TeX/texbin/:$PATH" t)
+# org-ref-default-bibliography: ("./olist.bib")
+# End:

@@ -1,0 +1,371 @@
+#+TITLE: Créer et utiliser une base de données
+#+PROPERTY: header-args:jupyter-python :session *Py* :results raw drawer :cache no :async yes :exports both :eval no
+
+#+SUBTITLE: Movie Db
+#+AUTHOR: Pierre, Thierno, Bastien, Laurent
+#+EMAIL: siksous@gmail.com
+# #+DATE:
+#+DESCRIPTION: 
+#+KEYWORDS: 
+#+LANGUAGE:  fr
+
+# specifying the beamer startup gives access to a number of
+# keybindings which make configuring individual slides and components
+# of slides easier.  See, for instance, C-c C-b on a frame headline.
+#+STARTUP: beamer
+
+#+STARTUP: oddeven
+
+# we tell the exporter to use a specific LaTeX document class, as
+# defined in org-latex-classes.  By default, this does not include a
+# beamer entry so this needs to be defined in your configuration (see
+# the tutorial).
+#+LaTeX_CLASS: beamer
+# #+LaTeX_CLASS_OPTIONS: [bigger] 
+
+#+LATEX_HEADER: \usepackage[AUTO]{babel}
+#+LATEX_HEADER: \usepackage[titles]{tocloft}
+#+LATEX_HEADER: \usepackage{listings}
+#+LATEX_HEADER: \usepackage[font=scriptsize]{caption} 
+#+LaTeX_HEADER: \usepackage{minted}
+#+LaTeX_HEADER: \usemintedstyle{xcode}
+
+#+LaTeX_CLASS_OPTIONS: [french] 
+
+# #+LATEX_HEADER: \usepackage{listings}
+#+LATEX_HEADER: \definecolor{UBCblue}{rgb}{0.04706, 0.13725, 0.26667} % UBC Blue (primary)
+#+LATEX_HEADER: \usecolortheme[named=UBCblue]{structure}
+#+LaTeX_HEADER: \newminted{sqlite}{fontsize=\footnotesize}
+# Raise footnotes 
+#+LaTeX_HEADER:\addtobeamertemplate{footnote}{}{\vspace{2ex}}
+
+# Beamer supports alternate themes.  Choose your favourite here
+#+BEAMER_COLOR_THEME: dolphin
+#+BEAMER_FONT_THEME: professionalfonts
+#+BEAMER_INNER_THEME: [shadow]rounded
+#+BEAMER_OUTER_THEME: infolines
+
+# the beamer exporter expects to be told which level of headlines
+# defines the frames.  We use the first level headlines for sections
+# and the second (hence H:2) for frames.
+#+OPTIONS: ^:nil H:2 toc:1
+
+# the following allow us to selectively choose headlines to export or not
+#+SELECT_TAGS: export
+#+EXCLUDE_TAGS: noexport
+
+# for a column view of options and configurations for the individual
+# frames
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+
+# #+BEAMER_HEADER: \usebackgroundtemplate{\includegraphics[width=\paperwidth,height=\paperheight,opacity=.01]{img/bg2.jpeg}}
+# #+BEAMER_HEADER: \logo{\includegraphics[height=.5cm,keepaspectratio]{img/bti_logo2.png}\vspace{240pt}}
+# #+BEAMER_HEADER: \setbeamertemplate{background canvas}{\begin{tikzpicture}\node[opacity=.1]{\includegraphics [width=\paperwidth,height=\paperheight]{img/background.jpg}};\end{tikzpicture}}
+# #+BEAMER_HEADER: \logo{\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{img/background.jpg}}
+#+BEAMER_HEADER: \titlegraphic{\includegraphics[width=90]{img/iu.png}}
+# #+BEAMER_HEADER: \definecolor{ft}{RGB}{255, 241, 229}
+# #+BEAMER_HEADER: \setbeamercolor{background canvas}{bg=ft}
+#+BEAMER_HEADER: \setbeamerfont{caption}{size=\scriptsize}
+
+#+attr_org: 
+* Preamble                                                         :noexport:
+
+#+begin_src emacs-lisp
+(setq org-src-fontify-natively t)
+
+(setq org-latex-image-default-width "5cm")
+(setq org-image-actual-width 400)
+(add-to-list 'org-latex-minted-langs '(sqlite "sqlite3"))
+(add-to-list 'org-latex-minted-langs '(sqlite "sql"))
+#+end_src
+
+#+RESULTS:
+| sqlite         | sql         |
+| sqlite         | sqlite3     |
+| jupyter-python | python      |
+| emacs-lisp     | common-lisp |
+| cc             | c++         |
+| cperl          | perl        |
+| shell-script   | bash        |
+| caml           | ocaml       |
+
+
+* Milestone 1 : (Modélisation) Analyse fonctionnelle
+** Données en entrée
+:PROPERTIES:
+:BEAMER_OPT: shrink=20
+:END:
+|                        | count | unique |                                                  top | freq |        mean |
+|------------------------+-------+--------+------------------------------------------------------+------+-------------|
+| color                  |  5024 |      2 |                                                Color | 4815 |         nan |
+| director_name           |  4939 |   2398 |                                     Steven Spielberg |   26 |         nan |
+| num_critic_for_reviews    |  4993 |    nan |                                                  nan |  nan |     140.194 |
+| duration               |  5028 |    nan |                                                  nan |  nan |     107.201 |
+| director_facebook_likes  |  4939 |    nan |                                                  nan |  nan |     686.509 |
+| actor_3_facebook_likes    |  5020 |    nan |                                                  nan |  nan |      645.01 |
+| actor_2_name             |  5030 |   3032 |                                       Morgan Freeman |   20 |         nan |
+| actor_1_facebook_likes    |  5036 |    nan |                                                  nan |  nan |     6560.05 |
+| gross                  |  4159 |    nan |                                                  nan |  nan | 4.84684e+07 |
+| genres                 |  5043 |    914 |                                                Drama |  236 |         nan |
+| actor_1_name             |  5036 |   2097 |                                       Robert De Niro |   49 |         nan |
+| movie_title             |  5043 |   4917 |                                              Ben-Hur |    3 |         nan |
+| num_voted_users          |  5043 |    nan |                                                  nan |  nan |     83668.2 |
+| cast_total_facebook_likes |  5043 |    nan |                                                  nan |  nan |     9699.06 |
+| actor_3_name             |  5020 |   3521 |                                           John Heard |    8 |         nan |
+| facenumber_in_poster     |  5030 |    nan |                                                  nan |  nan |     1.37117 |
+| plot_keywords           |  4890 |   4760 |                                       based on novel |    4 |         nan |
+| movie_imdb_link          |  5043 |   4919 | http://www.imdb.com/title/tt0232500/?ref_=fn_tt_tt_1 |    3 |         nan |
+| num_user_for_reviews      |  5022 |    nan |                                                  nan |  nan |     272.771 |
+| language               |  5031 |     47 |                                              English | 4704 |         nan |
+| country                |  5038 |     65 |                                                  USA | 3807 |         nan |
+| content_rating          |  4740 |     18 |                                                    R | 2118 |         nan |
+| budget                 |  4551 |    nan |                                                  nan |  nan | 3.97526e+07 |
+| title_year              |  4935 |    nan |                                                  nan |  nan |     2002.47 |
+| actor_2_facebook_likes    |  5030 |    nan |                                                  nan |  nan |     1651.75 |
+| imdb_score              |  5043 |    nan |                                                  nan |  nan |     6.44214 |
+| aspect_ratio            |  4714 |    nan |                                                  nan |  nan |      2.2204 |
+| movie_facebook_likes     |  5043 |    nan |                                                  nan |  nan |     7525.96 |
+
+** Dictionnaire des données
+
+#+attr_latex: :width 9cm
+[[./fig/cat.png]]
+
+
+* Milestone 2 : (Modélisation) Modèle conceptuel de données
+** MCD
+
+#+attr_latex: :width 10cm
+[[./fig/mcd.png]]
+
+
+* Milestone 3 : (Modélisation) Modèle logique de données
+** Modèle logique de données
+
+#+attr_latex: :width 10cm
+[[./fig/umldb.png]]
+
+
+* Milestone 4 : (Implémentation) Création de la base
+** Création de la base de données (SQLAlchemy)
+:PROPERTIES:
+:BEAMER_OPT: shrink=5
+:END:
+
+#+begin_src jupyter-python :exports code
+class Movie(Base):
+    __tablename__ = 'Movie'
+    id = Column(String, primary_key=True, nullable=False) 
+    title = Column(String)
+    year = Column(Date)
+    color = Column(String)
+    language = Column(String)
+    country = Column(String)
+    content_rating = Column(String)
+    duration = Column(Integer)
+    gross = Column(Integer)
+    budget = Column(Integer)
+    aspect_ratio = Column(Float)
+    facebook_likes = Column(Integer)
+    imdb_score = Column(Integer)
+    num_user_for_reviews = Column(Integer)
+    plot_keywords = Column(String)
+    facenumber_in_poster = Column(Integer)
+    genres = relationship('Genre', secondary = 'movie_genres', back_populates="movies")
+    cast = relationship('Artist', secondary = 'appearances', back_populates="movies")
+#+end_src
+
+** Création de la base de données (SQL)
+
+#+begin_src sqlite :exports code
+CREATE TABLE appearances (
+	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
+	role VARCHAR(32), 
+	facebook_likes INTEGER, 
+	movie_id VARCHAR, 
+	artist_id INTEGER, 
+	FOREIGN KEY(movie_id) REFERENCES "Movie" (id), 
+	FOREIGN KEY(artist_id) REFERENCES "Artist" (id)
+)
+;
+#+end_src
+
+* Milestone 5 : (Implémentation) Importation des données
+** Chargement des donneés
+
+- Extrait du script d'initialisation et de chargement de la base:
+
+#+begin_src jupyter-python :exports code
+roles = ['director', 'actor_1', 'actor_2', 'actor_3']
+
+for i, row in df.iterrows():
+    for role in roles:
+        a = eval(f'row.{role}_name')
+        q = s.query(Artist).filter(Artist.name==a)
+        if s.query(q.exists()).scalar():
+            artist_id = q.first().id
+        else:
+            artist = Artist(**{
+                'name': eval(f'row.{role}_name')
+            })
+            s.add(artist)
+            s.commit()
+            artist_id = q.first().id
+#+end_src
+
+
+* Milestone 6 : (Exploitation) Requêtes SQL
+** le top 10 des films les plus rentables
+
+#+header: :results orgtable :colnames yes :exports both
+#+header: :dir .
+#+header: :db movie.db
+#+begin_src sqlite 
+SELECT title,gross-budget FROM Movie ORDER BY gross-budget DESC LIMIT 10
+#+end_src
+
+#+RESULTS:
+| title                                      | gross-budget |
+|--------------------------------------------+--------------|
+| Avatar                                     |    523505847 |
+| Jurassic World                             |    502177271 |
+| Titanic                                    |    458672302 |
+| Star Wars: Episode IV - A New Hope         |    449935665 |
+| E.T. the Extra-Terrestrial                 |    424449459 |
+| The Lion King                              |    377783777 |
+| Star Wars: Episode I - The Phantom Menace  |    359544677 |
+| The Dark Knight                            |    348316061 |
+| The Hunger Games                           |    329999255 |
+| Deadpool                                   |    305024263 |
+
+
+** le top 10 des films les moins rentables
+
+#+header: :results orgtable :exports both
+#+header: :dir .
+#+header: :db movie.db
+#+begin_src sqlite 
+SELECT title,gross-budget FROM Movie ORDER BY gross-budget ASC LIMIT 10
+#+end_src
+
+#+RESULTS:
+| The Host                | -12213298588 |
+| Lady Vengeance          |  -4199788333 |
+| Fateless                |  -2499804112 |
+| Princess Mononoke       |  -2397701809 |
+| Steamboy                |  -2127109510 |
+| Akira                   |  -1099560838 |
+| Godzilla 2000           |   -989962610 |
+| Tango                   |   -698312689 |
+| Kabhi Alvida Naa Kehna  |   -696724557 |
+| Red Cliff               |   -553005191 |
+
+
+** les réalisateurs qui ont fait le plus de films
+:PROPERTIES:
+:BEAMER_OPT: shrink=5
+:END:
+
+#+header: :results orgtable :exports both
+#+header: :dir
+#+header: :db movie.db
+#+begin_src sqlite 
+SELECT
+a.name, COUNT(*)
+FROM
+Artist a
+INNER JOIN
+(Movie m INNER JOIN appearances p ON m.id = p.movie_id) ON a.id = p.artist_id
+WHERE role='director'
+GROUP BY a.name
+ORDER BY COUNT(*) DESC LIMIT 10;
+#+end_src
+
+#+RESULTS:
+| Steven Spielberg  | 26 |
+| Woody Allen       | 22 |
+| Martin Scorsese   | 20 |
+| Clint Eastwood    | 20 |
+| Spike Lee         | 16 |
+| Ridley Scott      | 15 |
+| Renny Harlin      | 15 |
+| Steven Soderbergh | 14 |
+| Oliver Stone      | 14 |
+| Ron Howard        | 13 |
+
+** l'acteur qui a joué dans le plus de films
+
+#+header: :results orgtable :exports both
+#+header: :dir .
+#+header: :db movie.db
+#+begin_src sqlite 
+SELECT
+a.name, COUNT(*)
+FROM
+Artist a
+INNER JOIN
+(Movie m INNER JOIN appearances p ON m.id = p.movie_id) ON a.id = p.artist_id
+WHERE role='actor_1' OR role='actor_2' OR role='actor_3'
+GROUP BY a.name
+ORDER BY COUNT(*) DESC LIMIT 1;
+#+end_src
+
+#+RESULTS:
+| Robert De Niro | 51 |
+
+
+** le nombre de films avec "love" dans les mots clés
+
+#+header: :results orgtable :exports both
+#+header: :dir .
+#+header: :db movie.db
+#+begin_src sqlite 
+SELECT COUNT(*) From movie WHERE plot_keywords LIKE '% love,%'
+#+end_src
+
+#+RESULTS:
+: 156
+
+** le nombre de films français
+
+#+header: :results orgtable :exports both
+#+header: :dir .
+#+header: :db movie.db
+#+begin_src sqlite 
+SELECT COUNT(*) From movie WHERE language = 'French'
+#+end_src
+
+#+RESULTS:
+: 64
+
+
+** le réalisateur avec au moins 10 films qui obtient la meilleure moyenne (note imdb)
+
+#+header: :results orgtable :exports both
+#+header: :dir .
+#+header: :db movie.db
+#+begin_src sqlite 
+SELECT a.name, AVG(m.imdb_score), COUNT(*)
+FROM movie m INNER JOIN appearances p
+ON m.id = p.movie_id INNER JOIN artist a
+ON p.artist_id = a.id WHERE p.role='director'
+GROUP BY a.name HAVING COUNT(m.id) > 9
+ORDER BY AVG(m.imdb_score) DESC LIMIT 1
+#+end_src
+
+#+RESULTS:
+| David Fincher | 7.75 | 10 |
+
+
+* Bibliography
+** References
+
+- https://github.com/lsiksous/recsys
+
+bibliographystyle:unsrt
+bibliography:recsys.bib
+
+* Local Variables                                                  :noexport:
+# Local Variables:
+# eval: (setenv "PATH" "/Library/TeX/texbin/:$PATH" t)
+# End:

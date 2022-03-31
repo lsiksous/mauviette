@@ -1,0 +1,6 @@
+SELECT a.name, AVG(m.imdb_score), COUNT(*)
+FROM movie m INNER JOIN appearances p
+ON m.id = p.movie_id INNER JOIN artist a
+ON p.artist_id = a.id WHERE p.role='director'
+GROUP BY a.name HAVING COUNT(m.id) > 9
+ORDER BY AVG(m.imdb_score) DESC LIMIT 1
