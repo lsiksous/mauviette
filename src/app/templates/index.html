@@ -2,13 +2,12 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
+
 <div class="jumbotron">
   <h1 class="display-4" style="font-size: 42px">Hi there, welcome!</h1>
-  <p class="lead" style="font-size: 18px">Please meet the <strong>IKKOÉ Custom Message Machine</strong>.</p>
+  <p class="lead" style="font-size: 18px">Please meet the <strong>Moviette</strong>.</p>
   <hr class="my-4">
-  <p style="font-size: 16px">CMM is here to support your spontaneous bursts of creativity. Type in a
-  first name, a sentence or any word, really, and find out what suggestions CMM
-    has to offer you.</p>
+  <p style="font-size: 16px">Hi, welcome!</p>
   <p style="font-size: 18px">
     Ready? Go!
   </p>
@@ -18,46 +17,5 @@
         {{ wtf.quick_form(form) }}
     {% endif %}
 
-    <br>
-    {% if suggest %}
-    <div class="table-responsive-md">
-      <table class="table table-striped">
-        <thead class="thead-dark">
-	  <tr>
-            <th>Correction</th>
-	    <th>Inspiration</th>
-            <th>Suggestions</th>
-	  </tr>
-	</thead>
-	<tbody>
-	  <tr>
-            <td style="width: 33%">{{ correct }}</td>
-    	    <td style="width: 33%">{{ inspire }}</td>
-    	    <td style="width: 33%"><pre>{{ suggest }}</pre></td>
-	  </tr>
-	</tbody>
-      </table>
-    </div>
-    {% endif %}
 
-    {% if correct != message['body'] %}
-    <div class="table-responsive-md">
-      <table class="table table-striped">
-	<thead class="thead-dark">
-	  <tr>
-            <th>Mistakes</th>
-	    <th>Replacements</th>
-	  </tr>
-	</thead>
-	<tbody>
-	  {% for i in range(0, len_miss) %}
-	  <tr>
-            <td>{{mistakes[i]}}</td>
-    	    <td>{{replacements[i]}}</td>
-	    {% endfor %}
-	  </tr>
-	</tbody>
-      </table>
-    </div>
-    {% endif %}
 {% endblock %}

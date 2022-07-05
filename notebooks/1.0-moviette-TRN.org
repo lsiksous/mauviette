@@ -1,0 +1,600 @@
+💈 Développez un moteur de recommandation de films
+#+PROPERTY: header-args:jupyter-python :session *Py* :results raw drawer :cache no :async yes :exports results :eval yes
+
+#+SUBTITLE: Model building
+#+AUTHOR: Laurent Siksous
+#+EMAIL: siksous@gmail.com
+# #+DATE: 
+#+DESCRIPTION: 
+#+KEYWORDS: 
+#+LANGUAGE:  fr
+
+# specifying the beamer startup gives access to a number of
+# keybindings which make configuring individual slides and components
+# of slides easier.  See, for instance, C-c C-b on a frame headline.
+#+STARTUP: beamer
+
+#+STARTUP: oddeven
+
+# we tell the exporter to use a specific LaTeX document class, as
+# defined in org-latex-classes.  By default, this does not include a
+# beamer entry so this needs to be defined in your configuration (see
+# the tutorial).
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [bigger] 
+
+#+LATEX_HEADER: \usepackage{listings}
+
+#+LATEX_HEADER: \definecolor{UBCblue}{rgb}{0.04706, 0.13725, 0.26667} % UBC Blue (primary)
+#+LATEX_HEADER: \usecolortheme[named=UBCblue]{structure}
+
+# Beamer supports alternate themes.  Choose your favourite here
+#+BEAMER_COLOR_THEME: dolphin
+#+BEAMER_FONT_THEME:  default
+#+BEAMER_INNER_THEME: [shadow]rounded
+#+BEAMER_OUTER_THEME: infolines
+
+# the beamer exporter expects to be told which level of headlines
+# defines the frames.  We use the first level headlines for sections
+# and the second (hence H:2) for frames.
+#+OPTIONS: ^:nil H:2 toc:nil
+
+# the following allow us to selectively choose headlines to export or not
+#+SELECT_TAGS: export
+#+EXCLUDE_TAGS: noexport
+
+# for a column view of options and configurations for the individual
+# frames
+#+COLUMNS: %20ITEM %13BEAMER_env(Env) %6BEAMER_envargs(Args) %4BEAMER_col(Col) %7BEAMER_extra(Extra)
+
+# #+BEAMER_HEADER: \usebackgroundtemplate{\includegraphics[width=\paperwidth,height=\paperheight,opacity=.01]{img/bg2.jpeg}}
+# #+BEAMER_HEADER: \logo{\includegraphics[height=.5cm,keepaspectratio]{img/bti_logo2.png}\vspace{240pt}}
+# #+BEAMER_HEADER: \setbeamertemplate{background canvas}{\begin{tikzpicture}\node[opacity=.1]{\includegraphics [width=\paperwidth,height=\paperheight]{img/background.jpg}};\end{tikzpicture}}
+# #+BEAMER_HEADER: \logo{\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{img/background.jpg}}
+#+BEAMER_HEADER: \titlegraphic{\includegraphics[width=50]{img/logo.png}}
+# #+BEAMER_HEADER: \definecolor{ft}{RGB}{255, 241, 229}
+#+BEAMER_HEADER: \setbeamercolor{background canvas}{bg=ft}
+
+* Preamble
+** Emacs Setup                                                    :noexport:
+
+#+begin_src emacs-lisp
+(setq org-src-fontify-natively t)
+(setq org-latex-image-default-width "5cm")
+(setq org-image-actual-width nil)
+#+end_src
+
+#+RESULTS:
+
+** Imports
+
+#+begin_src jupyter-python
+%matplotlib inline
+%load_ext autoreload
+%autoreload 2
+
+import sys
+import os
+import warnings
+warnings.filterwarnings("ignore")
+import pickle
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+import tensorflow as tf
+# for loading/processing the images  
+from keras.preprocessing.image import load_img 
+from keras.preprocessing.image import img_to_array 
+from keras.applications.vgg16 import preprocess_input 
+
+# models 
+from keras.applications.vgg16 import VGG16 
+from keras.models import Model
+
+# clustering and dimension reduction
+from sklearn.cluster import KMeans
+from sklearn.decomposition import PCA
+from sklearn.metrics.pairwise import cosine_similarity
+
+from random import randint
+import pickle
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[1]:
+:end:
+
+** Functions
+
+#+begin_src jupyter-python
+# Display all
+def display_all(df):
+    with pd.option_context("display.max_rows", 100, "display.max_columns", 100): 
+        display(df)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[2]:
+:end:
+
+** Org                                                            :noexport:
+
+#+begin_src jupyter-python
+# Org-mode table formatter
+import IPython
+import tabulate
+
+class OrgFormatter(IPython.core.formatters.BaseFormatter):
+    format_type = IPython.core.formatters.Unicode('text/org')
+    print_method = IPython.core.formatters.ObjectName('_repr_org_')
+
+def pd_dataframe_to_org(df):
+    return tabulate.tabulate(df, headers='keys', tablefmt='orgtbl', showindex='always')
+
+ip = get_ipython()
+ip.display_formatter.formatters['text/org'] = OrgFormatter()
+
+f = ip.display_formatter.formatters['text/org']
+f.for_type_by_name('pandas.core.frame', 'DataFrame', pd_dataframe_to_org)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[3]:
+:end:
+
+* Load Data
+** Load Data
+
+#+begin_src jupyter-python
+df = pd.read_csv('../data/processed/movie_metadata_processed.csv')
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[4]:
+:end:
+
+** Glimpse at the data
+
+#+begin_src jupyter-python
+display_all(df.describe(include='all').T)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[5]:
+|                           |   count |   unique | top              |   freq |            mean |              std |     min |           25% |             50% |             75% |              max |
+|---------------------------+---------+----------+------------------+--------+-----------------+------------------+---------+---------------+-----------------+-----------------+------------------|
+| Unnamed: 0                |    4688 |      nan | nan              |    nan |  2343.5         |   1353.45        |    0    | 1171.75       |  2343.5         |  3515.25        |   4687           |
+| id                        |    4688 |     4688 | tt0006864        |      1 |   nan           |    nan           |  nan    |  nan          |   nan           |   nan           |    nan           |
+| color                     |    4673 |        2 | Color            |   4477 |   nan           |    nan           |  nan    |  nan          |   nan           |   nan           |    nan           |
+| director_name             |    4688 |     2370 | Steven Spielberg |     26 |   nan           |    nan           |  nan    |  nan          |   nan           |   nan           |    nan           |
+| actor_3_facebook_likes    |    4670 |      nan | nan              |    nan |   620.241       |   1591.97        |    0    |  130          |   362           |   632.75        |  23000           |
+| actor_2_name              |    4678 |     2923 | Morgan Freeman   |     16 |   nan           |    nan           |  nan    |  nan          |   nan           |   nan           |    nan           |
+| actor_1_facebook_likes    |    4681 |      nan | nan              |    nan |  6548.67        |  15335.4         |    0    |  606          |   984           | 11000           | 640000           |
+| actor_1_name              |    4681 |     2020 | Robert De Niro   |     47 |   nan           |    nan           |  nan    |  nan          |   nan           |   nan           |    nan           |
+| movie_title               |    4688 |     4686 | The Host         |      2 |   nan           |    nan           |  nan    |  nan          |   nan           |   nan           |    nan           |
+| actor_3_name              |    4670 |     3389 | Steve Coogan     |      8 |   nan           |    nan           |  nan    |  nan          |   nan           |   nan           |    nan           |
+| plot_keywords             |    4553 |     4545 | based on novel   |      4 |   nan           |    nan           |  nan    |  nan          |   nan           |   nan           |    nan           |
+| language                  |    4688 |       47 | English          |   4376 |   nan           |    nan           |  nan    |  nan          |   nan           |   nan           |    nan           |
+| country                   |    4687 |       65 | USA              |   3540 |   nan           |    nan           |  nan    |  nan          |   nan           |   nan           |    nan           |
+| content_rating            |    4688 |       12 | R                |   2021 |   nan           |    nan           |  nan    |  nan          |   nan           |   nan           |    nan           |
+| title_year                |    4688 |      nan | nan              |    nan |  2002.42        |     12.4284      | 1916    | 1999          |  2005           |  2011           |   2016           |
+| actor_2_facebook_likes    |    4678 |      nan | nan              |    nan |  1614.51        |   4017.5         |    0    |  275          |   592           |   912           | 137000           |
+| aspect_ratio              |    4388 |      nan | nan              |    nan |     2.12791     |      0.807937    |    1.18 |    1.85       |     2.35        |     2.35        |     16           |
+| Action                    |    4688 |      nan | nan              |    nan |     0.225043    |      0.417655    |    0    |    0          |     0           |     0           |      1           |
+| Adventure                 |    4688 |      nan | nan              |    nan |     0.180461    |      0.384612    |    0    |    0          |     0           |     0           |      1           |
+| Animation                 |    4688 |      nan | nan              |    nan |     0.0492747   |      0.216464    |    0    |    0          |     0           |     0           |      1           |
+| Biography                 |    4688 |      nan | nan              |    nan |     0.0612201   |      0.239759    |    0    |    0          |     0           |     0           |      1           |
+| Comedy                    |    4688 |      nan | nan              |    nan |     0.380119    |      0.485468    |    0    |    0          |     0           |     1           |      1           |
+| Crime                     |    4688 |      nan | nan              |    nan |     0.174275    |      0.379386    |    0    |    0          |     0           |     0           |      1           |
+| Documentary               |    4688 |      nan | nan              |    nan |     0.025384    |      0.157305    |    0    |    0          |     0           |     0           |      1           |
+| Drama                     |    4688 |      nan | nan              |    nan |     0.512159    |      0.499905    |    0    |    0          |     1           |     1           |      1           |
+| Family                    |    4688 |      nan | nan              |    nan |     0.108575    |      0.311139    |    0    |    0          |     0           |     0           |      1           |
+| Fantasy                   |    4688 |      nan | nan              |    nan |     0.116254    |      0.320564    |    0    |    0          |     0           |     0           |      1           |
+| Film-Noir                 |    4688 |      nan | nan              |    nan |     0.00127986  |      0.0357561   |    0    |    0          |     0           |     0           |      1           |
+| History                   |    4688 |      nan | nan              |    nan |     0.0415956   |      0.199684    |    0    |    0          |     0           |     0           |      1           |
+| Horror                    |    4688 |      nan | nan              |    nan |     0.108575    |      0.311139    |    0    |    0          |     0           |     0           |      1           |
+| Music                     |    4688 |      nan | nan              |    nan |     0.0441553   |      0.205462    |    0    |    0          |     0           |     0           |      1           |
+| Musical                   |    4688 |      nan | nan              |    nan |     0.0273038   |      0.162984    |    0    |    0          |     0           |     0           |      1           |
+| Mystery                   |    4688 |      nan | nan              |    nan |     0.0949232   |      0.29314     |    0    |    0          |     0           |     0           |      1           |
+| News                      |    4688 |      nan | nan              |    nan |     0.000639932 |      0.0252915   |    0    |    0          |     0           |     0           |      1           |
+| Romance                   |    4688 |      nan | nan              |    nan |     0.222056    |      0.415673    |    0    |    0          |     0           |     0           |      1           |
+| Sci-Fi                    |    4688 |      nan | nan              |    nan |     0.119027    |      0.323855    |    0    |    0          |     0           |     0           |      1           |
+| Short                     |    4688 |      nan | nan              |    nan |     0.00106655  |      0.0326442   |    0    |    0          |     0           |     0           |      1           |
+| Sport                     |    4688 |      nan | nan              |    nan |     0.0364761   |      0.187492    |    0    |    0          |     0           |     0           |      1           |
+| Thriller                  |    4688 |      nan | nan              |    nan |     0.275384    |      0.446755    |    0    |    0          |     0           |     1           |      1           |
+| War                       |    4688 |      nan | nan              |    nan |     0.043302    |      0.203558    |    0    |    0          |     0           |     0           |      1           |
+| Western                   |    4688 |      nan | nan              |    nan |     0.019198    |      0.137235    |    0    |    0          |     0           |     0           |      1           |
+| num_critic_for_reviews    |    4688 |      nan | nan              |    nan |   137.259       |    119.006       |    1    |   50          |   108           |   190           |    813           |
+| duration                  |    4688 |      nan | nan              |    nan |   107.961       |     22.6209      |    7    |   94          |   103           |   118           |    330           |
+| gross                     |    4688 |      nan | nan              |    nan |     4.06176e+07 |      6.27544e+07 |  162    |    2.8341e+06 |     1.72871e+07 |     5.18582e+07 |      7.60506e+08 |
+| director_facebook_likes   |    4688 |      nan | nan              |    nan |   696.231       |   2853.72        |    0    |    7          |    47           |   188.25        |  23000           |
+| num_voted_users           |    4688 |      nan | nan              |    nan | 82861.6         | 139306           |    5    | 8428.5        | 32871           | 93011           |      1.68976e+06 |
+| cast_total_facebook_likes |    4688 |      nan | nan              |    nan |  9607.98        |  18324.4         |    0    | 1378.75       |  3062.5         | 13650.2         | 656730           |
+| facenumber_in_poster      |    4688 |      nan | nan              |    nan |     1.37521     |      2.03111     |    0    |    0          |     1           |     2           |     43           |
+| num_user_for_reviews      |    4688 |      nan | nan              |    nan |   265.88        |    371.625       |    1    |   64          |   153           |   318           |   5060           |
+| budget                    |    4688 |      nan | nan              |    nan |     3.67286e+07 |      2.02791e+08 |  218    |    5.43e+06   |     1.7e+07     |     4e+07       |      1.22155e+10 |
+| imdb_score                |    4688 |      nan | nan              |    nan |     6.41086     |      1.11889     |    1.6  |    5.8        |     6.5         |     7.2         |      9.3         |
+| movie_facebook_likes      |    4688 |      nan | nan              |    nan |  7216.21        |  19170.2         |    0    |    0          |   154           |  2000           | 349000           |
+:end:
+
+
+#+begin_src jupyter-python :results output
+numerical = df.select_dtypes(include='number').columns
+categorical = df.select_dtypes(exclude='number').columns
+
+print(f"categorical columns are : {', '.join(str(x) for x in categorical)}")
+print(f"numerical columns are : {', '.join(str(x) for x in numerical)}")
+#+end_src
+
+#+RESULTS:
+:results:
+categorical columns are : id, color, director_name, actor_2_name, actor_1_name, movie_title, actor_3_name, plot_keywords, language, country, content_rating
+numerical columns are : Unnamed: 0, actor_3_facebook_likes, actor_1_facebook_likes, title_year, actor_2_facebook_likes, aspect_ratio, Action, Adventure, Animation, Biography, Comedy, Crime, Documentary, Drama, Family, Fantasy, Film-Noir, History, Horror, Music, Musical, Mystery, News, Romance, Sci-Fi, Short, Sport, Thriller, War, Western, num_critic_for_reviews, duration, gross, director_facebook_likes, num_voted_users, cast_total_facebook_likes, facenumber_in_poster, num_user_for_reviews, budget, imdb_score, movie_facebook_likes
+:end:
+
+categorical columns are : color, director_name, actor_2_name, genres,
+actor_1_name, movie_title, actor_3_name, plot_keywords, movie_imdb_link,
+language, country, content_rating
+
+numerical columns are : num_critic_for_reviews, duration,
+director_facebook_likes, actor_3_facebook_likes, actor_1_facebook_likes, gross,
+num_voted_users, cast_total_facebook_likes, facenumber_in_poster,
+num_user_for_reviews, budget, title_year, actor_2_facebook_likes, imdb_score,
+aspect_ratio, movie_facebook_likes
+
+** Posters
+
+
+#+begin_src jupyter-python
+print(os.getcwd())
+#os.chdir('./mauviette/notebooks')
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[31]:
+:end:
+
+#+begin_src jupyter-python
+img_path = '../data/external/posters/'
+p = r"../data/processed/poster_features.pkl"
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[21]:
+:end:
+
+
+#+begin_src jupyter-python
+posters = []
+
+# creates a ScandirIterator aliased as files
+with os.scandir(img_path) as files:
+  # loops through each file in the directory
+    for file in files:
+        if file.name.endswith('.jpg'):
+          # adds only the image files to the posters list
+            posters.append(file.name)     
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[49]:
+:end:
+
+** Glimpse at a poster
+
+#+begin_src jupyter-python
+# load the image as a 224x224 array
+img = load_img(f'{img_path}/{posters[0]}', target_size=(224,224))
+# convert from 'PIL.Image.Image' to numpy array
+img = np.array(img)
+
+print(img.shape)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[34]:
+:end:
+
+#+begin_src jupyter-python
+reshaped_img = img.reshape(1,224,224,3)
+print(reshaped_img.shape)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[35]:
+:end:
+
+
+#+begin_src jupyter-python
+x = preprocess_input(reshaped_img)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[36]:
+:end:
+
+* Clustering
+** Extracting features
+
+Nous pouvons maintenant charger le modèle VGG et supprimer la couche de sortie
+manuellement. Cela signifie que la nouvelle couche finale est une couche
+entièrement connectée avec 4 096 nœuds de sortie. Ce vecteur de 4 096 nombres
+est le vecteur de caractéristiques que nous utiliserons pour regrouper les
+images.
+
+#+begin_src jupyter-python
+# load model
+model = VGG16()
+# remove the output layer
+model = Model(inputs=model.inputs, outputs=model.layers[-2].output)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[5]:
+:end:
+
+#+begin_src jupyter-python
+features = model.predict(x, use_multiprocessing=True)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[38]:
+:end:
+
+#+begin_src jupyter-python
+print(features.shape)
+features
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[39]:
+#+BEGIN_EXAMPLE
+  array([[1.5461166 , 6.260435  , 2.117587  , ..., 0.        , 0.5195822 ,
+  0.69436365]], dtype=float32)
+#+END_EXAMPLE
+:end:
+
+- Nous résumons l'ensemble du prototype ci-dessus en une fonction :
+
+
+#+begin_src jupyter-python
+def extract_features(file, model):
+    # load the image as a 224x224 array
+    img = load_img(file, target_size=(224,224))
+    # convert from 'PIL.Image.Image' to numpy array
+    img = np.array(img) 
+    # reshape the data for the model reshape(num_of_samples, dim 1, dim 2, channels)
+    reshaped_img = img.reshape(1,224,224,3) 
+    # prepare image for model
+    imgx = preprocess_input(reshaped_img)
+    # get the feature vector
+    features = model.predict(imgx, use_multiprocessing=True)
+    return features
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[40]:
+:end:
+
+- Nous appliquons cette fonction à toutes nos affiches :
+
+#+begin_src jupyter-python
+data = {}
+counter = 0
+
+# loop through each image in the dataset
+for poster in posters:
+    counter += 1
+    print(f'{counter} : Extrating features for {poster}')
+    feat = extract_features(f'{img_path}/{poster}', model)
+    data[poster] = feat
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[50]:
+:end:
+
+#+begin_src jupyter-python
+# get a list of the filenames
+filenames = np.array(list(data.keys()))
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[15]:
+:end:
+
+** Serializing features
+
+#+begin_src jupyter-python
+with open(p,'wb') as file:
+            pickle.dump(data, file)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[54]:
+:end:
+
+#+begin_src jupyter-python
+with open(p, 'rb') as file:
+    data = pickle.load(file)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[7]:
+:end:
+
+- get a list of just the features
+
+#+begin_src jupyter-python
+feat = np.array(list(data.values()))
+feat.shape
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[8]:
+: (4917, 1, 4096)
+:end:
+
+
+#+begin_src jupyter-python
+feat = feat.reshape(-1,4096)
+feat.shape
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[9]:
+: (4917, 4096)
+:end:
+
+** Reduce dimension
+
+#+begin_src jupyter-python
+pca = PCA(n_components=100, random_state=22)
+pca.fit(feat)
+x = pca.transform(feat)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[10]:
+:end:
+
+** Clustering K-Means
+
+#+begin_src jupyter-python
+sse = []
+list_k = list(range(50, 500))
+
+for k in list_k:
+    km = KMeans(n_clusters=k, random_state=22)
+    km.fit(x)
+    print(f'{k} clusters')
+    sse.append(km.inertia_)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[25]:
+:end:
+
+
+#+begin_src jupyter-python
+# Plot sse against k
+plt.figure(figsize=(6, 6))
+plt.plot(list_k, sse)
+plt.xlabel(r'Number of clusters *k*')
+plt.ylabel('Sum of squared distance');
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[26]:
+[[file:./obipy-resources/jdS27K.png]]
+:end:
+
+#+begin_src jupyter-python
+kmeans = KMeans(n_clusters=200, random_state=22)
+kmeans.fit(x)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[32]:
+: KMeans(n_clusters=200, random_state=22)
+:end:
+
+
+#+begin_src jupyter-python
+kmeans.labels_
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[13]:
+: array([85, 52, 99, ..., 69, 70, 85], dtype=int32)
+:end:
+
+#+begin_src jupyter-python
+# holds the cluster id and the images { id: [images] }
+groups = {}
+for file, cluster in zip(filenames, kmeans.labels_):
+    if cluster not in groups.keys():
+        groups[cluster] = []
+        groups[cluster].append(file)
+    else:
+        groups[cluster].append(file)
+#+end_src
+ 
+#+RESULTS:
+:results:
+# Out[33]:
+:end:
+
+** Glimpse at the clusters
+
+#+begin_src jupyter-python
+# function that lets view a cluster (based on identifier)        
+def view_cluster(cluster):
+    plt.figure(figsize = (25,25));
+    # gets the list of filenames for a cluster
+    files = groups[cluster]
+    # only allow up to 30 images to be shown at a time
+    if len(files) > 30:
+        print(f"Clipping cluster size from {len(files)} to 30")
+        files = files[:29]
+    # plot each image in the cluster
+    for index, file in enumerate(files):
+        plt.subplot(10,10,index+1);
+        img = load_img(f'{img_path}/{file}')
+        img = np.array(img)
+        plt.imshow(img)
+        plt.axis('off')
+        
+
+view_cluster(105)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[34]:
+[[file:./obipy-resources/0ll00e.png]]
+:end:
+
+* Bibliography
+** References
+:PROPERTIES:
+:BEAMER_opt: shrink=10
+:END:
+
+bibliographystyle:unsrt
+bibliography:../references/recsys.bib
+
+* Local Variables                                                  :noexport:
+# Local Variables:
+# eval: (setenv "PATH" "/Library/TeX/texbin/:$PATH" t)
+# after-save-hook: (lambda nil (ox-ipynb-export-org-file-to-ipynb-file (buffer-name)))
+# End:

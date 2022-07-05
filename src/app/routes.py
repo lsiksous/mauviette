@@ -7,53 +7,9 @@ from app.models import User, Message
 
 
 @app.route("/", methods=["GET", "POST"])
-@login_required
+#@login_required
 def index():
-    max_usage = 1000
-    language = ""
-    inspire = ""
-    correct = ""
-    suggest = ""
-    mistakes = []
-    replacements = []
-    message = {"body": "", "language": ""}
-
-    form = MessageForm()
-
-    if request.method == "POST":
-        message = Message(body=request.form["message"], language="fr")
-        correct, mistakes, replacements = message.correct()
-        if current_user.quota <= max_usage:
-            # flash(
-            #    "You have " + str(max_usage - current_user.quota) + " suggestions left."
-            # )
-            inspire, suggest = message.suggest(request.form["dialect"])
-            current_user.quota += 1
-            message.suggestions = suggest
-            message.user_id = current_user.id
-            db.session.add(message)
-            db.session.commit()
-        else:
-            flash("You have reached your suggestions quota.")
-            suggest = ""
-            message = {"body": message.body, "language": message.language}
-    else:
-        message = {"body": "Bonjour", "language": "fr"}
-        correct = "Bonjour"
-
-    return render_template(
-        "index.html",
-        form=form,
-        message=message,
-        language=language,
-        inspire=inspire,
-        suggest=suggest,
-        correct=correct,
-        mistakes=mistakes,
-        replacements=replacements,
-        len_miss=len(mistakes),
-    )
-
+    pass
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

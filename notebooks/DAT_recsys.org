@@ -149,7 +149,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 #+RESULTS:
 :results:
-# Out[44]:
+# Out[1]:
 :end:
 
 ** Functions
@@ -223,19 +223,19 @@ f.for_type_by_name('pandas.core.frame', 'DataFrame', pd_dataframe_to_org)
 
 #+RESULTS:
 :results:
-# Out[46]:
+# Out[35]:
 :end:
 
 * Data Prep
 ** Load Data
 
 #+begin_src jupyter-python
-df_raw = pd.read_csv('/Users/lss/Sites/simplon.ai/briefs/recsys/data/movie_metadata.csv')
+df_raw = pd.read_csv('../data/raw/movie_metadata.csv')
 #+end_src
 
 #+RESULTS:
 :results:
-# Out[47]:
+# Out[36]:
 :end:
 
 ** Glimpse at the data
@@ -246,7 +246,7 @@ display_all(df_raw.describe(include='all').T)
 
 #+RESULTS:
 :results:
-# Out[48]:
+# Out[37]:
 |                           |   count |   unique | top                                                  |   freq |            mean |              std |     min |            25% |             50% |             75% |              max |
 |---------------------------+---------+----------+------------------------------------------------------+--------+-----------------+------------------+---------+----------------+-----------------+-----------------+------------------|
 | color                     |    5024 |        2 | Color                                                |   4815 |   nan           |    nan           |  nan    |  nan           |   nan           |   nan           |    nan           |
@@ -316,8 +316,8 @@ plt.show()
 
 #+RESULTS:
 :results:
-# Out[50]:
-[[file:./obipy-resources/RNXwPH.png]]
+# Out[39]:
+[[file:./obipy-resources/GO2DoE.png]]
 :end:
 
 ** Feature selection
@@ -369,7 +369,7 @@ df_raw.isna().sum()
 
 #+RESULTS:
 :results:
-# Out[52]:
+# Out[40]:
 #+BEGIN_EXAMPLE
   color                         19
   director_name                104
@@ -1013,4 +1013,5 @@ bibliography:recsys.bib
 * Local Variables                                                  :noexport:
 # Local Variables:
 # eval: (setenv "PATH" "/Library/TeX/texbin/:$PATH" t)
+# after-save-hook: (lambda nil (ox-ipynb-export-org-file-to-ipynb-file (buffer-name)))
 # End:

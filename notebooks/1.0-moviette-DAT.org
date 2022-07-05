@@ -1,0 +1,788 @@
+💈 Développez un moteur de recommandation de films
+#+PROPERTY: header-args:jupyter-python :session *Py* :results raw drawer :cache no :async yes :exports results :eval yes :tangle yes
+
+#+SUBTITLE: Préparation des données
+#+AUTHOR: Laurent Siksous
+#+EMAIL: siksous@gmail.com
+# #+DATE: 
+#+DESCRIPTION: 
+#+KEYWORDS: 
+#+LANGUAGE:  fr
+
+# specifying the beamer startup gives access to a number of
+# keybindings which make configuring individual slides and components
+# of slides easier.  See, for instance, C-c C-b on a frame headline.
+#+STARTUP: beamer
+
+#+STARTUP: oddeven
+
+# we tell the exporter to use a specific LaTeX document class, as
+# defined in org-latex-classes.  By default, this does not include a
+# beamer entry so this needs to be defined in your configuration (see
+# the tutorial).
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [bigger] 
+
+#+LATEX_HEADER: \usepackage{listings}
+
+#+LATEX_HEADER: \definecolor{UBCblue}{rgb}{0.04706, 0.13725, 0.26667} % UBC Blue (primary)
+#+LATEX_HEADER: \usecolortheme[named=UBCblue]{structure}
+
+# Beamer supports alternate themes.  Choose your favourite here
+#+BEAMER_COLOR_THEME: dolphin
+#+BEAMER_FONT_THEME:  default
+#+BEAMER_INNER_THEME: [shadow]rounded
+#+BEAMER_OUTER_THEME: infolines
+
+# the beamer exporter expects to be told which level of headlines
+# defines the frames.  We use the first level headlines for sections
+# and the second (hence H:2) for frames.
+#+OPTIONS: ^:nil H:2 toc:nil
+
+# the following allow us to selectively choose headlines to export or not
+#+SELECT_TAGS: export
+#+EXCLUDE_TAGS: noexport
+
+# for a column view of options and configurations for the individual
+# frames
+#+COLUMNS: %20ITEM %13BEAMER_env(Env) %6BEAMER_envargs(Args) %4BEAMER_col(Col) %7BEAMER_extra(Extra)
+
+# #+BEAMER_HEADER: \usebackgroundtemplate{\includegraphics[width=\paperwidth,height=\paperheight,opacity=.01]{img/bg2.jpeg}}
+# #+BEAMER_HEADER: \logo{\includegraphics[height=.5cm,keepaspectratio]{img/bti_logo2.png}\vspace{240pt}}
+# #+BEAMER_HEADER: \setbeamertemplate{background canvas}{\begin{tikzpicture}\node[opacity=.1]{\includegraphics [width=\paperwidth,height=\paperheight]{img/background.jpg}};\end{tikzpicture}}
+# #+BEAMER_HEADER: \logo{\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{img/background.jpg}}
+#+BEAMER_HEADER: \titlegraphic{\includegraphics[width=50]{img/logo.png}}
+# #+BEAMER_HEADER: \definecolor{ft}{RGB}{255, 241, 229}
+#+BEAMER_HEADER: \setbeamercolor{background canvas}{bg=ft}
+
+* Preamble
+** Emacs Setup                                                    :noexport:
+
+#+NAME: startup
+#+begin_src emacs-lisp
+(setq org-src-fontify-natively t)
+
+(setq lsp-semantic-tokens-enable t)
+(setq lsp-enable-symbol-highlighting t)
+
+(setq lsp-enable-file-watchers nil
+      read-process-output-max (* 1024 1024)
+      gc-cons-threshold 100000000
+      lsp-idle-delay 0.5
+      ;;
+      lsp-eldoc-hook nil
+      lsp-eldoc-enable-hover nil
+
+      ;;pas de fil d'ariane
+      lsp-headerline-breadcrumb-enable nil
+      ;; pas de imenu voir menu-list
+      lsp-enable-imenu nil
+      ;; lentille
+      lsp-lens-enable t
+ 
+      lsp-semantic-highlighting t
+      lsp-modeline-code-actions-enable t
+      )
+  
+(setq lsp-completion-provider :company
+      lsp-completion-show-detail t
+      lsp-completion-show-kind t)
+
+(setq lsp-ui-doc-enable t
+      lsp-ui-doc-show-with-mouse nil
+      lsp-ui-doc-show-with-cursor t
+      lsp-ui-doc-use-childframe t
+      
+      lsp-ui-sideline-diagnostic-max-line-length 80
+
+      ;; lsp-ui-imenu
+      lsp-ui-imenu-enable nil
+      ;; lsp-ui-peek
+      lsp-ui-peek-enable t
+      ;; lsp-ui-sideline
+      lsp-ui-sideline-enable t
+      lsp-ui-sideline-ignore-duplicate t
+      lsp-ui-sideline-show-symbol t
+      lsp-ui-sideline-show-hover t
+      lsp-ui-sideline-show-diagnostics t
+      lsp-ui-sideline-show-code-actions t
+      )
+
+(setq lsp-diagnostics-provider :none
+      lsp-modeline-diagnostics-enable nil
+      lsp-signature-auto-activate nil ;; you could manually request them via `lsp-signature-activate`
+      lsp-signature-render-documentation nil)
+#+end_src
+
+#+RESULTS: startup
+
+#+RESULTS:
+
+** Imports
+
+#+begin_src jupyter-python
+%matplotlib inline
+%load_ext autoreload
+%autoreload 2
+
+import warnings
+
+from pandas.io.parsers.base_parser import _process_date_conversion
+from scipy.stats.stats import describe
+warnings.filterwarnings("ignore")
+import pickle
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+#from lib import posters
+
+import re
+import json
+
+from sklearn.impute import KNNImputer
+from sklearn.preprocessing import MinMaxScaler, MultiLabelBinarizer
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.feature_extraction.text import CountVectorizer
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[24]:
+:end:
+
+** Functions
+
+#+begin_src jupyter-python
+# Display all
+def display_all(df):
+    with pd.option_context("display.max_rows", 50, "display.max_columns", 25): 
+        display(df)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[2]:
+:end:
+
+** Org                                                            :noexport:
+
+#+begin_src jupyter-python
+# Org-mode table formatter
+import IPython
+import tabulate
+
+class OrgFormatter(IPython.core.formatters.BaseFormatter):
+    format_type = IPython.core.formatters.Unicode('text/org')
+    print_method = IPython.core.formatters.ObjectName('_repr_org_')
+
+def pd_dataframe_to_org(df):
+    return tabulate.tabulate(df.head(), headers='keys', tablefmt='orgtbl', showindex='always')
+
+ip = get_ipython()
+ip.display_formatter.formatters['text/org'] = OrgFormatter()
+
+f = ip.display_formatter.formatters['text/org']
+f.for_type_by_name('pandas.core.frame', 'DataFrame', pd_dataframe_to_org)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[3]:
+:end:
+
+* Data Prep
+** Load Data
+
+#+begin_src jupyter-python
+df_raw = pd.read_csv('../data/raw/movie_metadata.csv')
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[6]:
+:end:
+
+** Glimpse at the data
+
+#+begin_src jupyter-python
+display_all(df_raw.describe(include='all').T)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[7]:
+|                           |   count |   unique | top                                                  |   freq |            mean |              std |     min |            25% |             50% |             75% |              max |
+|---------------------------+---------+----------+------------------------------------------------------+--------+-----------------+------------------+---------+----------------+-----------------+-----------------+------------------|
+| color                     |    5024 |        2 | Color                                                |   4815 |   nan           |    nan           |  nan    |  nan           |   nan           |   nan           |    nan           |
+| director_name             |    4939 |     2398 | Steven Spielberg                                     |     26 |   nan           |    nan           |  nan    |  nan           |   nan           |   nan           |    nan           |
+| num_critic_for_reviews    |    4993 |      nan | nan                                                  |    nan |   140.194       |    121.602       |    1    |   50           |   110           |   195           |    813           |
+| duration                  |    5028 |      nan | nan                                                  |    nan |   107.201       |     25.1974      |    7    |   93           |   103           |   118           |    511           |
+| director_facebook_likes   |    4939 |      nan | nan                                                  |    nan |   686.509       |   2813.33        |    0    |    7           |    49           |   194.5         |  23000           |
+| actor_3_facebook_likes    |    5020 |      nan | nan                                                  |    nan |   645.01        |   1665.04        |    0    |  133           |   371.5         |   636           |  23000           |
+| actor_2_name              |    5030 |     3032 | Morgan Freeman                                       |     20 |   nan           |    nan           |  nan    |  nan           |   nan           |   nan           |    nan           |
+| actor_1_facebook_likes    |    5036 |      nan | nan                                                  |    nan |  6560.05        |  15020.8         |    0    |  614           |   988           | 11000           | 640000           |
+| gross                     |    4159 |      nan | nan                                                  |    nan |     4.84684e+07 |      6.8453e+07  |  162    |    5.34099e+06 |     2.55175e+07 |     6.23094e+07 |      7.60506e+08 |
+| genres                    |    5043 |      914 | Drama                                                |    236 |   nan           |    nan           |  nan    |  nan           |   nan           |   nan           |    nan           |
+| actor_1_name              |    5036 |     2097 | Robert De Niro                                       |     49 |   nan           |    nan           |  nan    |  nan           |   nan           |   nan           |    nan           |
+| movie_title               |    5043 |     4917 | Ben-Hur                                              |      3 |   nan           |    nan           |  nan    |  nan           |   nan           |   nan           |    nan           |
+| num_voted_users           |    5043 |      nan | nan                                                  |    nan | 83668.2         | 138485           |    5    | 8593.5         | 34359           | 96309           |      1.68976e+06 |
+| cast_total_facebook_likes |    5043 |      nan | nan                                                  |    nan |  9699.06        |  18163.8         |    0    | 1411           |  3090           | 13756.5         | 656730           |
+| actor_3_name              |    5020 |     3521 | John Heard                                           |      8 |   nan           |    nan           |  nan    |  nan           |   nan           |   nan           |    nan           |
+| facenumber_in_poster      |    5030 |      nan | nan                                                  |    nan |     1.37117     |      2.01358     |    0    |    0           |     1           |     2           |     43           |
+| plot_keywords             |    4890 |     4760 | based on novel                                       |      4 |   nan           |    nan           |  nan    |  nan           |   nan           |   nan           |    nan           |
+| movie_imdb_link           |    5043 |     4919 | http://www.imdb.com/title/tt0232500/?ref_=fn_tt_tt_1 |      3 |   nan           |    nan           |  nan    |  nan           |   nan           |   nan           |    nan           |
+| num_user_for_reviews      |    5022 |      nan | nan                                                  |    nan |   272.771       |    377.983       |    1    |   65           |   156           |   326           |   5060           |
+| language                  |    5031 |       47 | English                                              |   4704 |   nan           |    nan           |  nan    |  nan           |   nan           |   nan           |    nan           |
+| country                   |    5038 |       65 | USA                                                  |   3807 |   nan           |    nan           |  nan    |  nan           |   nan           |   nan           |    nan           |
+| content_rating            |    4740 |       18 | R                                                    |   2118 |   nan           |    nan           |  nan    |  nan           |   nan           |   nan           |    nan           |
+| budget                    |    4551 |      nan | nan                                                  |    nan |     3.97526e+07 |      2.06115e+08 |  218    |    6e+06       |     2e+07       |     4.5e+07     |      1.22155e+10 |
+| title_year                |    4935 |      nan | nan                                                  |    nan |  2002.47        |     12.4746      | 1916    | 1999           |  2005           |  2011           |   2016           |
+| actor_2_facebook_likes    |    5030 |      nan | nan                                                  |    nan |  1651.75        |   4042.44        |    0    |  281           |   595           |   918           | 137000           |
+| imdb_score                |    5043 |      nan | nan                                                  |    nan |     6.44214     |      1.12512     |    1.6  |    5.8         |     6.6         |     7.2         |      9.5         |
+| aspect_ratio              |    4714 |      nan | nan                                                  |    nan |     2.2204      |      1.38511     |    1.18 |    1.85        |     2.35        |     2.35        |     16           |
+| movie_facebook_likes      |    5043 |      nan | nan                                                  |    nan |  7525.96        |  19320.4         |    0    |    0           |   166           |  3000           | 349000           |
+:end:
+
+
+#+begin_src jupyter-python :results output
+numerical = df_raw.select_dtypes(include='number').columns
+categorical = df_raw.select_dtypes(exclude='number').columns
+
+print(f"categorical columns are : {', '.join(str(x) for x in categorical)}")
+print(f"numerical columns are : {', '.join(str(x) for x in numerical)}")
+#+end_src
+
+#+RESULTS:
+:results:
+categorical columns are : color, director_name, actor_2_name, genres, actor_1_name, movie_title, actor_3_name, plot_keywords, movie_imdb_link, language, country, content_rating
+numerical columns are : num_critic_for_reviews, duration, director_facebook_likes, actor_3_facebook_likes, actor_1_facebook_likes, gross, num_voted_users, cast_total_facebook_likes, facenumber_in_poster, num_user_for_reviews, budget, title_year, actor_2_facebook_likes, imdb_score, aspect_ratio, movie_facebook_likes
+:end:
+
+categorical columns are : color, director_name, actor_2_name, genres,
+actor_1_name, movie_title, actor_3_name, plot_keywords, movie_imdb_link,
+language, country, content_rating
+
+numerical columns are : num_critic_for_reviews, duration,
+director_facebook_likes, actor_3_facebook_likes, actor_1_facebook_likes, gross,
+num_voted_users, cast_total_facebook_likes, facenumber_in_poster,
+num_user_for_reviews, budget, title_year, actor_2_facebook_likes, imdb_score,
+aspect_ratio, movie_facebook_likes
+
+** Distributions of numerical values
+
+#+begin_src jupyter-python
+fig, axes = plt.subplots(nrows=4, ncols=4, figsize=(20, 16))
+for ax, col in zip(axes.flatten()[:16], numerical):
+    sns.distplot(df_raw[col], ax=ax)
+
+plt.show()
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[9]:
+[[file:./obipy-resources/tSR2J1.png]]
+:end:
+
+** Extract id from url
+
+#+begin_src jupyter-python
+df = df_raw.copy()
+
+df['id'] = df.movie_imdb_link.map(lambda x: x.split('/')[4])
+df.id.head(10)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[10]:
+#+BEGIN_EXAMPLE
+  0    tt0499549
+  1    tt0449088
+  2    tt2379713
+  3    tt1345836
+  4    tt5289954
+  5    tt0401729
+  6    tt0413300
+  7    tt0398286
+  8    tt2395427
+  9    tt0417741
+  Name: id, dtype: object
+#+END_EXAMPLE
+:end:
+
+#+begin_src jupyter-python
+df.drop('movie_imdb_link', axis=1, inplace=True)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[11]:
+:end:
+
+#+begin_src jupyter-python
+df = df.sort_values(by='id')
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[12]:
+:end:
+
+#+begin_src jupyter-python
+df = df.set_index('id')
+df.head()
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[13]:
+| id        | color           | director_name       |   num_critic_for_reviews |   duration |   director_facebook_likes |   actor_3_facebook_likes | actor_2_name    |   actor_1_facebook_likes |     gross | genres              | actor_1_name   | movie_title                                      |   num_voted_users |   cast_total_facebook_likes | actor_3_name       |   facenumber_in_poster | plot_keywords                                                         |   num_user_for_reviews | language   | country   | content_rating   |     budget |   title_year |   actor_2_facebook_likes |   imdb_score |   aspect_ratio |   movie_facebook_likes |
+|-----------+-----------------+---------------------+--------------------------+------------+---------------------------+--------------------------+-----------------+--------------------------+-----------+---------------------+----------------+--------------------------------------------------+-------------------+-----------------------------+--------------------+------------------------+-----------------------------------------------------------------------+------------------------+------------+-----------+------------------+------------+--------------+--------------------------+--------------+----------------+------------------------|
+| tt0006864 | Black and White | D.W. Griffith       |                       69 |        123 |                       204 |                        9 | Mae Marsh       |                      436 |   nan     | Drama|History|War   | Lillian Gish   | Intolerance: Love's Struggle Throughout the Ages |             10718 |                         481 | Walter Long        |                      1 | huguenot|intolerance|medicis|protestant|wedding                       |                     88 | nan        | USA       | Not Rated        | 385907     |         1916 |                       22 |          8   |           1.33 |                    691 |
+| tt0011549 | Black and White | Harry F. Millarde   |                        1 |        110 |                         0 |                        0 | Johnnie Walker  |                        2 |     3e+06 | Crime|Drama         | Stephen Carr   | Over the Hill to the Poorhouse                   |                 5 |                           4 | Mary Carr          |                      1 | family relationships|gang|idler|poorhouse|thief                       |                      1 | nan        | USA       | nan              | 100000     |         1920 |                        2 |          4.8 |           1.33 |                      0 |
+| tt0015624 | Black and White | King Vidor          |                       48 |        151 |                        54 |                        6 | Renée Adorée    |                       81 |   nan     | Drama|Romance|War   | John Gilbert   | The Big Parade                                   |              4849 |                         108 | Claire Adams       |                      0 | chewing gum|climbing a tree|france|translation problems|world war one |                     45 | nan        | USA       | Not Rated        | 245000     |         1925 |                       12 |          8.3 |           1.33 |                    226 |
+| tt0017136 | Black and White | Fritz Lang          |                      260 |        145 |                       756 |                       18 | Gustav Fröhlich |                      136 | 26435     | Drama|Sci-Fi        | Brigitte Helm  | Metropolis                                       |            111841 |                         203 | Rudolf Klein-Rogge |                      1 | art deco|bible quote|dance|silent film|worker                         |                    413 | German     | Germany   | Not Rated        |      6e+06 |         1927 |                       23 |          8.3 |           1.33 |                  12000 |
+| tt0018737 | Black and White | Georg Wilhelm Pabst |                       71 |        110 |                        21 |                        3 | Francis Lederer |                      426 |  9950     | Crime|Drama|Romance | Louise Brooks  | Pandora's Box                                    |              7431 |                         455 | Fritz Kortner      |                      1 | escape|femme fatale|german expressionism|lust|violence                |                     84 | German     | Germany   | Not Rated        |    nan     |         1929 |                       20 |          8   |           1.33 |                    926 |
+:end:
+
+** Duplicates
+
+#+begin_src jupyter-python
+idx = df.index.drop_duplicates(keep=False)
+df = df.loc[idx]
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[14]:
+:end:
+
+** Getting rid of bad records
+
+- Most records still with nans are not movies but TV shows:
+
+#+begin_src jupyter-python
+df[df.color.isna()]
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[15]:
+| id        |   color | director_name       |   num_critic_for_reviews |   duration |   director_facebook_likes |   actor_3_facebook_likes | actor_2_name        |   actor_1_facebook_likes |         gross | genres                                                          | actor_1_name       | movie_title                                           |   num_voted_users |   cast_total_facebook_likes | actor_3_name     |   facenumber_in_poster | plot_keywords                                                                   |   num_user_for_reviews | language   | country   | content_rating   |      budget |   title_year |   actor_2_facebook_likes |   imdb_score |   aspect_ratio |   movie_facebook_likes |
+|-----------+---------+---------------------+--------------------------+------------+---------------------------+--------------------------+---------------------+--------------------------+---------------+-----------------------------------------------------------------+--------------------+-------------------------------------------------------+-------------------+-----------------------------+------------------+------------------------+---------------------------------------------------------------------------------+------------------------+------------+-----------+------------------+-------------+--------------+--------------------------+--------------+----------------+------------------------|
+| tt0100146 |     nan | Pece Dingo          |                        1 |         94 |                         0 |                       87 | Wilhelm von Homburg |                      156 | nan           | Horror                                                          | Michael Des Barres | Midnight Cabaret                                      |                47 |                         544 | Thom Mathews     |                      0 | cigarette smoking|death|devil|nightmare|satanic cult                            |                      4 | English    | USA       | R                |   nan       |         1990 |                      102 |          4.5 |         nan    |                      4 |
+| tt0938305 |     nan | Charles Matthau     |                       13 |         90 |                       139 |                     1000 | Michael Jai White   |                     2000 | nan           | Comedy|Crime|Thriller                                           | Billy Burke        | Freaky Deaky                                          |              6741 |                        6569 | Bill Duke        |                      0 | black panties|bomb squad|car bomb|dynamite|girl in panties                      |                     11 | English    | USA       | R                |     6e+06   |         2012 |                     2000 |          6.5 |         nan    |                      0 |
+| tt0989757 |     nan | Lasse Hallström     |                      162 |        108 |                       529 |                      690 | Henry Thomas        |                    17000 |   8.00148e+07 | Drama|Romance|War                                               | Channing Tatum     | Dear John                                             |            104356 |                       19945 | Scott Porter     |                    nan | army|coin collector|love|surfboard|u.s. army                                    |                    186 | English    | USA       | PG-13            |     2.5e+07 |         2010 |                      861 |          6.3 |           2.35 |                  14000 |
+| tt1075419 |     nan | Tung-Shing Yee      |                       53 |        119 |                         3 |                       19 | Daniel Wu           |                      556 | nan           | Action|Crime|Drama|Thriller                                     | Bingbing Fan       | Shinjuku Incident                                     |              9177 |                         996 | Yasuaki Kurata   |                      4 | chinese|gang|gratitude|immigrant|japan                                          |                     53 | Mandarin   | Hong Kong | R                |     1.5e+07 |         2009 |                      353 |          7.1 |           2.35 |                    821 |
+| tt1272886 |     nan | Jonas Åkerlund      |                       33 |         96 |                        68 |                      722 | Saffron Burrows     |                     2000 | nan           | Comedy|Crime|Drama                                              | Noel Gugliemi      | Small Apartments                                      |              5732 |                        3683 | Matt Lucas       |                      6 | fire investigator|landlord|suicide|talking to one's self in a mirror|turpentine |                     26 | English    | USA       | R                |     2e+06   |         2012 |                      811 |          6.1 |           1.85 |                      0 |
+| tt1327601 |     nan | Darin Scott         |                        7 |         95 |                        39 |                      375 | Shantel VanSanten   |                     1000 | nan           | Drama|Horror|Mystery|Thriller                                   | Julian Morris      | Something Wicked                                      |               976 |                        3024 | John Robinson    |                      2 | eugene oregon|independent film|obsession                                        |                     15 | English    | USA       | R                |     3e+06   |         2014 |                      747 |          4.8 |         nan    |                    395 |
+| tt1541995 |     nan | Wayne Wang          |                       56 |        104 |                        61 |                      451 | Russell Wong        |                      974 |   1.3465e+06  | Drama|History                                                   | Bingbing Li        | Snow Flower and the Secret Fan                        |              3024 |                        2430 | Ji-hyun Jun      |                      0 | car hitting pedestrian|china|fan|nineteenth century|reversal of fortune         |                     22 | English    | China     | PG-13            |     6e+06   |         2011 |                      595 |          6.1 |           2.35 |                      0 |
+| tt1604100 |     nan | Jonathan Meyers     |                        1 |        111 |                         0 |                      426 | Luke Perry          |                      657 | nan           | Drama                                                           | Justin Baldoni     | A Fine Step                                           |               207 |                        2677 | Leonor Varela    |                      0 | nan                                                                             |                      1 | nan        | USA       | PG               |     1e+06   |         2014 |                      608 |          5.3 |         nan    |                    212 |
+| tt1639397 |     nan | Dave Rodriguez      |                        9 |         98 |                        11 |                      636 | Michael Rapaport    |                      979 | nan           | Comedy|Drama                                                    | Chazz Palminteri   | Once Upon a Time in Queens                            |               291 |                        4036 | Paul Sorvino     |                      2 | nan                                                                             |                      7 | English    | USA       | R                |     1.5e+06 |         2013 |                      975 |          6.3 |           1.89 |                    283 |
+| tt1694021 |     nan | David Hackl         |                       48 |         94 |                        43 |                      129 | Michaela McManus    |                      826 | nan           | Action|Horror|Thriller                                          | Scott Glenn        | Into the Grizzly Maze                                 |              4486 |                        1586 | Luisa D'Oliveira |                      4 | bear|breasts|female nudity|grizzly|wilderness                                   |                     38 | English    | USA       | R                |     1e+07   |         2015 |                      476 |          5.3 |           1.85 |                      0 |
+| tt1781935 |     nan | Brandon Landers     |                      nan |        143 |                         8 |                        8 | Alana Kaniewski     |                      720 | nan           | Drama|Horror|Thriller                                           | Robbie Barnes      | The Ridges                                            |               125 |                         770 | Brandon Landers  |                      0 | avatar|college|death|tron|university                                            |                      8 | English    | USA       | nan              | 17350       |         2011 |                       19 |          3   |         nan    |                     33 |
+| tt1842530 |     nan | nan                 |                       14 |         60 |                       nan |                      405 | Dylan Walsh         |                      654 | nan           | Drama|Mystery                                                   | Poppy Montgomery   | Unforgettable                                         |             12854 |                        1906 | Dallas Roberts   |                      1 | hyperthymesia|new york city|police                                              |                     44 | nan        | USA       | nan              |   nan       |          nan |                      426 |          6.7 |         nan    |                      0 |
+| tt1869849 |     nan | Christopher Barnard |                      nan |         22 |                         0 |                      nan | nan                 |                        5 | nan           | Comedy                                                          | Mathew Buck        | 10,000 B.C.                                           |                 6 |                           5 | nan              |                      0 | nan                                                                             |                    nan | nan        | nan       | nan              |   nan       |          nan |                      nan |          7.2 |         nan    |                      0 |
+| tt1946381 |     nan | Mario Van Peebles   |                        7 |        100 |                       535 |                      399 | Mario Van Peebles   |                      668 | nan           | Action|Thriller                                                 | Martin Kove        | Red Sky                                               |              1084 |                        2204 | Jacob Vargas     |                      0 | exploding airplane|fighter pilot|hands tied|held at gunpoint|military           |                     11 | English    | USA       | PG-13            |     2.5e+07 |         2014 |                      535 |          4.1 |         nan    |                    437 |
+| tt2945796 |     nan | Zackary Adler       |                       10 |        110 |                         0 |                      109 | Kevin Leslie        |                      490 | nan           | Crime|Drama                                                     | Simon Merrells     | The Rise of the Krays                                 |              1510 |                         881 | Kris Sommerville |                      0 | nan                                                                             |                     26 | English    | UK        | R                |     2.5e+06 |         2015 |                      159 |          5   |         nan    |                      0 |
+| tt3082898 |     nan | John Stockwell      |                        2 |         90 |                       134 |                      354 | T.J. Storm          |                   260000 | nan           | Action                                                          | Matthew Ziff       | Kickboxer: Vengeance                                  |               246 |                      261818 | Sam Medina       |                      5 | nan                                                                             |                      1 | nan        | USA       | nan              |     1.7e+07 |         2016 |                      454 |          9.1 |         nan    |                      0 |
+| tt3322312 |     nan | nan                 |                       95 |         54 |                       nan |                        0 | Royce Johnson       |                      577 | nan           | Action|Adventure|Crime|Drama|Sci-Fi|Thriller                    | Elden Henson       | Daredevil                                             |            213483 |                         581 | Charlie Cox      |                      0 | corruption|lawyer|partnership|superhero|vigilante                               |                    394 | English    | USA       | TV-MA            |   nan       |          nan |                        4 |          8.8 |          16    |                  55000 |
+| tt4061848 |     nan | Richard Rich        |                        2 |         45 |                        24 |                       29 | Kate Higgins        |                      122 | nan           | Action|Adventure|Animation|Comedy|Drama|Family|Fantasy|Thriller | Debi Derryberry    | Alpha and Omega 4: The Legend of the Saw Toothed Cave |               192 |                         236 | Cindy Robinson   |                      0 | blindness|cave|spirit|wolf|wolf cub                                             |                      6 | nan        | USA       | nan              |     7e+06   |         2014 |                       35 |          6   |         nan    |                     41 |
+| tt5289954 |     nan | Doug Walker         |                      nan |        nan |                       131 |                      nan | Rob Walker          |                      131 | nan           | Documentary                                                     | Doug Walker        | Star Wars: Episode VII - The Force Awakens            |                 8 |                         143 | nan              |                      0 | nan                                                                             |                    nan | nan        | nan       | nan              |   nan       |          nan |                       12 |          7.1 |         nan    |                      0 |
+:end:
+
+- We get rid of them:
+
+#+begin_src jupyter-python
+df.content_rating = df.content_rating.fillna('Not Rated')
+df = df[~(df.content_rating.str.contains('TV'))]
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[16]:
+:end:
+
+- Records with no language are from the USA:
+
+#+begin_src jupyter-python :exports both
+df[df.language.isna()]
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[17]:
+| id        | color           | director_name       |   num_critic_for_reviews |   duration |   director_facebook_likes |   actor_3_facebook_likes | actor_2_name   |   actor_1_facebook_likes |            gross | genres                                                          | actor_1_name            | movie_title                                           |   num_voted_users |   cast_total_facebook_likes | actor_3_name      |   facenumber_in_poster | plot_keywords                                                         |   num_user_for_reviews |   language | country   | content_rating   |       budget |   title_year |   actor_2_facebook_likes |   imdb_score |   aspect_ratio |   movie_facebook_likes |
+|-----------+-----------------+---------------------+--------------------------+------------+---------------------------+--------------------------+----------------+--------------------------+------------------+-----------------------------------------------------------------+-------------------------+-------------------------------------------------------+-------------------+-----------------------------+-------------------+------------------------+-----------------------------------------------------------------------+------------------------+------------+-----------+------------------+--------------+--------------+--------------------------+--------------+----------------+------------------------|
+| tt0006864 | Black and White | D.W. Griffith       |                       69 |        123 |                       204 |                        9 | Mae Marsh      |                      436 |    nan           | Drama|History|War                                               | Lillian Gish            | Intolerance: Love's Struggle Throughout the Ages      |             10718 |                         481 | Walter Long       |                      1 | huguenot|intolerance|medicis|protestant|wedding                       |                     88 |        nan | USA       | Not Rated        | 385907       |         1916 |                       22 |          8   |           1.33 |                    691 |
+| tt0011549 | Black and White | Harry F. Millarde   |                        1 |        110 |                         0 |                        0 | Johnnie Walker |                        2 |      3e+06       | Crime|Drama                                                     | Stephen Carr            | Over the Hill to the Poorhouse                        |                 5 |                           4 | Mary Carr         |                      1 | family relationships|gang|idler|poorhouse|thief                       |                      1 |        nan | USA       | Not Rated        | 100000       |         1920 |                        2 |          4.8 |           1.33 |                      0 |
+| tt0015624 | Black and White | King Vidor          |                       48 |        151 |                        54 |                        6 | Renée Adorée   |                       81 |    nan           | Drama|Romance|War                                               | John Gilbert            | The Big Parade                                        |              4849 |                         108 | Claire Adams      |                      0 | chewing gum|climbing a tree|france|translation problems|world war one |                     45 |        nan | USA       | Not Rated        | 245000       |         1925 |                       12 |          8.3 |           1.33 |                    226 |
+| tt0075222 | Color           | Mel Brooks          |                       39 |         87 |                         0 |                      753 | Dom DeLuise    |                      898 |    nan           | Comedy|Romance                                                  | Sid Caesar              | Silent Movie                                          |             12666 |                        2951 | Bernadette Peters |                      0 | black comedy|friend|modern silent movie|silent movie|two word title   |                     61 |        nan | USA       | PG               |      4.4e+06 |         1976 |                      842 |          6.7 |           1.85 |                    629 |
+| tt0473700 | Color           | Christopher Cain    |                       43 |        111 |                        58 |                      258 | Taylor Handley |                      482 |      1.06656e+06 | Drama|History|Romance|Western                                   | Jon Gries               | September Dawn                                        |              2618 |                        1526 | Trent Ford        |                      0 | massacre|mormon|settler|utah|wagon train                              |                    111 |        nan | USA       | R                |      1.1e+07 |         2007 |                      362 |          5.8 |           1.85 |                    411 |
+| tt0785025 | Color           | Michael Landon Jr.  |                        5 |         87 |                        84 |                      331 | Kevin Gage     |                      702 | 252726           | Drama|Family|Western                                            | William Morgan Sheppard | Love's Abiding Joy                                    |              1289 |                        2715 | Brianna Brown     |                      0 | 19th century|faith|mayor|ranch|sheriff                                |                     18 |        nan | USA       | PG               |      3e+06   |         2006 |                      366 |          7.2 |         nan    |                     76 |
+| tt1604100 | nan             | Jonathan Meyers     |                        1 |        111 |                         0 |                      426 | Luke Perry     |                      657 |    nan           | Drama                                                           | Justin Baldoni          | A Fine Step                                           |               207 |                        2677 | Leonor Varela     |                      0 | nan                                                                   |                      1 |        nan | USA       | PG               |      1e+06   |         2014 |                      608 |          5.3 |         nan    |                    212 |
+| tt1842530 | nan             | nan                 |                       14 |         60 |                       nan |                      405 | Dylan Walsh    |                      654 |    nan           | Drama|Mystery                                                   | Poppy Montgomery        | Unforgettable                                         |             12854 |                        1906 | Dallas Roberts    |                      1 | hyperthymesia|new york city|police                                    |                     44 |        nan | USA       | Not Rated        |    nan       |          nan |                      426 |          6.7 |         nan    |                      0 |
+| tt1869849 | nan             | Christopher Barnard |                      nan |         22 |                         0 |                      nan | nan            |                        5 |    nan           | Comedy                                                          | Mathew Buck             | 10,000 B.C.                                           |                 6 |                           5 | nan               |                      0 | nan                                                                   |                    nan |        nan | nan       | Not Rated        |    nan       |          nan |                      nan |          7.2 |         nan    |                      0 |
+| tt3082898 | nan             | John Stockwell      |                        2 |         90 |                       134 |                      354 | T.J. Storm     |                   260000 |    nan           | Action                                                          | Matthew Ziff            | Kickboxer: Vengeance                                  |               246 |                      261818 | Sam Medina        |                      5 | nan                                                                   |                      1 |        nan | USA       | Not Rated        |      1.7e+07 |         2016 |                      454 |          9.1 |         nan    |                      0 |
+| tt4061848 | nan             | Richard Rich        |                        2 |         45 |                        24 |                       29 | Kate Higgins   |                      122 |    nan           | Action|Adventure|Animation|Comedy|Drama|Family|Fantasy|Thriller | Debi Derryberry         | Alpha and Omega 4: The Legend of the Saw Toothed Cave |               192 |                         236 | Cindy Robinson    |                      0 | blindness|cave|spirit|wolf|wolf cub                                   |                      6 |        nan | USA       | Not Rated        |      7e+06   |         2014 |                       35 |          6   |         nan    |                     41 |
+| tt5289954 | nan             | Doug Walker         |                      nan |        nan |                       131 |                      nan | Rob Walker     |                      131 |    nan           | Documentary                                                     | Doug Walker             | Star Wars: Episode VII - The Force Awakens            |                 8 |                         143 | nan               |                      0 | nan                                                                   |                    nan |        nan | nan       | Not Rated        |    nan       |          nan |                       12 |          7.1 |         nan    |                      0 |
+:end:
+
+- We set them to English:
+
+#+begin_src jupyter-python
+df.loc[df.language.isna(), 'language'] = 'English'
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[18]:
+:end:
+
+
+#+begin_src jupyter-python
+df[df.title_year.isna()]
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[19]:
+| id        | color           | director_name       |   num_critic_for_reviews |   duration |   director_facebook_likes |   actor_3_facebook_likes | actor_2_name             |   actor_1_facebook_likes |   gross | genres                                    | actor_1_name          | movie_title                                |   num_voted_users |   cast_total_facebook_likes | actor_3_name            |   facenumber_in_poster | plot_keywords                                                                                              |   num_user_for_reviews | language   | country   | content_rating   |    budget |   title_year |   actor_2_facebook_likes |   imdb_score |   aspect_ratio |   movie_facebook_likes |
+|-----------+-----------------+---------------------+--------------------------+------------+---------------------------+--------------------------+--------------------------+--------------------------+---------+-------------------------------------------+-----------------------+--------------------------------------------+-------------------+-----------------------------+-------------------------+------------------------+------------------------------------------------------------------------------------------------------------+------------------------+------------+-----------+------------------+-----------+--------------+--------------------------+--------------+----------------+------------------------|
+| tt0042114 | Black and White | nan                 |                       15 |         30 |                       nan |                       94 | Art Carney               |                      491 |     nan | Comedy|Family                             | Jackie Gleason        | The Honeymooners                           |              3446 |                         812 | Joyce Randolph          |                      4 | 1950s|bus driver|money scheme|poverty|sewer                                                                |                     31 | English    | USA       | Not Rated        | nan       |          nan |                      154 |          8.7 |           1.33 |                    459 |
+| tt0068135 | Color           | nan                 |                       13 |        120 |                       nan |                      nan | Michael Douglas          |                      416 |     nan | Action|Crime|Drama|Mystery                | Karl Malden           | The Streets of San Francisco               |              3405 |                         416 | nan                     |                      0 | city name in series title|homicide|older man younger man relationship|place in series title|police partner |                     13 | English    | USA       | Not Rated        | nan       |          nan |                        0 |          7.3 |           4    |                    533 |
+| tt0094484 | Color           | nan                 |                        1 |         60 |                       nan |                      213 | Alan Autry               |                      480 |     nan | Crime|Drama|Mystery                       | Carroll O'Connor      | In the Heat of the Night                   |              2258 |                        1736 | Crystal R. Fox          |                      1 | detective|mississippi|police|police detective|small town                                                   |                     24 | English    | USA       | Not Rated        | nan       |          nan |                      360 |          7.4 |           1.33 |                    763 |
+| tt0098948 | Color           | nan                 |                       19 |         30 |                       nan |                      424 | Tim Daly                 |                      685 |     nan | Comedy|Drama                              | Steven Weber          | Wings                                      |              7646 |                        1884 | Amy Yasbeck             |                      5 | 1990s|brother brother relationship|nantucket island|one word title|sister sister relationship              |                     56 | English    | USA       | Not Rated        | nan       |          nan |                      511 |          7.3 |           1.33 |                   1000 |
+| tt0108967 | Color           | nan                 |                       14 |        105 |                       nan |                        5 | Bruce Alexander          |                      325 |     nan | Crime|Drama|Mystery                       | David Jason           | A Touch of Frost                           |              4438 |                         344 | John Lyons              |                      1 | cult tv|death|detective inspector|four word title|internal affairs                                         |                     33 | English    | UK        | Not Rated        | nan       |          nan |                        7 |          7.8 |           1.33 |                    361 |
+| tt0112173 | Color           | nan                 |                        8 |         60 |                       nan |                      109 | Tucker Smallwood         |                      210 |     nan | Drama|Sci-Fi                              | James Morrison        | Space: Above and Beyond                    |              6381 |                         611 | Kristen Cloke           |                      0 | alien|born in vitro|in vitro fertilization|marine|outer space                                              |                     79 | English    | USA       | Not Rated        |   5e+06   |          nan |                      121 |          7.7 |           1.33 |                    963 |
+| tt0118315 | Color           | nan                 |                      nan |         30 |                       nan |                      215 | Mark Feuerstein          |                      909 |     nan | Comedy                                    | Leah Remini           | Fired Up                                   |               114 |                        1557 | Sharon Lawrence         |                      2 | sitcom                                                                                                     |                      6 | English    | USA       | Not Rated        | nan       |          nan |                      417 |          6.7 |           1.33 |                      4 |
+| tt0118327 | Color           | nan                 |                        4 |         60 |                       nan |                       23 | Amanda Mealing           |                       40 |     nan | Drama                                     | Susan Hampshire       | The Grand                                  |               437 |                         158 | Tim Healy               |                      0 | concierge|front desk|hotel|maid|prostitute                                                                 |                     20 | English    | UK        | Not Rated        | nan       |          nan |                       37 |          7.6 |           1.33 |                    450 |
+| tt0156196 | Color           | nan                 |                      nan |         30 |                       nan |                      223 | David DeLuise            |                      775 |     nan | Comedy                                    | Eric Lloyd            | Jesse                                      |               954 |                        1713 | Bruno Campos            |                      8 | 1990s|brother sister relationship|female protagonist|single mother|sitcom                                  |                     14 | English    | USA       | Not Rated        | nan       |          nan |                      275 |          5.9 |         nan    |                     57 |
+| tt0156205 | Color           | nan                 |                       10 |        173 |                       nan |                      476 | Colm Feore               |                      723 |     nan | Horror|Sci-Fi|Thriller                    | Craig T. Nelson       | Creature                                   |              2011 |                        3149 | Megalyn Echikunwoke     |                      3 | author cameo|family relationships|island|monster|two part tv movie                                         |                     33 | English    | USA       | Not Rated        | nan       |          nan |                      539 |          5   |           1.78 |                    518 |
+| tt0166038 | Color           | nan                 |                      nan |         30 |                       nan |                        9 | George Coulouris         |                      310 |     nan | Drama|Family                              | Peter Vaughan         | The Doombolt Chase                         |                18 |                         344 | Ewen Solon              |                      4 | nan                                                                                                        |                    nan | English    | UK        | Not Rated        | nan       |          nan |                       11 |          7.2 |         nan    |                      0 |
+| tt0212662 | Color           | nan                 |                        1 |         60 |                       nan |                      143 | Jon Tenney               |                    11000 |     nan | Comedy|Drama|Romance                      | Anne Hathaway         | Get Real                                   |               415 |                       11618 | Debrah Farentino        |                      5 | breaking the fourth wall|brother brother relationship|high school friends|imperative in title|skateboard   |                     26 | English    | USA       | Not Rated        | nan       |          nan |                      289 |          7.3 |           1.33 |                     43 |
+| tt0249327 | Color           | nan                 |                        6 |         24 |                       nan |                      nan | nan                      |                        0 |     nan | Action|Adventure|Animation|Family|Fantasy | Pablo Sevilla         | Yu-Gi-Oh! Duel Monsters                    |             12417 |                           0 | nan                     |                      0 | anime|based on manga|hero|surrealism|zen                                                                   |                     51 | Japanese   | Japan     | Not Rated        | nan       |          nan |                      nan |          7   |         nan    |                    124 |
+| tt0313038 | Color           | nan                 |                        5 |         60 |                       nan |                      nan | nan                      |                       98 |     nan | Game-Show|Reality-TV|Romance              | Chris Harrison        | The Bachelor                               |              4398 |                          98 | nan                     |                      0 | bachelor|seeking love|single guy|tv host|women rivals for man                                              |                     33 | English    | USA       | Not Rated        |   3e+06   |          nan |                      nan |          2.9 |         nan    |                    141 |
+| tt0426697 | Color           | nan                 |                       17 |         60 |                       nan |                       84 | Steve Gonsalves          |                      155 |     nan | Documentary                               | Amy Bruni             | Ghost Hunters                              |              5563 |                         552 | Jason Hawes             |                      0 | ghost|paranormal|paranormal research|shaky cam                                                             |                     57 | English    | USA       | Not Rated        | nan       |          nan |                      130 |          6.6 |         nan    |                    373 |
+| tt0488352 | Color           | nan                 |                        9 |        286 |                       nan |                      527 | Tom Hollander            |                      857 |     nan | Drama|History|Thriller                    | Anna Silk             | The Company                                |              3828 |                        3809 | Alessandro Nivola       |                      3 | cia|mole|revolution|spy|ussr                                                                               |                     39 | English    | USA       | Not Rated        | nan       |          nan |                      555 |          7.9 |           1.78 |                    733 |
+| tt0691996 | Color           | John Blanchard      |                      nan |         65 |                         0 |                      176 | Andrea Martin            |                      770 |     nan | Comedy                                    | Martin Short          | Towering Inferno                           |                10 |                        1125 | Joe Flaherty            |                      2 | nan                                                                                                        |                    nan | English    | Canada    | Not Rated        | nan       |          nan |                      179 |          9.5 |           1.33 |                      0 |
+| tt0874936 | Color           | nan                 |                       12 |         45 |                       nan |                        0 | Brent Sexton             |                      374 |     nan | Crime|Drama|Mystery                       | Adam Arkin            | Life                                       |             29450 |                         504 | Damian Lewis            |                      1 | cop|murder|partner|police|protective male                                                                  |                     67 | English    | USA       | Not Rated        | nan       |          nan |                      130 |          8.3 |         nan    |                      0 |
+| tt1238834 | Color           | nan                 |                        9 |        142 |                       nan |                      427 | Jack O'Connell           |                    27000 |     nan | Drama|Romance                             | Tom Hardy             | Wuthering Heights                          |              6053 |                       29196 | Kevin McNally           |                      2 | abuse|love|moor the landscape|revenge|tv mini series                                                       |                     33 | English    | UK        | Not Rated        | nan       |          nan |                      698 |          7.7 |         nan    |                      0 |
+| tt1319598 | Color           | nan                 |                        3 |         30 |                       nan |                      295 | David Mann               |                      607 |     nan | Comedy                                    | Lamman Rucker         | Meet the Browns                            |              1922 |                        1530 | Denise Boutte           |                      2 | african american|character name in title|family relationships|sitcom                                       |                     20 | English    | USA       | Not Rated        | nan       |          nan |                      378 |          3.5 |           1.85 |                    211 |
+| tt1321865 | Color           | nan                 |                      108 |        334 |                       nan |                       30 | Nora von Waldstätten     |                      897 |  145118 | Biography|Crime|Drama|Thriller            | Edgar Ramírez         | Carlos                                     |             10111 |                        1032 | Katharina Schüttler     |                      0 | opec|pubic hair|revolutionary|terrorism|true crime                                                         |                     36 | English    | France    | Not Rated        | nan       |          nan |                       30 |          7.7 |           2.35 |                      0 |
+| tt1366312 | Color           | nan                 |                       10 |        240 |                       nan |                      334 | Blake Ritson             |                      805 |     nan | Comedy|Drama|Romance                      | Romola Garai          | Emma                                       |             10388 |                        2563 | Rupert Evans            |                      1 | friendship|love triangle|matchmaker|naivety|opposites attract                                              |                     50 | English    | UK        | Not Rated        | nan       |          nan |                      432 |          8.2 |           1.78 |                      0 |
+| tt1592154 | Color           | nan                 |                       27 |         60 |                       nan |                      346 | Xander Berkeley          |                      787 |     nan | Action|Crime|Drama|Thriller               | Melinda Clarke        | Nikita                                     |             42402 |                        2352 | Aaron Stanford          |                      1 | assassin|death|female protagonist|rogue|training                                                           |                     83 | English    | USA       | Not Rated        | nan       |          nan |                      485 |          7.7 |          16    |                      0 |
+| tt1639008 | Color           | Niels Arden Oplev   |                      nan |         88 |                        76 |                       75 | David Dencik             |                      690 |     nan | Action|Crime|Mystery|Thriller             | Michael Nyqvist       | Del 1 - Män som hatar kvinnor              |               335 |                         998 | Lena Endre              |                      0 | nan                                                                                                        |                    nan | Swedish    | Sweden    | Not Rated        | nan       |          nan |                       94 |          8.1 |         nan    |                     22 |
+| tt1842530 | nan             | nan                 |                       14 |         60 |                       nan |                      405 | Dylan Walsh              |                      654 |     nan | Drama|Mystery                             | Poppy Montgomery      | Unforgettable                              |             12854 |                        1906 | Dallas Roberts          |                      1 | hyperthymesia|new york city|police                                                                         |                     44 | English    | USA       | Not Rated        | nan       |          nan |                      426 |          6.7 |         nan    |                      0 |
+| tt1869849 | nan             | Christopher Barnard |                      nan |         22 |                         0 |                      nan | nan                      |                        5 |     nan | Comedy                                    | Mathew Buck           | 10,000 B.C.                                |                 6 |                           5 | nan                     |                      0 | nan                                                                                                        |                    nan | English    | nan       | Not Rated        | nan       |          nan |                      nan |          7.2 |         nan    |                      0 |
+| tt1986770 | Color           | nan                 |                       26 |         22 |                       nan |                      676 | Noureen DeWulf           |                      883 |     nan | Comedy|Romance                            | Barry Corbin          | Anger Management                           |             26992 |                        4115 | Brian Austin Green      |                      1 | anger management|argument|irony|sarcasm|therapist                                                          |                     54 | English    | USA       | Not Rated        | nan       |          nan |                      701 |          6.7 |          16    |                      0 |
+| tt2355844 | Color           | nan                 |                        4 |         60 |                       nan |                      398 | Brittany Curran          |                      629 |     nan | Drama|Mystery|Thriller                    | Grey Damon            | Twisted                                    |              7945 |                        2758 | Aaron Hill              |                      2 | nan                                                                                                        |                     22 | English    | USA       | Not Rated        | nan       |          nan |                      512 |          7.5 |          16    |                    915 |
+| tt2368645 | Color           | nan                 |                        3 |         60 |                       nan |                      628 | Kimberly Elise           |                      897 |     nan | Drama|Romance                             | Jodi Lyn O'Keefe      | Hit the Floor                              |              1641 |                        3438 | Logan Browning          |                      4 | affair|hip hop|sex scene                                                                                   |                     11 | English    | USA       | Not Rated        | nan       |          nan |                      637 |          7   |         nan    |                    265 |
+| tt2397255 | Color           | nan                 |                        6 |         50 |                       nan |                      543 | Sarah Carter             |                      787 |     nan | Action|Crime|Drama|Thriller               | Cole Hauser           | Rogue                                      |              1781 |                        3276 | Derek Luke              |                      0 | cheating wife|extramarital affair|female lead|undercover|unfaithfulness                                    |                     23 | English    | USA       | Not Rated        | nan       |          nan |                      748 |          6.8 |         nan    |                    532 |
+| tt3458030 | Color           | nan                 |                      nan |        197 |                       nan |                      110 | Jessica De Gouw          |                      578 |     nan | Drama|War                                 | Rachel Griffiths      | Deadline Gallipoli                         |               299 |                        1400 | Luke Ford               |                      0 | gallipoli|tv mini series|world war one                                                                     |                      1 | English    | Australia | Not Rated        |   1.5e+07 |          nan |                      476 |          7.4 |         nan    |                    367 |
+| tt3513704 | Color           | nan                 |                        3 |         60 |                       nan |                      762 | Jessika Van              |                     1000 |     nan | Drama|Fantasy|Mystery|Thriller            | Joel Courtney         | The Messengers                             |              7210 |                        4561 | Riley Smith             |                      0 | nan                                                                                                        |                     57 | English    | USA       | Not Rated        | nan       |          nan |                      921 |          6.6 |          16    |                      0 |
+| tt3516878 | Color           | nan                 |                        5 |         43 |                       nan |                      298 | Indiana Evans            |                      562 |     nan | Crime|Drama                               | Dan Fogler            | Secrets and Lies                           |              6762 |                        1587 | KaDee Strickland        |                      0 | nan                                                                                                        |                     27 | English    | USA       | Not Rated        | nan       |          nan |                      560 |          7.7 |          16    |                   2000 |
+| tt3561180 | Color           | nan                 |                       16 |        511 |                       nan |                       51 | Ingvar Eggert Sigurðsson |                      147 |     nan | Crime|Drama|Thriller                      | Ólafur Darri Ólafsson | Trapped                                    |              2308 |                         307 | Björn Hlynur Haraldsson |                      0 | coastal town|iceland|police|snowstorm|winter storm                                                         |                     19 | Icelandic  | Iceland   | Not Rated        | nan       |          nan |                       63 |          8.2 |          16    |                      0 |
+| tt3877200 | Color           | nan                 |                       14 |         60 |                       nan |                      575 | James Nesbitt            |                     1000 |     nan | Crime|Drama|Mystery                       | Jason Flemyng         | The Missing                                |              8739 |                        3537 | Frances O'Connor        |                      0 | france|journalist|limp|police detective|reporter                                                           |                     28 | English    | UK        | Not Rated        | nan       |          nan |                      773 |          8.1 |         nan    |                      0 |
+| tt4048942 | Color           | nan                 |                        1 |         41 |                       nan |                        2 | Marian Dziedziel         |                       70 |     nan | Action|Crime|Drama|Thriller               | Jacek Koman           | The Border                                 |               271 |                          74 | Jaroslaw Boberek        |                      4 | nan                                                                                                        |                      2 | Polish     | Poland    | Not Rated        | nan       |          nan |                        2 |          7.4 |         nan    |                     64 |
+| tt4051832 | Color           | nan                 |                        3 |         24 |                       nan |                       44 | Johnny Flynn             |                      381 |     nan | Comedy                                    | Antonia Thomas        | Lovesick                                   |              2651 |                         592 | Hannah Britland         |                      3 | blond boy|chlamydia|list|male rear nudity|young couple                                                     |                     18 | English    | UK        | Not Rated        | nan       |          nan |                      102 |          7.9 |         nan    |                      0 |
+| tt4192812 | Color           | nan                 |                        2 |         45 |                       nan |                      132 | Gemma Jones              |                      416 |     nan | Crime|Drama                               | Bernard Hill          | Unforgotten                                |              1824 |                        1816 | Nicola Walker           |                      2 | nan                                                                                                        |                      9 | English    | UK        | Not Rated        | nan       |          nan |                      171 |          7.9 |         nan    |                      0 |
+| tt4460878 | Color           | nan                 |                        2 |        nan |                       nan |                      206 | John Jarratt             |                      511 |     nan | Drama|Horror|Thriller                     | Richard Cawthorne     | Wolf Creek                                 |               726 |                        1617 | Lucy Fry                |                      0 | based on true story|blood|serial killer|slasher|tv mini series                                             |                      6 | English    | Australia | Not Rated        | nan       |          nan |                      457 |          7.1 |           2    |                    954 |
+| tt4877736 | Color           | nan                 |                        7 |         44 |                       nan |                      246 | Megan Hilty              |                      786 |     nan | Comedy|Drama|Horror|Sci-Fi|Thriller       | Danny Pino            | BrainDead                                  |              2948 |                        1551 | Zach Grenier            |                      0 | brains|exploding head|politician|swarm behavior|washington d.c.                                            |                     28 | English    | USA       | Not Rated        | nan       |          nan |                      341 |          7.9 |          16    |                   3000 |
+| tt5116280 | Color           | nan                 |                        1 |         45 |                       nan |                      119 | Ash Cook                 |                      773 |     nan | Drama|Thriller                            | James Nesbitt         | The Secret                                 |               653 |                        1393 | Genevieve O'Reilly      |                      3 | adultery|baptist church|dentist|double murder|tv mini series                                               |                      4 | English    | UK        | Not Rated        | nan       |          nan |                      133 |          7.3 |         nan    |                    405 |
+| tt5289954 | nan             | Doug Walker         |                      nan |        nan |                       131 |                      nan | Rob Walker               |                      131 |     nan | Documentary                               | Doug Walker           | Star Wars: Episode VII - The Force Awakens |                 8 |                         143 | nan                     |                      0 | nan                                                                                                        |                    nan | English    | nan       | Not Rated        | nan       |          nan |                       12 |          7.1 |         nan    |                      0 |
+| tt5574490 | Color           | nan                 |                        8 |         60 |                       nan |                      551 | Daniella Alonso          |                     1000 |     nan | Crime|Drama                               | Dorian Missick        | Animal Kingdom                             |              3673 |                        3026 | Ellen Barkin            |                      0 | based on film|brother brother relationship|crime family|remake|southern california                         |                     23 | English    | USA       | Not Rated        | nan       |          nan |                      557 |          8.1 |          16    |                      0 |
+:end:
+
+
+- Those are again TV Series with no pitches and issued over several years so we
+  drop them
+
+#+begin_src jupyter-python
+df = df[~(df.title_year.isna())]
+df.shape
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[20]:
+: (4688, 27)
+:end:
+
+** Casting variables
+
+#+begin_src jupyter-python
+literal = ['director_name', 'movie_title',
+           'actor_2_name', 'actor_3_name',
+           'actor_1_name', 'plot_keywords']
+categorical = ['color', 'genres',
+               'language', 'country', 'content_rating']
+numerical = ['num_critic_for_reviews', 'duration', 'gross', 'director_facebook_likes',
+             'num_voted_users', 'cast_total_facebook_likes', 'facenumber_in_poster',
+             'num_user_for_reviews', 'budget', 'imdb_score',
+             'movie_facebook_likes']
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[21]:
+:end:
+
+*** genres
+
+#+begin_src jupyter-python
+df.genres = df.genres.str.split('|')
+df.sample(10)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[22]:
+| id        | color           | director_name       |   num_critic_for_reviews |   duration |   director_facebook_likes |   actor_3_facebook_likes | actor_2_name   |   actor_1_facebook_likes |            gross | genres                                                  | actor_1_name       | movie_title               |   num_voted_users |   cast_total_facebook_likes | actor_3_name     |   facenumber_in_poster | plot_keywords                                                 |   num_user_for_reviews | language   | country   | content_rating   |     budget |   title_year |   actor_2_facebook_likes |   imdb_score |   aspect_ratio |   movie_facebook_likes |
+|-----------+-----------------+---------------------+--------------------------+------------+---------------------------+--------------------------+----------------+--------------------------+------------------+---------------------------------------------------------+--------------------+---------------------------+-------------------+-----------------------------+------------------+------------------------+---------------------------------------------------------------+------------------------+------------+-----------+------------------+------------+--------------+--------------------------+--------------+----------------+------------------------|
+| tt0286112 | Black and White | Stephen Chow        |                      246 |         85 |                         0 |                       51 | Karen Mok      |                      478 | 488872           | ['Action', 'Comedy', 'Sport']                           | Wei Zhao           | Shaolin Soccer            |             56923 |                         700 | Kwok-Kwan Chan   |                      2 | cult film|kung fu|martial arts|shaolin|soccer                 |                    243 | Cantonese  | Hong Kong | PG               |   1e+07    |         2001 |                       83 |          7.3 |           1.85 |                      0 |
+| tt0259324 | Color           | Mark Steven Johnson |                      276 |        123 |                       160 |                      402 | Matt Long      |                    12000 |      1.15803e+08 | ['Action', 'Fantasy', 'Thriller']                       | Nicolas Cage       | Ghost Rider               |            182661 |                       14017 | Peter Fonda      |                      1 | blackheart|devil|father|ghost|mephistopheles                  |                    681 | English    | USA       | PG-13            |   1.1e+08  |         2007 |                      701 |          5.2 |           2.35 |                      0 |
+| tt3104930 | Color           | Spike Lee           |                       46 |        123 |                         0 |                      161 | Elvis Nolasco  |                     3000 |    nan           | ['Comedy', 'Romance', 'Thriller']                       | Rami Malek         | Da Sweet Blood of Jesus   |               794 |                        4040 | Felicia Pearson  |                      0 | horror movie remake|remake|undead|undead sex|undead sexuality |                      9 | English    | USA       | Not Rated        |   1.42e+06 |         2014 |                      372 |          4.1 |           2.35 |                    447 |
+| tt0385880 | Color           | Gil Kenan           |                      190 |         91 |                        27 |                      925 | Jon Heder      |                    12000 |      7.3661e+07  | ['Animation', 'Comedy', 'Family', 'Fantasy', 'Mystery'] | Steve Buscemi      | Monster House             |             71137 |                       17299 | Catherine O'Hara |                      0 | babysitter|halloween|house|neighbor|suburb                    |                    229 | English    | USA       | PG               |   7.5e+07  |         2006 |                      970 |          6.6 |           2.35 |                      0 |
+| tt1045772 | Color           | Glenn Ficarra       |                      242 |        102 |                        43 |                      113 | Louis Herthum  |                      170 |      2.03557e+06 | ['Biography', 'Comedy', 'Crime', 'Drama', 'Romance']    | Dameon Clarke      | I Love You Phillip Morris |             77305 |                         931 | Annie Golden     |                      0 | character name in title|con artist|fraud|gay|prison break     |                    162 | English    | France    | R                |   1.3e+07  |         2009 |                      157 |          6.6 |           1.85 |                  11000 |
+| tt0758766 | Color           | Marc Lawrence       |                      175 |         95 |                        30 |                      664 | Scott Porter   |                      799 |      5.05626e+07 | ['Comedy', 'Music', 'Romance']                          | Brad Garrett       | Music and Lyrics          |             81334 |                        2787 | Haley Bennett    |                      4 | love|lyricist|singer|singing|song                             |                    291 | English    | USA       | PG-13            | nan        |         2007 |                      690 |          6.5 |           1.85 |                      0 |
+| tt0089755 | Color           | Sydney Pollack      |                       66 |        161 |                       521 |                      184 | Michael Gough  |                    11000 |      8.71e+07    | ['Biography', 'Drama', 'Romance']                       | Meryl Streep       | Out of Africa             |             52339 |                       12518 | Michael Kitchen  |                      0 | africa|hunter|love|marriage|plantation                        |                    200 | English    | USA       | PG               |   3.1e+07  |         1985 |                      920 |          7.2 |           1.85 |                      0 |
+| tt2475846 | Color           | Richard Boddington  |                       11 |         90 |                        15 |                      120 | CJ Adams       |                      900 |    nan           | ['Adventure', 'Family']                                 | Natasha Henstridge | Against the Wild          |               840 |                        1724 | Erin Pitt        |                      3 | cave|salmon                                                   |                      9 | English    | Canada    | PG               |   2e+06    |         2013 |                      450 |          4.7 |         nan    |                    326 |
+| tt0281364 | Color           | Gérard Krawczyk     |                       40 |         94 |                         7 |                       17 | Ryôko Hirosue  |                      235 |  81525           | ['Action', 'Comedy', 'Crime', 'Drama', 'Thriller']      | Carole Bouquet     | Wasabi                    |             29392 |                         303 | Michel Muller    |                      1 | french|inheritance|japan|letter|police detective hero         |                     91 | French     | France    | R                |   1.53e+07 |         2001 |                       46 |          6.6 |           2.35 |                      0 |
+| tt0283632 | Color           | Robert Harmon       |                       81 |         89 |                        11 |                      973 | Ethan Embry    |                     1000 |      1.26936e+07 | ['Horror', 'Mystery', 'Thriller']                       | Alexander Gould    | They                      |             10885 |                        4060 | Marc Blucas      |                      0 | darkness|friend|kiss|nightmare|suicide                        |                    271 | English    | USA       | PG-13            |   1.7e+07  |         2002 |                      982 |          4.8 |           2.35 |                    814 |
+:end:
+
+
+#+begin_src jupyter-python
+mlb = MultiLabelBinarizer()
+df_genres = pd.DataFrame(mlb.fit_transform(df.genres), columns=mlb.classes_, index=df.index)
+df_genres.sample(20)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[25]:
+| id        |   Action |   Adventure |   Animation |   Biography |   Comedy |   Crime |   Documentary |   Drama |   Family |   Fantasy |   Film-Noir |   History |   Horror |   Music |   Musical |   Mystery |   News |   Romance |   Sci-Fi |   Short |   Sport |   Thriller |   War |   Western |
+|-----------+----------+-------------+-------------+-------------+----------+---------+---------------+---------+----------+-----------+-------------+-----------+----------+---------+-----------+-----------+--------+-----------+----------+---------+---------+------------+-------+-----------|
+| tt0139462 |        0 |           0 |           0 |           0 |        0 |       0 |             0 |       1 |        0 |         0 |           0 |         0 |        0 |       0 |         0 |         0 |      0 |         1 |        0 |       0 |       0 |          0 |     0 |         0 |
+| tt0242998 |        0 |           0 |           0 |           0 |        0 |       0 |             0 |       0 |        0 |         0 |           0 |         0 |        1 |       0 |         0 |         1 |      0 |         0 |        0 |       0 |       0 |          1 |     0 |         0 |
+| tt0286716 |        1 |           0 |           0 |           0 |        0 |       0 |             0 |       0 |        0 |         0 |           0 |         0 |        0 |       0 |         0 |         0 |      0 |         0 |        1 |       0 |       0 |          0 |     0 |         0 |
+| tt1838722 |        0 |           0 |           0 |           0 |        0 |       0 |             0 |       0 |        0 |         0 |           0 |         0 |        1 |       0 |         0 |         1 |      0 |         0 |        0 |       0 |       0 |          0 |     0 |         0 |
+| tt2908446 |        0 |           1 |           0 |           0 |        0 |       0 |             0 |       0 |        0 |         0 |           0 |         0 |        0 |       0 |         0 |         0 |      0 |         0 |        1 |       0 |       0 |          1 |     0 |         0 |
+| tt0402249 |        0 |           0 |           0 |           0 |        0 |       0 |             0 |       0 |        0 |         0 |           0 |         0 |        1 |       0 |         0 |         0 |      0 |         0 |        0 |       0 |       0 |          1 |     0 |         0 |
+| tt1646974 |        0 |           0 |           0 |           0 |        1 |       0 |             0 |       1 |        0 |         0 |           0 |         0 |        0 |       0 |         0 |         0 |      0 |         1 |        0 |       0 |       0 |          0 |     0 |         0 |
+| tt0192111 |        0 |           0 |           0 |           0 |        1 |       0 |             0 |       0 |        0 |         0 |           0 |         0 |        0 |       0 |         0 |         1 |      0 |         1 |        0 |       0 |       0 |          0 |     0 |         0 |
+| tt0842926 |        0 |           0 |           0 |           0 |        1 |       0 |             0 |       1 |        0 |         0 |           0 |         0 |        0 |       0 |         0 |         0 |      0 |         0 |        0 |       0 |       0 |          0 |     0 |         0 |
+| tt0112642 |        0 |           0 |           0 |           0 |        1 |       0 |             0 |       0 |        1 |         1 |           0 |         0 |        0 |       0 |         0 |         0 |      0 |         0 |        0 |       0 |       0 |          0 |     0 |         0 |
+| tt0185371 |        0 |           0 |           0 |           0 |        0 |       0 |             0 |       0 |        0 |         0 |           0 |         0 |        1 |       0 |         0 |         1 |      0 |         0 |        0 |       0 |       0 |          1 |     0 |         0 |
+| tt0059245 |        0 |           0 |           0 |           1 |        0 |       0 |             0 |       1 |        0 |         0 |           0 |         1 |        0 |       0 |         0 |         0 |      0 |         0 |        0 |       0 |       0 |          0 |     0 |         0 |
+| tt0976247 |        0 |           0 |           0 |           0 |        1 |       0 |             0 |       0 |        0 |         0 |           0 |         0 |        0 |       0 |         0 |         0 |      0 |         0 |        0 |       0 |       0 |          0 |     0 |         0 |
+| tt1226229 |        0 |           0 |           0 |           0 |        1 |       0 |             0 |       0 |        0 |         0 |           0 |         0 |        0 |       1 |         0 |         0 |      0 |         0 |        0 |       0 |       0 |          0 |     0 |         0 |
+| tt1322312 |        0 |           0 |           0 |           0 |        1 |       0 |             0 |       0 |        0 |         0 |           0 |         0 |        0 |       0 |         0 |         0 |      0 |         1 |        0 |       0 |       0 |          0 |     0 |         0 |
+| tt0362227 |        0 |           0 |           0 |           0 |        1 |       0 |             0 |       1 |        0 |         0 |           0 |         0 |        0 |       0 |         0 |         0 |      0 |         0 |        0 |       0 |       0 |          0 |     0 |         0 |
+| tt2645670 |        1 |           0 |           0 |           0 |        0 |       0 |             0 |       0 |        0 |         0 |           0 |         0 |        0 |       0 |         0 |         0 |      0 |         0 |        1 |       0 |       0 |          0 |     0 |         0 |
+| tt0866439 |        0 |           0 |           0 |           0 |        1 |       0 |             0 |       0 |        0 |         0 |           0 |         0 |        0 |       0 |         0 |         0 |      0 |         1 |        0 |       0 |       0 |          0 |     0 |         0 |
+| tt2245084 |        1 |           1 |           1 |           0 |        1 |       0 |             0 |       1 |        1 |         0 |           0 |         0 |        0 |       0 |         0 |         0 |      0 |         0 |        1 |       0 |       0 |          0 |     0 |         0 |
+| tt0085549 |        0 |           0 |           0 |           0 |        0 |       0 |             0 |       1 |        0 |         0 |           0 |         0 |        0 |       1 |         0 |         0 |      0 |         1 |        0 |       0 |       0 |          0 |     0 |         0 |
+:end:
+
+#+begin_src jupyter-python
+df.drop('genres', axis=1, inplace=True)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[26]:
+:end:
+
+*** plots
+
+#+begin_src jupyter-python
+df.plot_keywords.head()
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[27]:
+#+BEGIN_EXAMPLE
+  id
+  tt0006864      huguenot|intolerance|medicis|protestant|wedding
+  tt0011549      family relationships|gang|idler|poorhouse|thief
+  tt0015624    chewing gum|climbing a tree|france|translation...
+  tt0017136        art deco|bible quote|dance|silent film|worker
+  tt0018737    escape|femme fatale|german expressionism|lust|...
+  Name: plot_keywords, dtype: object
+#+END_EXAMPLE
+:end:
+
+#+begin_src jupyter-python
+df.plot_keywords = df.plot_keywords.str.replace('|', ", ")
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[28]:
+:end:
+
+#+begin_src jupyter-python :exports both
+df.sample(10)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[29]:
+| id        | color   | director_name       |   num_critic_for_reviews |   duration |   director_facebook_likes |   actor_3_facebook_likes | actor_2_name    |   actor_1_facebook_likes |            gross | actor_1_name      | movie_title                 |   num_voted_users |   cast_total_facebook_likes | actor_3_name             |   facenumber_in_poster | plot_keywords                                                          |   num_user_for_reviews | language   | country   | content_rating   |      budget |   title_year |   actor_2_facebook_likes |   imdb_score |   aspect_ratio |   movie_facebook_likes |
+|-----------+---------+---------------------+--------------------------+------------+---------------------------+--------------------------+-----------------+--------------------------+------------------+-------------------+-----------------------------+-------------------+-----------------------------+--------------------------+------------------------+------------------------------------------------------------------------+------------------------+------------+-----------+------------------+-------------+--------------+--------------------------+--------------+----------------+------------------------|
+| tt0242445 | Color   | Andrzej Bartkowiak  |                      107 |        101 |                        43 |                      655 | Bill Duke       |                     2000 |      5.17586e+07 | Michael Jai White | Exit Wounds                 |             27580 |                        5942 | Bruce McGill             |                      0 | corrupt cop, drug dealer, drugs, heroin, vice president                |                    232 | English    | USA       | R                |     3.3e+07 |         2001 |                     1000 |          5.5 |           2.35 |                    742 |
+| tt0986263 | Color   | Jonathan Mostow     |                      258 |         89 |                        84 |                     1000 | Devin Ratray    |                    13000 |      3.85424e+07 | Bruce Willis      | Surrogates                  |            151424 |                       18132 | Boris Kodjoe             |                      5 | android, fbi agent, future, murder, robot                              |                    252 | English    | USA       | PG-13            |     8e+07   |         2009 |                     1000 |          6.3 |           2.35 |                      0 |
+| tt0118863 | Color   | David Dobkin        |                       49 |        104 |                        71 |                      168 | Vince Vieluf    |                     1000 |      1.78989e+06 | Janeane Garofalo  | Clay Pigeons                |              9494 |                        1795 | Kevin Rahm               |                      1 | breasts, serial killer, small town, vomiting, widow                    |                    109 | English    | Germany   | R                |     8e+06   |         1998 |                      261 |          6.6 |           1.85 |                    515 |
+| tt0185371 | Color   | William Malone      |                      147 |         93 |                        37 |                      545 | Peter Gallagher |                      885 |      4.08461e+07 | Jeffrey Combs     | House on Haunted Hill       |             45317 |                        2872 | Bridgette Wilson-Sampras |                      0 | billionaire, corpse, eccentric, haunted hospital, haunted house        |                    536 | English    | USA       | R                |     1.9e+07 |         1999 |                      828 |          5.6 |           1.37 |                      0 |
+| tt0257756 | Color   | Carl Franklin       |                      114 |        115 |                        73 |                      505 | Adam Scott      |                    11000 |      4.15432e+07 | Morgan Freeman    | High Crimes                 |             30077 |                       15571 | Bruce Davison            |                      1 | defense lawyer, lawyer, marine, murder, villager                       |                    175 | English    | USA       | PG-13            |     4.2e+07 |         2002 |                     3000 |          6.3 |           2.35 |                    893 |
+| tt2582846 | Color   | Josh Boone          |                      326 |        133 |                       131 |                      733 | Sam Trammell    |                     8000 |      1.24869e+08 | Shailene Woodley  | The Fault in Our Stars      |            249688 |                       10565 | Nat Wolff                |                      0 | cancer, falling in love, friendship, novel, teenager                   |                    548 | English    | USA       | PG-13            |     1.2e+07 |         2014 |                     1000 |          7.8 |           1.85 |                  93000 |
+| tt0196857 | Color   | Ron Shelton         |                       73 |        124 |                        41 |                      197 | Robert Wagner   |                      512 |      8.4272e+06  | Willie Garson     | Play It to the Bone         |             10100 |                        1523 | Lolita Davidovich        |                      0 | boxing movie, friendship, highway travel, male rear nudity, road movie |                     59 | English    | USA       | R                |     2.4e+07 |         1999 |                      481 |          5.4 |           2.35 |                    153 |
+| tt0162348 | Color   | Kevin Jordan        |                       21 |         90 |                         4 |                      113 | Christa Miller  |                    20000 | 277233           | Derick Martini    | Smiling Fish & Goat on Fire |              2631 |                       20814 | Ion Overman              |                      5 | accountant, actor, animal in title, mail carrier, single parent        |                     26 | English    | USA       | R                | 40000       |         1999 |                      467 |          7.6 |           1.85 |                      0 |
+| tt1821694 | Color   | Dean Parisot        |                      234 |        116 |                        23 |                      110 | Anthony Hopkins |                    13000 |      5.3216e+07  | Bruce Willis      | RED 2                       |            125036 |                       25220 | Garrick Hagon            |                      7 | cia, cia agent, rescue, russian, team                                  |                    205 | English    | USA       | PG-13            |     8.4e+07 |         2013 |                    12000 |          6.7 |           2.35 |                  22000 |
+| tt0109015 | Color   | Charles T. Kanganis |                        5 |         93 |                        18 |                      181 | Dustin Nguyen   |                      400 |      1.1784e+07  | Victor Wong       | 3 Ninjas Kick Back          |              6701 |                        1151 | Don Stark                |                      0 | 1990s, dagger, japan, mousetrap, stick fight                           |                     26 | English    | USA       | PG               |     2e+07   |         1994 |                      220 |          4.3 |           1.85 |                    444 |
+:end:
+
+** KNN Imputation of numerical variables
+
+#+begin_src jupyter-python :exports both
+imputer = KNNImputer(n_neighbors=5)
+df_num = pd.DataFrame(imputer.fit_transform(df[numerical]),columns = df[numerical].columns)
+df_num.sample(20)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[30]:
+|      |   num_critic_for_reviews |   duration |           gross |   director_facebook_likes |   num_voted_users |   cast_total_facebook_likes |   facenumber_in_poster |   num_user_for_reviews |      budget |   imdb_score |   movie_facebook_likes |
+|------+--------------------------+------------+-----------------+---------------------------+-------------------+-----------------------------+------------------------+------------------------+-------------+--------------+------------------------|
+| 1749 |                       84 |        280 |     1.28706e+07 |                        33 |             13215 |                        1671 |                      0 |                    497 | 5.6e+07     |          6.3 |                    953 |
+| 2237 |                       35 |        128 |     2.69407e+06 |                         9 |              3222 |                        1727 |                      3 |                     64 | 5.22e+06    |          6.7 |                    352 |
+| 2639 |                      183 |        105 |     1.30484e+06 |                         0 |             21481 |                        2355 |                      2 |                    175 | 3.2e+07     |          6.1 |                    559 |
+| 3922 |                      163 |         98 |     1.72257e+07 |                       136 |             62198 |                        4151 |                      2 |                    139 | 2.90822e+06 |          5.6 |                      0 |
+| 3284 |                       11 |         90 |     2.14949e+06 |                         0 |              1118 |                        1651 |                      2 |                      9 | 2.2e+06     |          4.3 |                     77 |
+| 3819 |                      310 |        118 |     8.42449e+07 |                        43 |            375456 |                       57426 |                      7 |                    292 | 5e+07       |          7.4 |                  44000 |
+| 1659 |                      168 |         95 |     2.41437e+08 |                        38 |            102071 |                        1495 |                      3 |                    756 | 5e+06       |          6.6 |                   5000 |
+| 2579 |                       90 |         75 |     5.76518e+07 |                       221 |             40651 |                       13125 |                      2 |                    209 | 3.3e+07     |          5.6 |                      0 |
+| 2848 |                      316 |        110 |     1.34569e+08 |                       335 |            299852 |                       25763 |                      0 |                    713 | 7.5e+07     |          6.7 |                      0 |
+| 4374 |                      177 |        106 |     2.2331e+07  |                        16 |             57349 |                        1819 |                      0 |                    177 | 1.2e+07     |          6.4 |                      0 |
+|  731 |                       45 |        103 |     1.75182e+07 |                         0 |              9105 |                       25263 |                      1 |                     76 | 2e+07       |          6.6 |                      0 |
+| 3138 |                      160 |        108 |     1.54835e+07 |                       123 |             56338 |                       41359 |                      4 |                    215 | 1.4e+07     |          6.5 |                   4000 |
+| 2570 |                       27 |         75 | 47111           |                       269 |              1227 |                         127 |                      1 |                     11 | 5.12e+06    |          6.8 |                     62 |
+|  192 |                      149 |        133 |     1.12e+08    |                       869 |            680041 |                        2176 |                      0 |                    760 | 4.4e+06     |          8.7 |                  32000 |
+|  954 |                       29 |         97 |     4.10674e+07 |                       420 |             22748 |                        2530 |                      2 |                     41 | 2.5e+07     |          6.1 |                    666 |
+| 1128 |                      113 |        137 |     3.51684e+07 |                         0 |             26034 |                       25469 |                      0 |                    226 | 5e+07       |          6.5 |                      0 |
+| 3774 |                      145 |         96 |     1.50315e+08 |                        51 |             54010 |                       10886 |                      2 |                    130 | 5e+07       |          6.1 |                  13000 |
+|  248 |                       71 |         98 |     3.98e+07    |                     11000 |             81599 |                       14921 |                      3 |                    250 | 6e+06       |          7.4 |                      0 |
+| 1299 |                       46 |        126 |     1.99781e+06 |                       407 |              5158 |                         823 |                      0 |                    140 | 8e+06       |          7.1 |                    196 |
+|  976 |                       24 |        103 |     2.15454e+06 |                       170 |              3803 |                        2457 |                      2 |                     41 | 4.5e+07     |          4.9 |                     68 |
+:end:
+
+#+begin_src jupyter-python :exports both
+df.drop(numerical, axis=1, inplace=True)
+df.head()
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[31]:
+| id        | color           | director_name       |   actor_3_facebook_likes | actor_2_name    |   actor_1_facebook_likes | actor_1_name   | movie_title                                      | actor_3_name       | plot_keywords                                                             | language   | country   | content_rating   |   title_year |   actor_2_facebook_likes |   aspect_ratio |
+|-----------+-----------------+---------------------+--------------------------+-----------------+--------------------------+----------------+--------------------------------------------------+--------------------+---------------------------------------------------------------------------+------------+-----------+------------------+--------------+--------------------------+----------------|
+| tt0006864 | Black and White | D.W. Griffith       |                        9 | Mae Marsh       |                      436 | Lillian Gish   | Intolerance: Love's Struggle Throughout the Ages | Walter Long        | huguenot, intolerance, medicis, protestant, wedding                       | English    | USA       | Not Rated        |         1916 |                       22 |           1.33 |
+| tt0011549 | Black and White | Harry F. Millarde   |                        0 | Johnnie Walker  |                        2 | Stephen Carr   | Over the Hill to the Poorhouse                   | Mary Carr          | family relationships, gang, idler, poorhouse, thief                       | English    | USA       | Not Rated        |         1920 |                        2 |           1.33 |
+| tt0015624 | Black and White | King Vidor          |                        6 | Renée Adorée    |                       81 | John Gilbert   | The Big Parade                                   | Claire Adams       | chewing gum, climbing a tree, france, translation problems, world war one | English    | USA       | Not Rated        |         1925 |                       12 |           1.33 |
+| tt0017136 | Black and White | Fritz Lang          |                       18 | Gustav Fröhlich |                      136 | Brigitte Helm  | Metropolis                                       | Rudolf Klein-Rogge | art deco, bible quote, dance, silent film, worker                         | German     | Germany   | Not Rated        |         1927 |                       23 |           1.33 |
+| tt0018737 | Black and White | Georg Wilhelm Pabst |                        3 | Francis Lederer |                      426 | Louise Brooks  | Pandora's Box                                    | Fritz Kortner      | escape, femme fatale, german expressionism, lust, violence                | German     | Germany   | Not Rated        |         1929 |                       20 |           1.33 |
+:end:
+
+** Getting it all back together
+
+- Let's check everything is in good shape
+
+#+begin_src jupyter-python :exports both
+df_num.shape, df_genres.shape
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[32]:
+: ((4688, 11), (4688, 24))
+:end:
+
+- Concatenate genras
+
+#+begin_src jupyter-python :exports both
+df = pd.concat([df, df_genres], axis = 1)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[33]:
+:end:
+
+
+- Concatenate numericals
+
+#+begin_src jupyter-python :exports both
+df = df.reset_index()
+df = pd.concat([df, df_num], axis = 1)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[34]:
+:end:
+
+#+begin_src jupyter-python
+df
+#+end_src
+
+#+RESULTS:
+:results:
+0 - 0a8c8064-543f-4605-97b6-9247837709b7
+:end:
+
+#+begin_src jupyter-python
+#display_all(df.describe(include='all').T)
+
+dg = df.iloc[:,16:40]
+for genre in dg.columns:
+    print(dg.groupby(genre).groups)
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[32]:
+:end:
+
+** Save data
+
+#+begin_src jupyter-python
+df.to_csv('../data/processed/movie_metadata_processed.csv')
+#+end_src
+
+#+RESULTS:
+:results:
+# Out[33]:
+:end:
+
+* Bibliography
+** References
+:PROPERTIES:
+:BEAMER_opt: shrink=10
+:END:
+
+bibliographystyle:unsrt
+bibliography:../references/recsys.bib
+
+* Local Variables                                                  :noexport:
+# Local Variables:
+# eval: (setenv "PATH" "/Library/TeX/texbin/:$PATH" t)
+# after-save-hook: (lambda nil (ox-ipynb-export-org-file-to-ipynb-file (buffer-name)))
+# End:
