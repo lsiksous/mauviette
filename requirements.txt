@@ -1,4 +1,8 @@
 dvc==2.12.1
+flask_bootstrap==3.3.7.1
+flask_login==0.6.1
+flask_sqlalchemy==2.5.1
+Flask_WTF==1.0.1
 jupyter==1.0.0
 matplotlib==3.5.2
 mlflow==1.27.0

@@ -16,11 +16,3 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField("Remember Me")
     submit = SubmitField("Sign In")
 
-
-class MessageForm(FlaskForm):
-    message = TextAreaField("", validators=[Length(max=140)])
-    dialect = SelectField(
-        u"Product",
-        choices=[("GOMA", "Goeland ou Malouine"), ("LPBF", "Lolly Pop ou Baby Flac")],
-    )
-    submit = SubmitField("Submit")
