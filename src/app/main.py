@@ -3,12 +3,13 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.automap import automap_base
 from flask_bootstrap import Bootstrap
 from flask_login import login_user, logout_user, current_user, login_required, LoginManager
-#from flask_cors import CORS
+from flask_cors import CORS
 from forms import LoginForm
 import models
 
 
 app = Flask(__name__)
+cors = CORS(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../../data/movie.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
