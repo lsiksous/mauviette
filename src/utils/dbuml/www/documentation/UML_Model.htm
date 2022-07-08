@@ -1,0 +1,1516 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="UML_Model_files/filelist.xml">
+<link rel=Edit-Time-Data href="UML_Model_files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>UML Database Modeling</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>rpurdum</o:Author>
+  <o:LastAuthor>Jeff</o:LastAuthor>
+  <o:Revision>4</o:Revision>
+  <o:TotalTime>14</o:TotalTime>
+  <o:LastPrinted>2004-08-19T13:55:00Z</o:LastPrinted>
+  <o:Created>2007-09-07T16:51:00Z</o:Created>
+  <o:LastSaved>2007-09-07T17:01:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>2007</o:Words>
+  <o:Characters>11445</o:Characters>
+  <o:Company>Cincom Systems, Inc.</o:Company>
+  <o:Lines>95</o:Lines>
+  <o:Paragraphs>26</o:Paragraphs>
+  <o:CharactersWithSpaces>13426</o:CharactersWithSpaces>
+  <o:Version>11.6568</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:ActiveWritingStyle Lang="EN-US" VendorID="64" DLLVersion="131077"
+   NLCheck="1">1</w:ActiveWritingStyle>
+  <w:ActiveWritingStyle Lang="EN-US" VendorID="64" DLLVersion="131078"
+   NLCheck="1">1</w:ActiveWritingStyle>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:Compatibility>
+   <w:SelectEntireFieldWithStartOrEnd/>
+   <w:UseWord2002TableStyleRules/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:1627421319 -2147483648 8 0 66047 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h1
+	{mso-style-parent:"Heading Base";
+	mso-style-next:"Body Text";
+	margin-top:11.0pt;
+	margin-right:0in;
+	margin-bottom:11.0pt;
+	margin-left:0in;
+	line-height:14.0pt;
+	mso-pagination:widow-orphan lines-together;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	background:#E5E5E5;
+	mso-shading:windowtext;
+	mso-pattern:gray-10 auto;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	position:relative;
+	top:-3.0pt;
+	mso-text-raise:3.0pt;
+	letter-spacing:-.5pt;
+	mso-font-kerning:14.0pt;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+h2
+	{mso-style-parent:"Heading Base";
+	mso-style-next:"Body Text";
+	margin-top:7.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	line-height:11.0pt;
+	mso-pagination:widow-orphan lines-together;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	font-size:11.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	letter-spacing:-.2pt;
+	mso-font-kerning:14.0pt;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+h3
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	font-size:10.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:Arial;
+	font-weight:bold;}
+h4
+	{mso-style-link:"Char Char";
+	mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:4;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	font-weight:bold;
+	text-decoration:underline;
+	text-underline:single;}
+h5
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:5;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	font-weight:bold;
+	text-decoration:underline;
+	text-underline:single;}
+p.MsoToc1, li.MsoToc1, div.MsoToc1
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	text-transform:uppercase;
+	font-weight:bold;}
+p.MsoToc2, li.MsoToc2, div.MsoToc2
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:12.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	font-variant:small-caps;}
+p.MsoToc3, li.MsoToc3, div.MsoToc3
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:24.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	font-style:italic;}
+p.MsoToc4, li.MsoToc4, div.MsoToc4
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.5pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoToc5, li.MsoToc5, div.MsoToc5
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:48.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.5pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoToc6, li.MsoToc6, div.MsoToc6
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:60.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.5pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoToc7, li.MsoToc7, div.MsoToc7
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:1.0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.5pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoToc8, li.MsoToc8, div.MsoToc8
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:84.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.5pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoToc9, li.MsoToc9, div.MsoToc9
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:96.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.5pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoCommentText, li.MsoCommentText, div.MsoCommentText
+	{mso-style-noshow:yes;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:center 3.0in right 6.0in;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:center 3.0in right 6.0in;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+span.MsoCommentReference
+	{mso-style-noshow:yes;
+	mso-ansi-font-size:8.0pt;
+	mso-bidi-font-size:8.0pt;}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{mso-style-parent:"Heading Base";
+	mso-style-next:Subtitle;
+	margin-top:33.0pt;
+	margin-right:1.5in;
+	margin-bottom:20.0pt;
+	margin-left:.75in;
+	mso-line-height-alt:27.0pt;
+	mso-pagination:widow-orphan lines-together;
+	page-break-after:avoid;
+	font-size:30.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	letter-spacing:-2.0pt;
+	mso-font-kerning:14.0pt;}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:11.0pt;
+	margin-left:.75in;
+	line-height:11.0pt;
+	mso-pagination:widow-orphan lines-together;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoBodyTextIndent, li.MsoBodyTextIndent, div.MsoBodyTextIndent
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoSubtitle, li.MsoSubtitle, div.MsoSubtitle
+	{mso-style-parent:Title;
+	mso-style-next:"Body Text";
+	margin-top:0in;
+	margin-right:1.5in;
+	margin-bottom:8.0pt;
+	margin-left:.75in;
+	line-height:20.0pt;
+	mso-pagination:widow-orphan lines-together;
+	page-break-after:avoid;
+	font-size:17.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	letter-spacing:-.7pt;
+	mso-font-kerning:14.0pt;
+	font-style:italic;
+	mso-bidi-font-style:normal;}
+p.MsoBodyTextIndent2, li.MsoBodyTextIndent2, div.MsoBodyTextIndent2
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+p.MsoDocumentMap, li.MsoDocumentMap, div.MsoDocumentMap
+	{mso-style-noshow:yes;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	background:navy;
+	font-size:12.0pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+pre
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt;
+	font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Courier New";}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+	{mso-style-noshow:yes;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:8.0pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+span.CharChar
+	{mso-style-name:"Char Char";
+	mso-style-locked:yes;
+	mso-style-link:"Heading 4";
+	mso-ansi-font-size:12.0pt;
+	mso-bidi-font-size:12.0pt;
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;
+	mso-bidi-language:AR-SA;
+	font-weight:bold;
+	text-decoration:underline;
+	text-underline:single;}
+p.HeadingBase, li.HeadingBase, div.HeadingBase
+	{mso-style-name:"Heading Base";
+	mso-style-next:"Body Text";
+	margin-top:7.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.75in;
+	margin-bottom:.0001pt;
+	line-height:11.0pt;
+	mso-pagination:widow-orphan lines-together;
+	page-break-after:avoid;
+	font-size:11.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	letter-spacing:-.2pt;
+	mso-font-kerning:14.0pt;}
+p.SubtitleCover, li.SubtitleCover, div.SubtitleCover
+	{mso-style-name:"Subtitle Cover";
+	mso-style-parent:"Title Cover";
+	mso-style-next:"Body Text";
+	margin-top:76.0pt;
+	margin-right:84.0pt;
+	margin-bottom:0in;
+	margin-left:.75in;
+	margin-bottom:.0001pt;
+	mso-line-height-alt:12.0pt;
+	mso-pagination:widow-orphan lines-together;
+	page-break-after:avoid;
+	font-size:20.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	letter-spacing:-1.0pt;
+	mso-font-kerning:14.0pt;
+	font-style:italic;
+	mso-bidi-font-style:normal;}
+p.TitleCover, li.TitleCover, div.TitleCover
+	{mso-style-name:"Title Cover";
+	mso-style-parent:"Heading Base";
+	mso-style-next:"Subtitle Cover";
+	margin-top:1.25in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.75in;
+	margin-bottom:.0001pt;
+	mso-line-height-alt:12.0pt;
+	mso-pagination:widow-orphan lines-together;
+	page-break-after:avoid;
+	font-size:36.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	letter-spacing:-2.4pt;
+	mso-font-kerning:14.0pt;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.BodyText, li.BodyText, div.BodyText
+	{mso-style-name:BodyText;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan lines-together;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.xl24, li.xl24, div.xl24
+	{mso-style-name:xl24;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:9.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";}
+p.xl25, li.xl25, div.xl25
+	{mso-style-name:xl25;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-alt:solid windowtext .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+p.xl26, li.xl26, div.xl26
+	{mso-style-name:xl26;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-alt:solid windowtext .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+p.xl27, li.xl27, div.xl27
+	{mso-style-name:xl27;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-alt:solid windowtext .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+p.xl28, li.xl28, div.xl28
+	{mso-style-name:xl28;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-alt:solid windowtext .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.xl29, li.xl29, div.xl29
+	{mso-style-name:xl29;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-left-alt:solid windowtext .5pt;
+	mso-border-bottom-alt:solid windowtext .5pt;
+	mso-border-right-alt:solid windowtext .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+p.xl30, li.xl30, div.xl30
+	{mso-style-name:xl30;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-left-alt:solid windowtext .5pt;
+	mso-border-bottom-alt:solid windowtext .5pt;
+	mso-border-right-alt:solid windowtext .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+p.xl31, li.xl31, div.xl31
+	{mso-style-name:xl31;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-left-alt:solid windowtext .5pt;
+	mso-border-bottom-alt:solid windowtext .5pt;
+	mso-border-right-alt:solid windowtext .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.xl32, li.xl32, div.xl32
+	{mso-style-name:xl32;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-left-alt:solid windowtext .5pt;
+	mso-border-bottom-alt:solid windowtext .5pt;
+	mso-border-right-alt:solid windowtext .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+p.xl33, li.xl33, div.xl33
+	{mso-style-name:xl33;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-left-alt:solid windowtext .5pt;
+	mso-border-bottom-alt:solid windowtext .5pt;
+	mso-border-right-alt:solid windowtext .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+p.xl34, li.xl34, div.xl34
+	{mso-style-name:xl34;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:silver;
+	border:none;
+	mso-border-top-alt:1.0pt;
+	mso-border-left-alt:1.0pt;
+	mso-border-bottom-alt:.5pt;
+	mso-border-right-alt:.5pt;
+	mso-border-color-alt:windowtext;
+	mso-border-style-alt:solid;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.xl35, li.xl35, div.xl35
+	{mso-style-name:xl35;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:silver;
+	border:none;
+	mso-border-alt:solid windowtext .5pt;
+	mso-border-top-alt:solid windowtext 1.0pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.xl36, li.xl36, div.xl36
+	{mso-style-name:xl36;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:silver;
+	border:none;
+	mso-border-top-alt:1.0pt;
+	mso-border-left-alt:.5pt;
+	mso-border-bottom-alt:.5pt;
+	mso-border-right-alt:1.0pt;
+	mso-border-color-alt:windowtext;
+	mso-border-style-alt:solid;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.xl37, li.xl37, div.xl37
+	{mso-style-name:xl37;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:silver;
+	border:none;
+	mso-border-top-alt:.5pt;
+	mso-border-left-alt:1.0pt;
+	mso-border-bottom-alt:1.0pt;
+	mso-border-right-alt:.5pt;
+	mso-border-color-alt:windowtext;
+	mso-border-style-alt:solid;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.xl38, li.xl38, div.xl38
+	{mso-style-name:xl38;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:silver;
+	border:none;
+	mso-border-alt:solid windowtext .5pt;
+	mso-border-bottom-alt:solid windowtext 1.0pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+ /* Page Definitions */
+ @page
+	{mso-footnote-separator:url("UML_Model_files/header.htm") fs;
+	mso-footnote-continuation-separator:url("UML_Model_files/header.htm") fcs;
+	mso-endnote-separator:url("UML_Model_files/header.htm") es;
+	mso-endnote-continuation-separator:url("UML_Model_files/header.htm") ecs;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 13.7pt .7in;
+	mso-header-margin:.5in;
+	mso-footer-margin:48.25pt;
+	mso-page-numbers:1;
+	mso-title-page:yes;
+	mso-even-footer:url("UML_Model_files/header.htm") ef1;
+	mso-footer:url("UML_Model_files/header.htm") f1;
+	mso-first-footer:url("UML_Model_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:217933029;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-493077244 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:1.25in;
+	mso-level-number-position:left;
+	margin-left:1.25in;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l0:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1
+	{mso-list-id:1234780140;
+	mso-list-type:simple;
+	mso-list-template-ids:-929109892;}
+@list l1:level1
+	{mso-level-tab-stop:.25in;
+	mso-level-number-position:left;
+	margin-left:.25in;
+	text-indent:-.25in;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="3074"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+  <o:regrouptable v:ext="edit">
+   <o:entry new="1" old="0"/>
+   <o:entry new="2" old="0"/>
+   <o:entry new="3" old="0"/>
+   <o:entry new="4" old="0"/>
+   <o:entry new="5" old="0"/>
+  </o:regrouptable>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoTitle style='margin-top:84.0pt;margin-right:0in;margin-bottom:20.0pt;
+margin-left:0in'><a name=xgraphic>UML<span style='mso-spacerun:yes'> 
+</span>Database Modeling</a></p>
+
+<p class=BodyText><span style='mso-bookmark:xgraphic'><span style='mso-bidi-font-family:
+Arial'>© Cincom Systems, Inc. 2007<br>
+All Rights Reserved<o:p></o:p></span></span></p>
+
+<p class=MsoBodyText style='margin-left:0in'><span style='mso-bookmark:xgraphic'><span
+style='mso-bidi-font-family:Arial'><o:p>&nbsp;</o:p></span></span></p>
+
+<span style='mso-bookmark:xgraphic'></span>
+
+<h1 style='margin-left:.25in;text-indent:-.25in;page-break-before:always;
+mso-list:l1 level1 lfo2;tab-stops:list .25in left 153.0pt'><![if !supportLists]><sup><span
+style='font-size:18.0pt;mso-fareast-font-family:Arial;mso-bidi-font-family:
+Arial;position:relative;top:0pt;mso-text-raise:0pt'><span style='mso-list:Ignore'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span></sup><![endif]><sup><span style='font-size:18.0pt;
+mso-bidi-font-family:Arial;position:relative;top:0pt;mso-text-raise:0pt'><span
+style='mso-spacerun:yes'> </span><a name="_Toc80672631">Background</a><o:p></o:p></span></sup></h1>
+
+<p class=MsoBodyText style='margin-left:.5in'><span style='mso-bidi-font-family:
+Arial'>This paper proposes a database modeling language based on the Unified
+Modeling Language.<o:p></o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><span style='mso-bidi-font-family:
+Arial'>TheUnified Modeling Language (UML) is a standard language which was
+developed for object oriented software modeling.<span
+style='mso-spacerun:yes'>  </span>See <a href="http://www.omg.org/uml/">http://www.omg.org/uml/</a>
+.<span style='mso-spacerun:yes'>  </span>It can be applied in a natural way for
+object oriented database modeling.<span style='mso-spacerun:yes'>  </span>As
+the language is flexible it can also be used to model relational
+databases.<span style='mso-spacerun:yes'>  </span>Several mechanisms are
+available for extending the language where necessary.<o:p></o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><span style='mso-bidi-font-family:
+Arial'>Several authors have proposed data modeling languages based on UML.<span
+style='mso-spacerun:yes'>  </span>See:<o:p></o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><span style='mso-bidi-font-family:
+Arial'><a href="http://www.agiledata.org/essays/umlDataModelingProfile.html">http://www.agiledata.org/essays/umlDataModelingProfile.html</a><br>
+<a href="http://www.rational.com/media/whitepapers/tp162.pdf?SMSESSION=NO">http://www.rational.com/media/whitepapers/tp162.pdf?SMSESSION=NO</a><o:p></o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><span style='mso-bidi-font-family:
+Arial'>This paper builds on the models proposed in the above work.<span
+style='mso-spacerun:yes'>  </span>It defines in more detail the elements of the
+language, defines the use of constraints and ties together relational and
+object oriented concepts.<span style='mso-spacerun:yes'>  </span>This language
+does not include SQL3 elements but could be extended to include these.<span
+style='mso-spacerun:yes'>  </span>The paper assumes familiarity with the UML
+and the UML Object Constraint Language (OCL).<span style='mso-spacerun:yes'> 
+</span>For an introduction see <a
+href="http://www.omg.org/gettingstarted/what_is_uml.htm">http://www.omg.org/gettingstarted/what_is_uml.htm</a>
+.<o:p></o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><span style='mso-bidi-font-family:
+Arial'>The Database UML profile (DB-UML) is defined using UML extension
+mechanisms. Stereotypes are used to create subtypes of standard UML
+elements.<span style='mso-spacerun:yes'>  </span>Standard methods and
+attributes are defined for elements.<span style='mso-spacerun:yes'>  </span>For
+elements which do not have attributes or methods, standard tagged values are
+defined.<o:p></o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><span style='mso-bidi-font-family:
+Arial'>The language is useful for modeling object relational databases.<span
+style='mso-spacerun:yes'>  </span>By ignoring the object oriented structures
+the language is also useful for modeling relational databases.<o:p></o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><span style='mso-bidi-font-family:
+Arial'><o:p>&nbsp;</o:p></span></p>
+
+<h1 style='margin-left:.25in;text-indent:-.25in;page-break-before:always;
+mso-list:l1 level1 lfo2;tab-stops:list .25in'><a name="_Toc80672632"><![if !supportLists]><sup><span
+style='font-size:18.0pt;mso-fareast-font-family:Arial;mso-bidi-font-family:
+Arial;position:relative;top:0pt;mso-text-raise:0pt'><span style='mso-list:Ignore'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span></sup><![endif]><sup><span style='font-size:18.0pt;
+mso-bidi-font-family:Arial;position:relative;top:0pt;mso-text-raise:0pt'>Example
+Model</span></sup></a><sup><span style='font-size:18.0pt;mso-bidi-font-family:
+Arial;position:relative;top:0pt;mso-text-raise:0pt'><o:p></o:p></span></sup></h1>
+
+<p class=MsoBodyText style='margin-left:.5in'><span style='mso-bidi-font-family:
+Arial'>Throughout the paper we will use the following example of an auction
+database.<span style='mso-spacerun:yes'>  </span>The database organizes a set
+of items for sale at an auction.<span style='mso-spacerun:yes'>  </span>For
+each item a record of bids is kept.<span style='mso-spacerun:yes'>  </span>The
+bid records identify the company submitting the bid and records the
+amount.<span style='mso-spacerun:yes'>  </span>Also the auction’s seller is
+defined.<span style='mso-spacerun:yes'>  </span>The table definitions might be
+as follows:<o:p></o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:1.0in'><span style='mso-bidi-font-family:
+Arial'>create schema Auction;<br>
+<br>
+create table Auction.Company<br>
+(<br>
+<span style='mso-spacerun:yes'>   </span>name String primary key<br>
+);<o:p></o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:1.0in'><span style='mso-bidi-font-family:
+Arial'>create table Auction.Item<br>
+(<br>
+<span style='mso-spacerun:yes'>   </span>name String primary key<br>
+);<o:p></o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:1.0in'><span style='mso-bidi-font-family:
+Arial'>create table Auction.Auction<br>
+(<br>
+<span style='mso-spacerun:yes'>   </span>saleDate DATE not null,<br>
+<span style='mso-spacerun:yes'>   </span>saleItems sequence of Item,<br>
+<span style='mso-spacerun:yes'>   </span>seller Company not null<br>
+);<o:p></o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:1.0in'><span style='mso-bidi-font-family:
+Arial'>create table Auction.Bid<br>
+(<br>
+<span style='mso-spacerun:yes'>   </span>myItem String not null,<br>
+<span style='mso-spacerun:yes'>   </span>amount Monetary not null,<br>
+<span style='mso-spacerun:yes'>   </span>bidder String not null,<br>
+<span style='mso-spacerun:yes'>   </span>constaint fk_myItem foreign
+key(myItem) references Item<br>
+<span style='mso-spacerun:yes'>   </span>constaint fk_bidder foreign
+key(bidder) references Company<br>
+);<o:p></o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:1.0in'><span style='mso-bidi-font-family:
+Arial'>create view Auction.HighBidders<br>
+(<br>
+<span style='mso-spacerun:yes'>   </span>name String,<br>
+<span style='mso-spacerun:yes'>   </span>highAmount Monetary<br>
+)<br>
+as select name, amount from Auction.Company, Auction.Bid<br>
+where name = bidder and amount &gt; 10,000;<o:p></o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:1.0in'><span style='mso-bidi-font-family:
+Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><span style='mso-bidi-font-family:
+Arial'>The database shows both object oriented structures and relational
+structures.<span style='mso-spacerun:yes'>  </span>The Bid table shows the use
+of relational structures as the column myItem is a foreign key to the Item
+table.<span style='mso-spacerun:yes'>  </span>And the bidder column is a
+foreign key to the Company table.<span style='mso-spacerun:yes'>  </span>The
+Auction table shows the use of object oriented structures.<span
+style='mso-spacerun:yes'>  </span>The seller column is a reference to an
+instance (a row) in the Company table.<span style='mso-spacerun:yes'> 
+</span>The saleItems column is an array of references to instances in the Item
+table.<o:p></o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><span style='mso-bidi-font-family:
+Arial'>The database also shows a view that derives data from several of the
+tables.<span style='mso-spacerun:yes'>  </span>The view HighBidders shows
+companies that have bid over a certain amount in the auction.<o:p></o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><span style='mso-bidi-font-family:
+Arial'>A complete modeling diagram in DBUML for the elements and relationships
+follows.<span style='mso-spacerun:yes'>  </span>Each of the elements and
+relationships is defined in later sections with an explanation of the
+properties that are relevant for database modeling.<o:p></o:p></span></p>
+
+<p align=center><img border=0 width=516 height=462
+src="UML_Model_files/image003.jpg" ></p>
+
+<h1 style='margin-left:.25in;text-indent:-.25in;page-break-before:always;
+mso-list:l1 level1 lfo2;tab-stops:list .25in'><a name="_Toc80672633"><![if !supportLists]><sup><span
+style='font-size:18.0pt;mso-fareast-font-family:Arial;mso-bidi-font-family:
+Arial;position:relative;top:0pt;mso-text-raise:0pt'><span style='mso-list:Ignore'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span></sup><![endif]><sup><span style='font-size:18.0pt;
+mso-bidi-font-family:Arial;position:relative;top:0pt;mso-text-raise:0pt'>DBUML
+Language Elements</span></sup></a><sup><span style='font-size:18.0pt;
+mso-bidi-font-family:Arial;position:relative;top:0pt;mso-text-raise:0pt'><o:p></o:p></span></sup></h1>
+
+<h2><a name="_Toc80672634">Database</a></h2>
+
+<p class=MsoBodyText>A Database is the highest level modeling element.<span
+style='mso-spacerun:yes'>  </span>It is used to organize database Schemas and
+to associate model elements with a physical database.</p>
+
+<p class=MsoBodyText>The stereotype &lt;&lt;Database&gt;&gt; when used as a UML
+Component defines a physical database.<span style='mso-spacerun:yes'>  </span>A
+Database is represented by the following figure:</p>
+
+<p align=center><img border=0 width=152 height=90
+src="UML_Model_files/image004.jpg" ></p>
+
+<p class=MsoBodyText>A Database has the following standard tagged values:
+driver, URL, user and password.<span style='mso-spacerun:yes'>  </span>As a
+Database identifies a user and password it can be used to define a connection
+to a physical database.<span style='mso-spacerun:yes'>   </span></p>
+
+<p class=MsoBodyText>A Database can be associated with one or more Schema
+elements where the Schema elements have a dependency as a client.</p>
+
+<h2><a name="_Toc80672635">Schema</a></h2>
+
+<p class=MsoBodyText>Database schemas are typically used as an organization
+mechanism.<span style='mso-spacerun:yes'>  </span>They are used to qualify
+tables and to facilitate security.<span style='mso-spacerun:yes'>   </span>The
+implementation of schemas varies by database.<span style='mso-spacerun:yes'> 
+</span>For example, some databases may use a table’s user as the schema for the
+table.<span style='mso-spacerun:yes'>   </span></p>
+
+<p class=MsoBodyText>The stereotype &lt;&lt;Schema&gt;&gt; when used as a UML
+Package defines a database schema.<span style='mso-spacerun:yes'>  </span>A
+Schema is represented by the following figure:</p>
+
+<p align=center><img border=0 width=156 height=118
+src="UML_Model_files/image006.jpg" ></p>
+
+<p class=MsoBodyText>A Schema can be associated with a Database element through
+a dependency.<span style='mso-spacerun:yes'>  </span>A Schema can have and one
+or more Table or View elements as owned elements.</p>
+
+<p class=MsoBodyText>If the Schema name is the same as the associated Database
+name, the Schema is considered to be the “default” Schema.<span
+style='mso-spacerun:yes'>  </span>The owned elements of a Default Schema have
+database catalog names unqualified by a Schema name.<span
+style='mso-spacerun:yes'>  </span>If a Database does not support Schemas (the
+catalog does not support Schema qualified names) then only the default Schema
+may have an association to the Database.<span style='mso-spacerun:yes'> 
+</span>If a Database does support Schemas then other Schema elements may have
+an association to the Database.<span style='mso-spacerun:yes'>  </span>The
+owned elements of these Schemas have database catalog names qualified by the
+Schema names.<span style='mso-spacerun:yes'>  </span></p>
+
+<h2><a name="_Toc80672636">Table</a></h2>
+
+<p class=MsoBodyText>A table is a set of database rows with the same
+structure.<span style='mso-spacerun:yes'>  </span></p>
+
+<p class=MsoBodyText>The stereotype &lt;&lt;Table&gt;&gt; when used as a UML
+Class defines a database table.<span style='mso-spacerun:yes'>  </span>A Table
+is represented by the following figure:</p>
+
+<p align=center><img border=0 width=100 height=104
+src="UML_Model_files/image007.jpg" ></p>
+
+<p class=MsoBodyText style='margin-left:.5in'>For the auction database example
+a diagram showing an Auction Schema and the Tables associated with the Schema
+might look like the following:</p>
+
+<p align=center><img border=0 width=297 height=394
+src="UML_Model_files/image008.jpg" ></p>
+
+<h2><a name="_Toc80672637">Table Columns</a></h2>
+
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyTextIndent>A column is the basic database organization unit
+used to store data.<span style='mso-spacerun:yes'>  </span>Each row of a table
+is composed of columns.<span style='mso-spacerun:yes'>  </span>Columns are
+modeled as class attributes.<span style='mso-spacerun:yes'>  </span></p>
+
+<p class=MsoBodyTextIndent><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=CharChar>Not Null
+Constraint</span><b style='mso-bidi-font-weight:normal'>.</b><span
+style='mso-spacerun:yes'>  </span></p>
+
+<p class=MsoNormal style='margin-left:.5in'>Columns defined as “not null” are
+modeled using an invariant attribute constraint with the “null” method.<span
+style='mso-spacerun:yes'>  </span>For example, in the auction database the
+Auction Table defines the seller column as “not null”.<span
+style='mso-spacerun:yes'>  </span>Using the Object Constraint Language (OCL)
+this could be defined as:</p>
+
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span style='mso-tab-count:1'>            </span>context
+Auction inv nullCon:<br>
+<span style='mso-tab-count:1'>            </span>null(seller.oclAsType(object))
+&lt;&gt; 1</p>
+
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:.5in'>This defines an invariant
+constraint named nullCon on the Auction Table.<span style='mso-spacerun:yes'> 
+</span>The constraint tests that the unique method does not return 1 for the
+seller attribute.<span style='mso-spacerun:yes'>  </span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=CharChar>Unique
+Constraint.</span><span style='mso-spacerun:yes'>   </span></p>
+
+<p class=MsoNormal style='margin-left:.5in'>Unique columns are modeled using an
+invariant attribute constraint.<span style='mso-spacerun:yes'>  </span>The
+constraint uses the OCL function “isUnique”.<span style='mso-spacerun:yes'> 
+</span>For example, in the auction database the Item Table defines the name
+column as unique.<span style='mso-spacerun:yes'>  </span>Using OCL this could
+be defined as:</p>
+
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span style='mso-tab-count:1'>            </span>context
+Item inv uniCon:<br>
+<span style='mso-tab-count:1'>            </span>isUnique(name.oclAsType(object))
+= 1</p>
+
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:.5in'>This defines an invariant
+constraint named uniCon on the Item Table.<span style='mso-spacerun:yes'> 
+</span>The constraint tests that the unique method returns 1 for the name
+attribute.<span style='mso-spacerun:yes'>  </span>The name attribute is cast to
+object using the oclAsType method.</p>
+
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=CharChar>Primary Key
+Constraint.</span><span style='mso-spacerun:yes'>  </span></p>
+
+<p class=MsoNormal style='margin-left:.5in'>In SQL, a column defined to have
+the “not null” and “unique” constraints can simply be defined as having a
+“primary key” constraint..<span style='mso-spacerun:yes'>  </span>A Column
+defined with a primary key constraint is modeled by an attribute with
+stereotype &lt;&lt;PK&gt;&gt;.<span style='mso-spacerun:yes'>  </span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:.5in'>If the SQL primary key constraint
+is named, the name is modeled with a tagged value “SQL_constraint”.</p>
+
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyTextIndent><span class=CharChar>Foreign Key Constraint.</span><span
+style='mso-spacerun:yes'>   </span></p>
+
+<p class=MsoBodyTextIndent>A foreign key constraint is modeled as an
+association between the table with the foreign key and the table with the
+primary key.<span style='mso-spacerun:yes'>  </span>Also, the foreign key column
+is modeled by an attribute with the stereotype &lt;&lt;FK&gt;&gt;.<span
+style='mso-spacerun:yes'>  </span></p>
+
+<p class=MsoBodyTextIndent><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:.5in'>For example, in the auction
+database there is a association between the Bid Table and the Item Table.<span
+style='mso-spacerun:yes'>  </span>The Bid Table has a foreign key myItem
+associated with the primary key name in the Item Table.<span
+style='mso-spacerun:yes'>  </span>This is shown in the following diagram:</p>
+
+<p class=MsoNormal style='margin-left:.5in'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p align=center><img border=0 width=360 height=172
+src="UML_Model_files/image010.jpg" ></p>
+
+<p class=MsoBodyTextIndent>The association has the same name and stereotype as
+the foreign key attribute.<span style='mso-spacerun:yes'>  </span>The
+association has the same end name and stereotype as the the primary key
+attribute.<span style='mso-spacerun:yes'>  </span></p>
+
+<p class=MsoBodyTextIndent><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:.5in'>If the SQL foreign key constraint is
+named, the name is modeled with a tagged value “SQL_constraint”.<span
+style='mso-spacerun:yes'>  </span>For<span style='mso-spacerun:yes'> 
+</span>multi-column SQL foreign key constraints the key sequence number is
+modeled by the tagged value “KEY_SEQ”.</p>
+
+<p class=MsoBodyTextIndent><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyTextIndent><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:.5in'>If a referential integrity
+constraint is defined for a foreign key then an invariant constraint is defined
+for the table.<span style='mso-spacerun:yes'>  </span>For example, if a cascade
+delete action is defined for the Bid entries associated with an Item then a
+constraint would be defined as follows:</p>
+
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span style='mso-tab-count:1'>            </span>context
+Bid inv del_Item:<br>
+<span style='mso-tab-count:1'>            </span>onDelete(fk_myItem, “cascade”)
+= 1</p>
+
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:.5in'>This defines an invariant constrant
+named del_Item on the Bid table.<span style='mso-spacerun:yes'>  </span>The
+constraint tests that the onDelete method returns a 1 for the fk_myItem
+relationship with the “cascade” option<span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Arial'>.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=CharChar>Index.</span><span
+style='mso-spacerun:yes'>   </span></p>
+
+<p class=MsoNormal style='margin-left:.5in'>Constraints are also used to model
+database indices.<span style='mso-spacerun:yes'>  </span>A database index is a
+physical structure used to improve performance.<span style='mso-spacerun:yes'> 
+</span>An index defined over a column is modeled using an invariant attribute
+constraint with the “index” method.<span style='mso-spacerun:yes'>  </span>For
+example, in the auction database we might have an index defined over the amount
+column in the Bid Table.<span style='mso-spacerun:yes'>  </span>This would help
+performance when sorting results by amount.<span style='mso-spacerun:yes'> 
+</span>Using OCL this could be defined as:</p>
+
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyTextIndent2><span style='font-size:12.0pt;font-family:"Times New Roman"'><span
+style='mso-tab-count:1'>            </span>context Bid inv indexCon:<br>
+<span style='mso-tab-count:1'>            </span>index(amount.oclAsType(object),
+1) = 1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:.5in'>This defines an invariant
+constraint named indexCon on the Bid Table.<span style='mso-spacerun:yes'> 
+</span>The constraint tests that the index method returns 1 for the amount
+attribute.<span style='mso-spacerun:yes'>  </span>The second parameter in the
+index method defines the position of the attribute in a multiple attribute
+index. </p>
+
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<h4 style='text-indent:.5in'>Data Types</h4>
+
+<h4 style='text-indent:.5in'><o:p><span style='text-decoration:none'>&nbsp;</span></o:p></h4>
+
+<p class=MsoNormal style='margin-left:.5in'>SQL-92 types are modeled as
+primitive datatypes.<span style='mso-spacerun:yes'>  </span>The datatypes are
+organized in the package types.sql.<span style='mso-spacerun:yes'> 
+</span>Types specific to a database can also be defined in new packages.</p>
+
+<h4 style='text-indent:.5in'><o:p><span style='text-decoration:none'>&nbsp;</span></o:p></h4>
+
+<p class=MsoNormal style='margin-left:.5in'>For object oriented databases,
+attributes can have a type defined by another Table.<span
+style='mso-spacerun:yes'>  </span>This is modeled by a one-to-one association.<span
+style='mso-spacerun:yes'>   </span>For example, in the Auction database the
+Auction Table has a reference to the Company Table defined as the seller
+attribute.</p>
+
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p align=center><img border=0 width=239 height=200
+src="UML_Model_files/image011.jpg" ></p>
+
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyTextIndent2><span style='font-size:12.0pt;font-family:"Times New Roman"'>Object
+oriented databases can also define array attributes.<span
+style='mso-spacerun:yes'>  </span>These are modeled by one-to-many
+associations.<span style='mso-spacerun:yes'>  </span>For example, in the Action
+database, the Auction table has a sequence of references to the Item table
+defined in the saleItems attribute</span>.</p>
+
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p align=center><img border=0 width=248 height=150
+src="UML_Model_files/image012.jpg" ></p>
+
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<h4 style='text-indent:.5in'>Default Values</h4>
+
+<p class=MsoNormal style='margin-left:.5in'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:Arial'>Default values for columns are
+modeled as initial values for attributes.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<h4 style='text-indent:.5in'>Operations</h4>
+
+<p class=MsoBodyText style='margin-left:0in;text-indent:.5in'>Tables have the
+following standard operations:</p>
+
+<p class=MsoBodyText style='margin-left:1.25in;text-indent:-.25in;mso-list:
+l0 level1 lfo4;tab-stops:list 1.25in'><![if !supportLists]><span
+style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol;mso-bidi-font-weight:bold'><span style='mso-list:Ignore'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><b>Boolean null( object )<span
+style='mso-spacerun:yes'>  </span></b>This is used to define a “not null”
+constraint on attributes.<b><o:p></o:p></b></p>
+
+<p class=MsoBodyText style='margin-left:1.25in;text-indent:-.25in;mso-list:
+l0 level1 lfo4;tab-stops:list 1.25in'><![if !supportLists]><span
+style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol;mso-bidi-font-weight:bold'><span style='mso-list:Ignore'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><b>Boolean index( object, int )<span
+style='mso-spacerun:yes'>  </span></b>This is used to define an index
+constraint on attributes.<b><o:p></o:p></b></p>
+
+<p class=MsoBodyText style='margin-left:1.25in;text-indent:-.25in;mso-list:
+l0 level1 lfo4;tab-stops:list 1.25in'><![if !supportLists]><span
+style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol;mso-bidi-font-weight:bold'><span style='mso-list:Ignore'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><b>Boolean onUpdate( object, String )<span
+style='mso-spacerun:yes'>  </span></b>This is used to define a referential
+integrity constraint for a Foreign Key..<b><o:p></o:p></b></p>
+
+<p class=MsoBodyText style='margin-left:1.25in;text-indent:-.25in;mso-list:
+l0 level1 lfo4;tab-stops:list 1.25in'><![if !supportLists]><span
+style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol;mso-bidi-font-weight:bold'><span style='mso-list:Ignore'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><b>Boolean onDelete( object, String )<span
+style='mso-spacerun:yes'>  </span></b>This is used to define a referential
+integrity constraint for a Foreign Key..<b><o:p></o:p></b></p>
+
+<p class=MsoBodyText style='margin-left:.5in'>Tables may also have user-defined
+methods which can be used to model database procedures and triggers.<span
+style='mso-spacerun:yes'>  </span>Tables may be associated with Schemas as
+owned elements.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<h2><a name="_Toc80672638"><span style='font-size:12.0pt;mso-bidi-font-family:
+Arial'>Views</span></a><span style='font-size:12.0pt;mso-bidi-font-family:Arial'><o:p></o:p></span></h2>
+
+<p class=MsoNormal style='margin-left:.5in'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><span style='mso-bidi-font-family:
+Arial'>A database view is a virtual table with the source of data being other
+tables or other views.<span style='mso-spacerun:yes'>  </span>Like a table, a
+view defines columns and methods.<span style='mso-spacerun:yes'>  </span>But it
+also defines how to derive these columns from other tables and views.<span
+style='mso-spacerun:yes'>  </span><o:p></o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><span style='mso-bidi-font-family:
+Arial'>The stereotype &lt;&lt;View&gt;&gt; when used as a UML Class defines a
+database view.<span style='mso-spacerun:yes'>  </span>A View is represented by
+the following figure:<o:p></o:p></span></p>
+
+<p align=center><img border=0 width=120 height=105
+src="UML_Model_files/image013.jpg" ></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><span style='mso-bidi-font-family:
+Arial'>View columns are modeled as attributes.<span style='mso-spacerun:yes'> 
+</span>The attributes can have the same types and properties as Table
+attributes except that stereotypes &lt;&lt;FK&gt;&gt; and &lt;&lt;PK&gt;&gt;
+can not be used on View attributes.<span style='mso-spacerun:yes'>  </span>Also
+the constraints for uniqueness, not null and index do not apply to View
+attributes.<o:p></o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:.5in'>Views are dependent on the tables
+and views used to derive data.<span style='mso-spacerun:yes'>  </span>This
+relationship is modeled as a dependency with stereotype
+&lt;&lt;Derive&gt;&gt;.<span style='mso-spacerun:yes'>  </span>The dependency
+defines the query used to derive data.<span style='mso-spacerun:yes'> 
+</span>The query is defined as a tagged value.</p>
+
+<p class=MsoBodyText style='margin-left:.5in'>For example, in the auction
+database we might have a view that only shows companies that have bid a certain
+amount in the auction.<span style='mso-spacerun:yes'>  </span>The View derives
+data from both the Bid Table and the Company Table.</p>
+
+<p align=center><img border=0 width=348 height=218
+src="UML_Model_files/image015.jpg" ></p>
+
+<p class=MsoBodyText style='margin-left:.5in'>Views are associated with Schemas
+as owned elements.</p>
+
+<h2><a name="_Toc80672639"><span style='font-size:10.0pt;mso-bidi-font-family:
+Arial'>Generalization</span></a><span style='font-size:10.0pt;mso-bidi-font-family:
+Arial'><o:p></o:p></span></h2>
+
+<p class=MsoBodyText style='margin-left:.5in'><span style='mso-bidi-font-family:
+Arial'>Object Oriented databases allow the use of generalization so that a
+table can inherit the columns and procedures from another table.<span
+style='mso-spacerun:yes'>  </span>Also generalization can be used with views.<o:p></o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:.5in'>For example, in the auction
+database we might want to use the Company table as a generalization.<span
+style='mso-spacerun:yes'>  </span>We could define sub-tables of Company to
+represent companies specializing in building or in machine tools.</p>
+
+<p align=center><img border=0 width=297 height=202
+src="UML_Model_files/image016.jpg" ></p>
+
+<h1 style='margin-left:.25in;text-indent:-.25in;page-break-before:always;
+mso-list:l1 level1 lfo2;tab-stops:list .25in'><a name="_Toc80672640"><![if !supportLists]><sup><span
+style='mso-fareast-font-family:Arial;mso-bidi-font-family:Arial;position:relative;
+top:0pt;mso-text-raise:0pt'><span style='mso-list:Ignore'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span></sup><![endif]><sup><span style='mso-bidi-font-family:
+Arial;position:relative;top:0pt;mso-text-raise:0pt'>DBUML Diagrams</span></sup></a><sup><span
+style='mso-bidi-font-family:Arial;position:relative;top:0pt;mso-text-raise:
+0pt'><o:p></o:p></span></sup></h1>
+
+<h2><a name="_Toc80672641">Database Deployment Diagrams</a></h2>
+
+<p class=MsoBodyText>Deployment diagrams show the configuration of run time
+nodes and components that live on them.<span style='mso-spacerun:yes'> 
+</span>They are used to model the static deployment of a system.<span
+style='mso-spacerun:yes'>  </span>The diagrams address the distribution,
+delivery and installation parts of the physical system.</p>
+
+<p class=MsoBodyText>Database deployment diagrams show run time nodes and the
+databases deployed on them.<span style='mso-spacerun:yes'>  </span>They also
+show the relationship of databases and schemas.<span style='mso-spacerun:yes'> 
+</span>For example, the following database deployment diagram shows the demo
+Database and two associated Schemas.<span style='mso-spacerun:yes'>  </span>The
+Auction Schema is shown and the default Schema is shown.</p>
+
+<p align=center><img border=0 width=296 height=293
+src="UML_Model_files/image017.jpg" ></p>
+
+<h2><a name="_Toc80672642">Database Schema Diagrams</a></h2>
+
+<p class=MsoBodyText>Database Schema diagrams are similar to class
+diagrams.<span style='mso-spacerun:yes'>  </span>Schema diagrams show schemas,
+tables and views and their relationships.<span style='mso-spacerun:yes'> 
+</span>.</p>
+
+<p class=MsoBodyText><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText><o:p>&nbsp;</o:p></p>
+
+</div>
+
+</body>
+
+</html>

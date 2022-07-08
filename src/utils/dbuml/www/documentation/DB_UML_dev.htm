@@ -1,0 +1,2280 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="DB_UML_dev_files/filelist.xml">
+<link rel=Edit-Time-Data href="DB_UML_dev_files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>DB-UML Modeling Tool Developer’s Guide </title>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="PlaceName"/>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="PlaceType"/>
+<o:SmartTagType namespaceuri="urn:schemas-microsoft-com:office:smarttags"
+ name="place"/>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>rpurdum</o:Author>
+  <o:LastAuthor> </o:LastAuthor>
+  <o:Revision>9</o:Revision>
+  <o:TotalTime>1349</o:TotalTime>
+  <o:LastPrinted>2004-03-11T21:01:00Z</o:LastPrinted>
+  <o:Created>2007-09-07T16:55:00Z</o:Created>
+  <o:LastSaved>2007-10-16T13:43:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>2389</o:Words>
+  <o:Characters>13618</o:Characters>
+  <o:Company>Cincom Systems, Inc.</o:Company>
+  <o:Lines>113</o:Lines>
+  <o:Paragraphs>31</o:Paragraphs>
+  <o:CharactersWithSpaces>15976</o:CharactersWithSpaces>
+  <o:Version>11.8132</o:Version>
+ </o:DocumentProperties>
+ <o:CustomDocumentProperties>
+  <o:_AdHocReviewCycleID dt:dt="float">-1444108348</o:_AdHocReviewCycleID>
+  <o:_EmailSubject dt:dt="string">WebDAV Requirements</o:_EmailSubject>
+  <o:_AuthorEmail dt:dt="string">mike@nxcommerce.com</o:_AuthorEmail>
+  <o:_AuthorEmailDisplayName dt:dt="string">Mike Rymkiewicz</o:_AuthorEmailDisplayName>
+  <o:_ReviewingToolsShownOnce dt:dt="string"></o:_ReviewingToolsShownOnce>
+ </o:CustomDocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:ActiveWritingStyle Lang="EN-US" VendorID="64" DLLVersion="131077"
+   NLCheck="1">1</w:ActiveWritingStyle>
+  <w:ActiveWritingStyle Lang="EN-US" VendorID="64" DLLVersion="131078"
+   NLCheck="1">1</w:ActiveWritingStyle>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:Compatibility>
+   <w:SelectEntireFieldWithStartOrEnd/>
+   <w:UseWord2002TableStyleRules/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]--><!--[if !mso]><object
+ classid="clsid:38481807-CA0E-42D2-BF39-B33AF135CC4D" id=ieooui></object>
+<style>
+st1\:*{behavior:url(#ieooui) }
+</style>
+<![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Courier;
+	panose-1:2 7 4 9 2 2 5 2 4 4;
+	mso-font-charset:0;
+	mso-generic-font-family:modern;
+	mso-font-format:other;
+	mso-font-pitch:fixed;
+	mso-font-signature:3 0 0 0 1 0;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:1627421319 -2147483648 8 0 66047 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h1
+	{mso-style-parent:"Heading Base";
+	mso-style-next:"Body Text";
+	margin-top:11.0pt;
+	margin-right:0in;
+	margin-bottom:11.0pt;
+	margin-left:0in;
+	line-height:14.0pt;
+	mso-pagination:widow-orphan lines-together;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	background:#E5E5E5;
+	mso-shading:windowtext;
+	mso-pattern:gray-10 auto;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	position:relative;
+	top:-3.0pt;
+	mso-text-raise:3.0pt;
+	letter-spacing:-.5pt;
+	mso-font-kerning:14.0pt;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+h2
+	{mso-style-parent:"Heading Base";
+	mso-style-next:"Body Text";
+	margin-top:7.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	line-height:11.0pt;
+	mso-pagination:widow-orphan lines-together;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	font-size:11.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	letter-spacing:-.2pt;
+	mso-font-kerning:14.0pt;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+h3
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	font-size:10.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:Arial;
+	font-weight:bold;}
+h4
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:4;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	font-weight:bold;
+	text-decoration:underline;
+	text-underline:single;}
+h5
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:5;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	font-weight:bold;
+	text-decoration:underline;
+	text-underline:single;}
+p.MsoToc1, li.MsoToc1, div.MsoToc1
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	text-transform:uppercase;
+	font-weight:bold;}
+p.MsoToc2, li.MsoToc2, div.MsoToc2
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:12.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	font-variant:small-caps;}
+p.MsoToc3, li.MsoToc3, div.MsoToc3
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:24.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	font-style:italic;}
+p.MsoToc4, li.MsoToc4, div.MsoToc4
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.5pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoToc5, li.MsoToc5, div.MsoToc5
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:48.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.5pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoToc6, li.MsoToc6, div.MsoToc6
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:60.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.5pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoToc7, li.MsoToc7, div.MsoToc7
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:1.0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.5pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoToc8, li.MsoToc8, div.MsoToc8
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:84.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.5pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoToc9, li.MsoToc9, div.MsoToc9
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:96.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.5pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoCommentText, li.MsoCommentText, div.MsoCommentText
+	{mso-style-noshow:yes;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:center 3.0in right 6.0in;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:center 3.0in right 6.0in;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+span.MsoCommentReference
+	{mso-style-noshow:yes;
+	mso-ansi-font-size:8.0pt;
+	mso-bidi-font-size:8.0pt;}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{mso-style-parent:"Heading Base";
+	mso-style-next:Subtitle;
+	margin-top:33.0pt;
+	margin-right:1.5in;
+	margin-bottom:20.0pt;
+	margin-left:.75in;
+	mso-line-height-alt:27.0pt;
+	mso-pagination:widow-orphan lines-together;
+	page-break-after:avoid;
+	font-size:30.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	letter-spacing:-2.0pt;
+	mso-font-kerning:14.0pt;}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:11.0pt;
+	margin-left:.75in;
+	line-height:11.0pt;
+	mso-pagination:widow-orphan lines-together;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoBodyTextIndent, li.MsoBodyTextIndent, div.MsoBodyTextIndent
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoSubtitle, li.MsoSubtitle, div.MsoSubtitle
+	{mso-style-parent:Title;
+	mso-style-next:"Body Text";
+	margin-top:0in;
+	margin-right:1.5in;
+	margin-bottom:8.0pt;
+	margin-left:.75in;
+	line-height:20.0pt;
+	mso-pagination:widow-orphan lines-together;
+	page-break-after:avoid;
+	font-size:17.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	letter-spacing:-.7pt;
+	mso-font-kerning:14.0pt;
+	font-weight:bold;
+	font-style:italic;
+	mso-bidi-font-style:normal;}
+p.MsoBodyText2, li.MsoBodyText2, div.MsoBodyText2
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoBodyTextIndent2, li.MsoBodyTextIndent2, div.MsoBodyTextIndent2
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+p.MsoDocumentMap, li.MsoDocumentMap, div.MsoDocumentMap
+	{mso-style-noshow:yes;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	background:navy;
+	font-size:12.0pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+pre
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt;
+	font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Courier New";}
+p.HeadingBase, li.HeadingBase, div.HeadingBase
+	{mso-style-name:"Heading Base";
+	mso-style-next:"Body Text";
+	margin-top:7.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.75in;
+	margin-bottom:.0001pt;
+	line-height:11.0pt;
+	mso-pagination:widow-orphan lines-together;
+	page-break-after:avoid;
+	font-size:11.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	letter-spacing:-.2pt;
+	mso-font-kerning:14.0pt;}
+p.SubtitleCover, li.SubtitleCover, div.SubtitleCover
+	{mso-style-name:"Subtitle Cover";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.TitleCover, li.TitleCover, div.TitleCover
+	{mso-style-name:"Title Cover";
+	mso-style-parent:"Heading Base";
+	mso-style-next:"Subtitle Cover";
+	margin-top:1.25in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.75in;
+	margin-bottom:.0001pt;
+	mso-line-height-alt:12.0pt;
+	mso-pagination:widow-orphan lines-together;
+	page-break-after:avoid;
+	font-size:36.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	letter-spacing:-2.4pt;
+	mso-font-kerning:14.0pt;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.BodyText, li.BodyText, div.BodyText
+	{mso-style-name:BodyText;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan lines-together;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.xl24, li.xl24, div.xl24
+	{mso-style-name:xl24;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:9.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";}
+p.xl25, li.xl25, div.xl25
+	{mso-style-name:xl25;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-alt:solid windowtext .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+p.xl26, li.xl26, div.xl26
+	{mso-style-name:xl26;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-alt:solid windowtext .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+p.xl27, li.xl27, div.xl27
+	{mso-style-name:xl27;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-alt:solid windowtext .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+p.xl28, li.xl28, div.xl28
+	{mso-style-name:xl28;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-alt:solid windowtext .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.xl29, li.xl29, div.xl29
+	{mso-style-name:xl29;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-left-alt:solid windowtext .5pt;
+	mso-border-bottom-alt:solid windowtext .5pt;
+	mso-border-right-alt:solid windowtext .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+p.xl30, li.xl30, div.xl30
+	{mso-style-name:xl30;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-left-alt:solid windowtext .5pt;
+	mso-border-bottom-alt:solid windowtext .5pt;
+	mso-border-right-alt:solid windowtext .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+p.xl31, li.xl31, div.xl31
+	{mso-style-name:xl31;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-left-alt:solid windowtext .5pt;
+	mso-border-bottom-alt:solid windowtext .5pt;
+	mso-border-right-alt:solid windowtext .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.xl32, li.xl32, div.xl32
+	{mso-style-name:xl32;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-left-alt:solid windowtext .5pt;
+	mso-border-bottom-alt:solid windowtext .5pt;
+	mso-border-right-alt:solid windowtext .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+p.xl33, li.xl33, div.xl33
+	{mso-style-name:xl33;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-left-alt:solid windowtext .5pt;
+	mso-border-bottom-alt:solid windowtext .5pt;
+	mso-border-right-alt:solid windowtext .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+p.xl34, li.xl34, div.xl34
+	{mso-style-name:xl34;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:silver;
+	border:none;
+	mso-border-top-alt:1.0pt;
+	mso-border-left-alt:1.0pt;
+	mso-border-bottom-alt:.5pt;
+	mso-border-right-alt:.5pt;
+	mso-border-color-alt:windowtext;
+	mso-border-style-alt:solid;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.xl35, li.xl35, div.xl35
+	{mso-style-name:xl35;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:silver;
+	border:none;
+	mso-border-alt:solid windowtext .5pt;
+	mso-border-top-alt:solid windowtext 1.0pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.xl36, li.xl36, div.xl36
+	{mso-style-name:xl36;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:silver;
+	border:none;
+	mso-border-top-alt:1.0pt;
+	mso-border-left-alt:.5pt;
+	mso-border-bottom-alt:.5pt;
+	mso-border-right-alt:1.0pt;
+	mso-border-color-alt:windowtext;
+	mso-border-style-alt:solid;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.xl37, li.xl37, div.xl37
+	{mso-style-name:xl37;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:silver;
+	border:none;
+	mso-border-top-alt:.5pt;
+	mso-border-left-alt:1.0pt;
+	mso-border-bottom-alt:1.0pt;
+	mso-border-right-alt:.5pt;
+	mso-border-color-alt:windowtext;
+	mso-border-style-alt:solid;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.xl38, li.xl38, div.xl38
+	{mso-style-name:xl38;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	background:silver;
+	border:none;
+	mso-border-alt:solid windowtext .5pt;
+	mso-border-bottom-alt:solid windowtext 1.0pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:9.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+ /* Page Definitions */
+ @page
+	{mso-footnote-separator:url("DB_UML_dev_files/header.htm") fs;
+	mso-footnote-continuation-separator:url("DB_UML_dev_files/header.htm") fcs;
+	mso-endnote-separator:url("DB_UML_dev_files/header.htm") es;
+	mso-endnote-continuation-separator:url("DB_UML_dev_files/header.htm") ecs;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 13.7pt .7in;
+	mso-header-margin:.5in;
+	mso-footer-margin:48.25pt;
+	mso-page-numbers:1;
+	mso-title-page:yes;
+	mso-even-footer:url("DB_UML_dev_files/header.htm") ef1;
+	mso-footer:url("DB_UML_dev_files/header.htm") f1;
+	mso-first-footer:url("DB_UML_dev_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+@page Section2
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 13.7pt .7in;
+	mso-header-margin:.5in;
+	mso-footer-margin:48.25pt;
+	mso-page-numbers:1;
+	mso-title-page:yes;
+	mso-even-footer:url("DB_UML_dev_files/header.htm") ef1;
+	mso-footer:url("DB_UML_dev_files/header.htm") f1;
+	mso-first-footer:url("DB_UML_dev_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section2
+	{page:Section2;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:1182936983;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-866362090 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l0:level1
+	{mso-level-tab-stop:1.25in;
+	mso-level-number-position:left;
+	margin-left:1.25in;
+	text-indent:-.25in;}
+@list l0:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1
+	{mso-list-id:1521435261;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-811317912 1391468750 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l1:level1
+	{mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.25in;}
+@list l1:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2
+	{mso-list-id:2140878669;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1439511844 59913518 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l2:level1
+	{mso-level-tab-stop:75.0pt;
+	mso-level-number-position:left;
+	margin-left:75.0pt;
+	text-indent:-.25in;}
+@list l2:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="6146"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+  <o:regrouptable v:ext="edit">
+   <o:entry new="1" old="0"/>
+   <o:entry new="2" old="0"/>
+   <o:entry new="3" old="0"/>
+   <o:entry new="4" old="0"/>
+   <o:entry new="5" old="0"/>
+  </o:regrouptable>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoTitle style='margin-top:84.0pt;margin-right:0in;margin-bottom:20.0pt;
+margin-left:0in'><a name=xgraphic>DB-UML Modeling Tool Developer’s Guide </a><span
+style='mso-bookmark:xgraphic'><b style='mso-bidi-font-weight:normal'><i><span
+style='font-size:24.0pt;mso-bidi-font-size:10.0pt;font-family:Arial'><o:p></o:p></span></i></b></span></p>
+
+</div>
+
+<span style='font-size:12.0pt;font-family:Arial;mso-fareast-font-family:"Times New Roman";
+mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA'><br
+clear=all style='page-break-before:always;mso-break-type:section-break'>
+</span>
+
+<div class=Section2>
+
+<p class=BodyText><span style='mso-bookmark:xgraphic'><span style='mso-bidi-font-family:
+Arial'>© Cincom Systems, Inc. 2007<br>
+All Rights Reserved<o:p></o:p></span></span></p>
+
+<p class=MsoBodyText style='margin-left:0in;mso-outline-level:1'><span
+style='mso-bookmark:xgraphic'><span style='mso-bidi-font-family:Arial'><o:p>&nbsp;</o:p></span></span></p>
+
+<h1><span style='mso-bookmark:xgraphic'><a name="_Toc66860151"><sup><span
+style='font-size:18.0pt;position:relative;top:0pt;mso-text-raise:0pt'>Overview</span></sup></a></span><span
+style='mso-bookmark:xgraphic'><sup><span style='font-size:18.0pt;position:relative;
+top:0pt;mso-text-raise:0pt'><o:p></o:p></span></sup></span></h1>
+
+<p class=MsoBodyText style='margin-left:0in'><span style='mso-bookmark:xgraphic'><span
+style='mso-bidi-font-family:Arial'>This document provides build directions and
+a high-level architecture for the DB-UML Modeling Tool.<span
+style='mso-spacerun:yes'>  </span>The architecture requirements, overview and
+package structure are defined.<span style='mso-spacerun:yes'>  </span>The
+architecture is not complete and several sections need to be added.<span
+style='mso-spacerun:yes'>  </span>In particular the sections on Transformers
+need be completed.<span style='mso-spacerun:yes'>  </span><i><o:p></o:p></i></span></span></p>
+
+<span style='mso-bookmark:xgraphic'></span>
+
+<h1 style='page-break-before:always'><a name="_Toc66860152"><sup><span
+style='font-size:18.0pt;mso-bidi-font-family:Arial;position:relative;
+top:0pt;mso-text-raise:0pt'>Building DB-UML<o:p></o:p></span></sup></a></h1>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc66860152'>To build DB-UML
+you must be able to build ArgoUML first.<span style='mso-spacerun:yes'> 
+</span>For directions on building ArgoUML, see:</span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc66860152'></span><a
+href="http://argouml-stats.tigris.org/documentation/defaulthtml/cookbook/ch02.html"><span
+style='mso-bookmark:_Toc66860152'>http://argouml-stats.tigris.org/documentation/defaulthtml/cookbook/ch02.html</span><span
+style='mso-bookmark:_Toc66860152'></span></a><span style='mso-bookmark:_Toc66860152'></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc66860152'>To build DB-UML
+you will need an SVN client, the release 5 (or higher) Java JDK and Apache
+Ant.<span style='mso-spacerun:yes'>  </span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc66860152'>To check out the
+latest version of DB-UML from SVN use:</span></p>
+
+<p class=MsoNormal style='margin-left:.75in;line-height:135%;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='mso-bookmark:_Toc66860152'><span lang=EN style='font-size:9.0pt;
+line-height:135%;font-family:Courier;mso-bidi-font-family:"Courier New";
+color:black;mso-ansi-language:EN'><span style='mso-tab-count:1'>       </span>svn
+checkout </span></span><span style='mso-bookmark:_Toc66860152'><span lang=EN
+style='mso-ansi-language:EN'>http://argouml-db.tigris.org/svn/argouml-db/trunk
+<o:p></o:p></span></span></p>
+
+<p class=MsoNormal style='margin-left:.75in;line-height:135%;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='mso-bookmark:_Toc66860152'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc66860152'>Before building
+DB-UML you must set the location of your ArgoUML build in the module.properties
+file.<span style='mso-spacerun:yes'>  </span>For example:</span></p>
+
+<p class=MsoBodyText style='text-indent:.25in'><span style='mso-bookmark:_Toc66860152'><span
+style='font-family:"Courier New"'>argo.root.dir=C:/argosvn/argo<o:p></o:p></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc66860152'>sets the ArgoUML
+root directory to “C:/argosvn/argo”.<span style='mso-spacerun:yes'> 
+</span>This is used to locate ArgoUML classes needed by DB-UML.<span
+style='mso-spacerun:yes'>  </span>Also, the build will place the dbuml.jar in
+ArgUML’s<span style='mso-spacerun:yes'>  </span>/ext folder so that ArgoUML
+will install it as a module.</span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc66860152'>To build DB-UML
+use the jar target:</span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc66860152'><span
+style='mso-tab-count:1'>      </span>Ant jar</span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc66860152'>You can use the
+run target but this will actually run ArgoUML defined by argo.root.dir.</span></p>
+
+<h1 style='page-break-before:always'><span style='mso-bookmark:_Toc66860152'><sup><span
+style='font-size:18.0pt;mso-bidi-font-family:Arial;position:relative;
+top:0pt;mso-text-raise:0pt'>Architecture Requirements</span></sup></span><sup><span
+style='font-size:18.0pt;mso-bidi-font-family:Arial;position:relative;
+top:0pt;mso-text-raise:0pt'><o:p></o:p></span></sup></h1>
+
+<p class=MsoBodyText style='margin-left:.5in'><span style='mso-bidi-font-family:
+Arial'>The following are general requirements for the architecture.<span
+style='mso-spacerun:yes'>  </span>The general architecture of a UML modeling
+tool is shown in the following figure:<o:p></o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:1.0in'><!--[if gte vml 1]><v:shapetype
+ id="_x0000_t202" coordsize="21600,21600" o:spt="202" path="m,l,21600r21600,l21600,xe">
+ <v:stroke joinstyle="miter"/>
+ <v:path gradientshapeok="t" o:connecttype="rect"/>
+</v:shapetype><v:shape id="_x0000_s1450" type="#_x0000_t202" style='position:absolute;
+ left:0;text-align:left;margin-left:2in;margin-top:12.75pt;width:234pt;
+ height:63pt;z-index:1' fillcolor="#cff">
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoBodyText2>UML GUI </p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:shape id="_x0000_s1451" type="#_x0000_t202" style='position:absolute;
+ left:0;text-align:left;margin-left:261pt;margin-top:78pt;width:117pt;height:63pt;
+ flip:y;z-index:2' fillcolor="#cff">
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoBodyText2>Model</p>
+    <p class=MsoBodyText2><o:p>&nbsp;</o:p></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:shape id="_x0000_s1452" type="#_x0000_t202" style='position:absolute;
+ left:0;text-align:left;margin-left:2in;margin-top:78pt;width:117pt;height:63pt;
+ flip:y;z-index:3' fillcolor="#cff">
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoBodyText2>Transformation</p>
+    <p class=MsoBodyText2>Tools</p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:shapetype id="_x0000_t132" coordsize="21600,21600" o:spt="132"
+ path="m10800,qx,3391l,18209qy10800,21600,21600,18209l21600,3391qy10800,xem,3391nfqy10800,6782,21600,3391e">
+ <v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="custom"
+  o:connectlocs="10800,6782;10800,0;0,10800;10800,21600;21600,10800"
+  o:connectangles="270,270,180,90,0" textboxrect="0,6782,21600,18209"/>
+</v:shapetype><v:shape id="_x0000_s1455" type="#_x0000_t132" style='position:absolute;
+ left:0;text-align:left;margin-left:297pt;margin-top:198.75pt;width:54pt;
+ height:54pt;z-index:5'>
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=BodyText style='margin-bottom:0in;margin-bottom:.0001pt;
+    mso-pagination:widow-orphan'>Model</p>
+    <p class=BodyText style='margin-bottom:0in;margin-bottom:.0001pt;
+    mso-pagination:widow-orphan'>Storage</p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:line id="_x0000_s1457" style='position:absolute;left:0;
+ text-align:left;z-index:7' from="198pt,152.25pt" to="198pt,188.25pt">
+ <v:stroke startarrow="classic" endarrow="classic"/>
+</v:line><v:line id="_x0000_s1513" style='position:absolute;left:0;
+ text-align:left;z-index:29' from="108pt,50.25pt" to="135pt,50.25pt">
+ <v:stroke startarrow="classic" endarrow="classic"/>
+</v:line><v:shapetype id="_x0000_t75" coordsize="21600,21600" o:spt="75"
+ o:preferrelative="t" path="m@4@5l@4@11@9@11@9@5xe" filled="f" stroked="f">
+ <v:stroke joinstyle="miter"/>
+ <v:formulas>
+  <v:f eqn="if lineDrawn pixelLineWidth 0"/>
+  <v:f eqn="sum @0 1 0"/>
+  <v:f eqn="sum 0 0 @1"/>
+  <v:f eqn="prod @2 1 2"/>
+  <v:f eqn="prod @3 21600 pixelWidth"/>
+  <v:f eqn="prod @3 21600 pixelHeight"/>
+  <v:f eqn="sum @0 0 1"/>
+  <v:f eqn="prod @6 1 2"/>
+  <v:f eqn="prod @7 21600 pixelWidth"/>
+  <v:f eqn="sum @8 21600 0"/>
+  <v:f eqn="prod @7 21600 pixelHeight"/>
+  <v:f eqn="sum @10 21600 0"/>
+ </v:formulas>
+ <v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"/>
+ <o:lock v:ext="edit" aspectratio="t"/>
+</v:shapetype><v:shape id="_x0000_s1514" type="#_x0000_t75" style='position:absolute;
+ left:0;text-align:left;margin-left:54pt;margin-top:32.25pt;width:63pt;
+ height:47.7pt;z-index:30'>
+ <v:imagedata src="DB_UML_dev_files/image003.wmz" o:title="BD18190_"/>
+</v:shape><v:line id="_x0000_s1456" style='position:absolute;left:0;
+ text-align:left;z-index:6' from="324pt,152.25pt" to="324pt,188.25pt">
+ <v:stroke startarrow="classic" endarrow="classic"/>
+</v:line><v:shape id="_x0000_s1453" type="#_x0000_t132" style='position:absolute;
+ left:0;text-align:left;margin-left:171pt;margin-top:198.75pt;width:54pt;
+ height:54pt;z-index:4'>
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=BodyText style='margin-bottom:0in;margin-bottom:.0001pt;
+    mso-pagination:widow-orphan'><span style='mso-bidi-font-size:12.0pt;
+    font-family:"Times New Roman"'>Database<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>Catalog<o:p></o:p></span></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><![endif]--><![if !vml]><span style='mso-ignore:vglayout'>
+
+<table cellpadding=0 cellspacing=0 align=left>
+ <tr>
+  <td width=72 height=16></td>
+  <td width=110></td>
+  <td width=7></td>
+  <td width=36></td>
+  <td width=33></td>
+  <td width=12></td>
+  <td width=33></td>
+  <td width=90></td>
+  <td width=33></td>
+  <td width=12></td>
+  <td width=33></td>
+  <td width=36></td>
+ </tr>
+ <tr>
+  <td height=29></td>
+  <td colspan=2></td>
+  <td colspan=9 rowspan=3 align=left valign=top><img width=318 height=177
+  src="DB_UML_dev_files/image004.gif"
+  alt="Text Box: Model&#13;&#10;&#13;&#10;,Text Box: Transformation&#13;&#10;Tools&#13;&#10;"
+  v:shapes="_x0000_s1450 _x0000_s1451 _x0000_s1452"></td>
+ </tr>
+ <tr>
+  <td height=64></td>
+  <td align=left valign=top><img width=110 height=64
+  src="DB_UML_dev_files/image005.gif" v:shapes="_x0000_s1513 _x0000_s1514"></td>
+ </tr>
+ <tr>
+  <td height=84></td>
+ </tr>
+ <tr>
+  <td height=10></td>
+ </tr>
+ <tr>
+  <td height=52></td>
+  <td colspan=4></td>
+  <td align=left valign=top><img width=12 height=52
+  src="DB_UML_dev_files/image006.gif" v:shapes="_x0000_s1457"></td>
+  <td colspan=3></td>
+  <td align=left valign=top><img width=12 height=52
+  src="DB_UML_dev_files/image006.gif" v:shapes="_x0000_s1456"></td>
+ </tr>
+ <tr>
+  <td height=9></td>
+ </tr>
+ <tr>
+  <td height=78></td>
+  <td colspan=3></td>
+  <td colspan=3 align=left valign=top><img width=78 height=78
+  src="DB_UML_dev_files/image007.gif"
+  alt="Flowchart: Magnetic Disk: Database&#13;&#10;Catalog&#13;&#10;" v:shapes="_x0000_s1453"></td>
+  <td></td>
+  <td colspan=3 align=left valign=top><img width=78 height=78
+  src="DB_UML_dev_files/image008.gif"
+  alt="Flowchart: Magnetic Disk: Model&#13;&#10;Storage&#13;&#10;" v:shapes="_x0000_s1455"></td>
+ </tr>
+</table>
+
+</span><![endif]><span style='mso-bidi-font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:1.0in'><span style='mso-bidi-font-family:
+Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:1.0in'><span style='mso-bidi-font-family:
+Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:1.0in'><span style='mso-bidi-font-family:
+Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:1.0in'><span style='mso-bidi-font-family:
+Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:1.0in'><span style='mso-bidi-font-family:
+Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:1.0in'><span style='mso-bidi-font-family:
+Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:1.0in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText style='margin-left:1.0in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText style='margin-left:1.0in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText style='margin-left:1.0in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText style='margin-left:1.0in'><o:p>&nbsp;</o:p></p>
+
+<br style='mso-ignore:vglayout' clear=ALL>
+
+<p class=MsoBodyText style='margin-left:.5in'>The <b>UML GUI </b>component
+provides the GUI for the tool.<span style='mso-spacerun:yes'>  </span>The GUI
+is specific to the UML model.<span style='mso-spacerun:yes'>  </span>It uses
+the<b> Model</b> component to represent the elements of models and to store
+models.<span style='mso-spacerun:yes'>  </span>It also uses <b>Transformation
+Tools</b>.<span style='mso-spacerun:yes'>  </span>The tools accept
+transformation definitions for transforming one model into another. For
+database modeling tools the transformations need to access database catalogs.</p>
+
+<h2 style='margin-left:.5in'><a name="_Toc66860153">UML GUI</a></h2>
+
+<p class=MsoBodyText>The language used to model databases is a UML profile
+called DB-UML (see UML Database Modeling).<span style='mso-spacerun:yes'> 
+</span>As DB-UML is a UML profile it uses standard UML extension
+mechanisms.<span style='mso-spacerun:yes'>  </span>Existing UML modeling tools
+can be used to create DB-UML models.<span style='mso-spacerun:yes'> 
+</span>However to be easy to use, the GUI of the modeling tool needs to be
+specific to the DB-UML profile.<span style='mso-spacerun:yes'>  </span>Also the
+GUI needs to provide access to transformations that are relevant for database
+modeling. </p>
+
+<h2 style='text-indent:.5in'><a name="_Toc66860154">Model</a></h2>
+
+<p class=MsoBodyText>The model component should be based on the Meta Object
+Facility (MOF).<span style='mso-spacerun:yes'>  </span>Model storage should use
+the <span style='mso-bidi-font-family:Arial'>XML Metadata Interchange (XMI)
+language.<span style='mso-spacerun:yes'>  </span>This provides interoperability
+with other modeling tools and enables use of transformation tools<o:p></o:p></span></p>
+
+<h2><span style='mso-tab-count:1'>            </span><a name="_Toc66860155">Transformation
+Tools</a></h2>
+
+<p class=MsoBodyText>Transformation tools transform between models and
+implementations or between models.<span style='mso-spacerun:yes'> 
+</span>Currently there is no standard for a translation definition
+language.<span style='mso-spacerun:yes'>  </span>However, standards and tools
+supporting standards will be available in the future and the modeling tool
+should be structured so that new tools can be integrated.<span
+style='mso-spacerun:yes'>  </span></p>
+
+<h1 style='page-break-before:always'><a name="_Toc66860156"><sup><span
+style='font-size:18.0pt;mso-bidi-font-family:Arial;position:relative;
+top:0pt;mso-text-raise:0pt'>Tool Architecture Overview</span></sup></a><sup><span
+style='font-size:18.0pt;mso-bidi-font-family:Arial;position:relative;
+top:0pt;mso-text-raise:0pt'><o:p></o:p></span></sup></h1>
+
+<p class=MsoBodyText style='margin-left:.5in'>ArgoUML is used as a basis for
+the DB-UML Modeling Tool.<span style='mso-spacerun:yes'>  </span>ArgoUML is an
+open source UML modeling tool (see <a href="http://argouml.tigris.org/">http://ArgoUML.tigris.org/</a>
+).<span style='mso-spacerun:yes'>  </span>The following diagram shows DB-UML
+and ArgoUML components:</p>
+
+<p class=MsoBodyText style='margin-left:.5in'><!--[if gte vml 1]><v:shape id="_x0000_s1470"
+ type="#_x0000_t132" style='position:absolute;left:0;text-align:left;
+ margin-left:5in;margin-top:344.75pt;width:54pt;height:54.75pt;z-index:9'>
+ <v:textbox style='mso-next-textbox:#_x0000_s1470'>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=BodyText style='margin-bottom:0in;margin-bottom:.0001pt;
+    mso-pagination:widow-orphan'><span style='mso-bidi-font-size:12.0pt;
+    font-family:"Times New Roman"'>Database<o:p></o:p></span></p>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>Catalog<o:p></o:p></span></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:shape id="_x0000_s1467" type="#_x0000_t202" style='position:absolute;
+ left:0;text-align:left;margin-left:153pt;margin-top:10.25pt;width:171pt;
+ height:90pt;z-index:8' fillcolor="#cfc">
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoBodyText2>ArgoUML </p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:line id="_x0000_s1478" style='position:absolute;left:0;
+ text-align:left;z-index:11' from="126pt,65.75pt" to="153pt,65.75pt">
+ <v:stroke startarrow="classic" endarrow="classic"/>
+</v:line><v:shape id="_x0000_s1480" type="#_x0000_t202" style='position:absolute;
+ left:0;text-align:left;margin-left:162pt;margin-top:38pt;width:63pt;height:36pt;
+ flip:y;z-index:12' fillcolor="#cff">
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoBodyText2>GUI</p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:shape id="_x0000_s1481" type="#_x0000_t75" style='position:absolute;
+ left:0;text-align:left;margin-left:1in;margin-top:47pt;width:63pt;height:47.7pt;
+ z-index:13'>
+ <v:imagedata src="DB_UML_dev_files/image003.wmz" o:title="BD18190_"/>
+</v:shape><v:shape id="_x0000_s1482" type="#_x0000_t202" style='position:absolute;
+ left:0;text-align:left;margin-left:252pt;margin-top:38pt;width:63pt;height:36pt;
+ flip:y;z-index:14' fillcolor="#cff">
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoBodyText2 align=left style='text-align:left'>Model</p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:line id="_x0000_s1483" style='position:absolute;left:0;
+ text-align:left;z-index:15' from="324pt,65.75pt" to="351pt,65.75pt">
+ <v:stroke startarrow="classic" endarrow="classic"/>
+</v:line><v:shape id="_x0000_s1484" type="#_x0000_t202" style='position:absolute;
+ left:0;text-align:left;margin-left:153pt;margin-top:104pt;width:171pt;
+ height:90pt;z-index:16' fillcolor="#cfc">
+ <v:textbox style='mso-next-textbox:#_x0000_s1484'>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoBodyText2>ArgoUML Facade </p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:shape id="_x0000_s1485" type="#_x0000_t202" style='position:absolute;
+ left:0;text-align:left;margin-left:162pt;margin-top:131pt;width:63pt;height:36pt;
+ flip:y;z-index:17' fillcolor="#cff">
+ <v:textbox style='mso-next-textbox:#_x0000_s1485'>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoBodyText2>GUI</p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:shape id="_x0000_s1486" type="#_x0000_t202" style='position:absolute;
+ left:0;text-align:left;margin-left:252pt;margin-top:131pt;width:63pt;height:36pt;
+ flip:y;z-index:18' fillcolor="#cff">
+ <v:textbox style='mso-next-textbox:#_x0000_s1486'>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoBodyText2 align=left style='text-align:left'>Model</p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:shape id="_x0000_s1487" type="#_x0000_t202" style='position:absolute;
+ left:0;text-align:left;margin-left:153pt;margin-top:196.25pt;width:171pt;
+ height:198pt;z-index:19' fillcolor="#cfc">
+ <v:textbox style='mso-next-textbox:#_x0000_s1487'>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoBodyText2>DB-UML </p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:shape id="_x0000_s1488" type="#_x0000_t202" style='position:absolute;
+ left:0;text-align:left;margin-left:162pt;margin-top:290.75pt;width:63pt;
+ height:36pt;flip:y;z-index:20' fillcolor="#cff">
+ <v:textbox style='mso-next-textbox:#_x0000_s1488'>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoBodyText2>Trans-</p>
+    <p class=MsoBodyText2>formers</p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:shape id="_x0000_s1489" type="#_x0000_t202" style='position:absolute;
+ left:0;text-align:left;margin-left:252pt;margin-top:290.75pt;width:63pt;
+ height:36pt;flip:y;z-index:21' fillcolor="#cff">
+ <v:textbox style='mso-next-textbox:#_x0000_s1489'>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoBodyText2 align=left style='text-align:left'>Model</p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:shape id="_x0000_s1490" type="#_x0000_t202" style='position:absolute;
+ left:0;text-align:left;margin-left:207pt;margin-top:353.75pt;width:63pt;
+ height:36pt;flip:y;z-index:22' fillcolor="#cff">
+ <v:textbox style='mso-next-textbox:#_x0000_s1490'>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoBodyText2 align=left style='text-align:left'>Catalog</p>
+    <p class=MsoBodyText2 align=left style='text-align:left'>Interface</p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:line id="_x0000_s1491" style='position:absolute;left:0;
+ text-align:left;z-index:23' from="279pt,371.75pt" to="351pt,371.75pt">
+ <v:stroke startarrow="classic" endarrow="classic"/>
+</v:line><v:line id="_x0000_s1504" style='position:absolute;left:0;
+ text-align:left;z-index:24' from="4in,177.5pt" to="4in,276.5pt">
+ <v:stroke startarrow="classic" endarrow="block"/>
+</v:line><v:line id="_x0000_s1506" style='position:absolute;left:0;
+ text-align:left;z-index:25' from="4in,84.5pt" to="4in,120.5pt">
+ <v:stroke startarrow="classic" endarrow="block"/>
+</v:line><v:line id="_x0000_s1507" style='position:absolute;left:0;
+ text-align:left;flip:y;z-index:26' from="189pt,84.5pt" to="189pt,120.5pt">
+ <v:stroke startarrow="classic" endarrow="block"/>
+</v:line><v:line id="_x0000_s1508" style='position:absolute;left:0;
+ text-align:left;flip:y;z-index:27' from="189pt,177.5pt" to="189pt,213.5pt">
+ <v:stroke startarrow="classic" endarrow="block"/>
+</v:line><v:shape id="_x0000_s1511" type="#_x0000_t202" style='position:absolute;
+ left:0;text-align:left;margin-left:162pt;margin-top:224pt;width:1in;height:36pt;
+ flip:y;z-index:28' fillcolor="#cff">
+ <v:textbox style='mso-next-textbox:#_x0000_s1511'>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoBodyText2>Controllers</p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:shape id="_x0000_s1471" type="#_x0000_t132" style='position:absolute;
+ left:0;text-align:left;margin-left:5in;margin-top:38pt;width:45pt;height:54.75pt;
+ z-index:10'>
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=BodyText style='margin-bottom:0in;margin-bottom:.0001pt;
+    mso-pagination:widow-orphan'>Model</p>
+    <p class=BodyText style='margin-bottom:0in;margin-bottom:.0001pt;
+    mso-pagination:widow-orphan'>Storage</p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><![endif]--><![if !vml]><span style='mso-ignore:vglayout'>
+
+<table cellpadding=0 cellspacing=0 align=left>
+ <tr>
+  <td width=96 height=13></td>
+  <td width=374></td>
+  <td width=7></td>
+  <td width=66></td>
+  <td width=12></td>
+ </tr>
+ <tr>
+  <td height=37></td>
+  <td rowspan=4 align=left valign=top><img width=374 height=518
+  src="DB_UML_dev_files/image011.gif"
+  alt="Text Box: GUI,Text Box: Model,Text Box: GUI,Text Box: Model,Text Box: Trans-&#13;&#10;formers&#13;&#10;,Text Box: Model,Text Box: Catalog&#13;&#10;Interface&#13;&#10;,Text Box: Controllers"
+  v:shapes="_x0000_s1467 _x0000_s1478 _x0000_s1480 _x0000_s1481 _x0000_s1482 _x0000_s1483 _x0000_s1484 _x0000_s1485 _x0000_s1486 _x0000_s1487 _x0000_s1488 _x0000_s1489 _x0000_s1490 _x0000_s1491 _x0000_s1504 _x0000_s1506 _x0000_s1507 _x0000_s1508 _x0000_s1511"></td>
+ </tr>
+ <tr>
+  <td height=79></td>
+  <td></td>
+  <td align=left valign=top><img width=66 height=79
+  src="DB_UML_dev_files/image010.gif"
+  alt="Flowchart: Magnetic Disk: Model&#13;&#10;Storage&#13;&#10;" v:shapes="_x0000_s1471"></td>
+ </tr>
+ <tr>
+  <td height=330></td>
+ </tr>
+ <tr>
+  <td height=72></td>
+  <td></td>
+  <td colspan=2 rowspan=2 align=left valign=top><img width=78 height=79
+  src="DB_UML_dev_files/image014.gif"
+  alt="Flowchart: Magnetic Disk: Database&#13;&#10;Catalog&#13;&#10;" v:shapes="_x0000_s1470"></td>
+ </tr>
+ <tr>
+  <td height=7></td>
+ </tr>
+</table>
+
+</span><![endif]><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<h2><o:p>&nbsp;</o:p></h2>
+
+<h2><o:p>&nbsp;</o:p></h2>
+
+<h2><o:p>&nbsp;</o:p></h2>
+
+<h2><o:p>&nbsp;</o:p></h2>
+
+<h2><o:p>&nbsp;</o:p></h2>
+
+<br style='mso-ignore:vglayout' clear=ALL>
+
+<h2><a name="_Toc66860157">ArgoUML</a></h2>
+
+<p class=MsoBodyText style='margin-left:.5in'>ArgoUML (package org.argouml.*)
+implements a UML GUI providing diagrams, explorer trees, property sheets and
+menus. </p>
+
+<p class=MsoBodyText style='margin-left:.5in'>Argo implements a Model based on
+the <span style='mso-bidi-font-family:Arial'>Metadata Repository project
+(MDR).<span style='mso-spacerun:yes'>  </span>MDR is a Netbeans project that
+implements an MOF repository (see <a href="http://mdr.netbeans.org/">http://mdr.netbeans.org/</a>
+).<span style='mso-spacerun:yes'>  </span>An implementation of the Java
+Metadata Interface is provided (JMI).<span style='mso-spacerun:yes'>  </span><o:p></o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:.5in'>ArgoUML has a “module”
+architecture where modules can be added to extend behavior.<span
+style='mso-spacerun:yes'>  </span>Most of the database modeling tool has been
+developed as an ArgoUML module.<span style='mso-spacerun:yes'>  </span>This
+will allow future versions of ArgoUML to be utilized without large
+changes.<span style='mso-spacerun:yes'>  </span>However, some minor changes to
+ArgoUML are also necessary as there are areas of ArgoUML that can not be
+extended. </p>
+
+<h2><a name="_Toc66860158">Argo</a>UML Facade</h2>
+
+<p class=MsoBodyText style='margin-left:.5in'>ArgoUML Façade components
+(package org.dbuml.argo.*) are implemented as an ArgoUML “module”.<span
+style='mso-spacerun:yes'>  </span>The GUI component implements GUI extensions
+for the DB-UML profile.<span style='mso-spacerun:yes'>  </span>The extensions
+add new diagrams, toolbars and menu items to facilitate models using the DBUML
+language.<span style='mso-spacerun:yes'>    </span></p>
+
+<p class=MsoBodyText style='margin-left:.5in'>The model component stands in
+front of the <span style='mso-bidi-font-weight:bold'>ArgoUML Model</span> to
+insulate components from changes in ArgoUML.<span style='mso-spacerun:yes'> 
+</span>It also provides a view of the UML model that is specific to the DB-UML
+profile.<span style='mso-spacerun:yes'>  </span></p>
+
+<h2><a name="_Toc66860159">DB-UML</a></h2>
+
+<p class=MsoBodyText style='margin-left:.5in'>DB-UML components (package
+org.dbuml.base.*) implement Controllers for the actions needed by the
+tool.<span style='mso-spacerun:yes'>  </span>The Controllers implement
+particular actions using the other components of DB-UML</p>
+
+<p class=MsoBodyText style='margin-left:.5in'>DB-UML components implement
+Transformers for the DB-UML profile.<span style='mso-spacerun:yes'> 
+</span>These provide transformations between models or between models and
+implementations.<span style='mso-spacerun:yes'>   </span>The Transformers
+utilize a Catalog Interface for database metadata and utilize a Model component
+to represent the model.</p>
+
+<p class=MsoBodyText style='margin-left:.5in'>The Catalog Interface is generic
+and uses standard JDBC metadata.<span style='mso-spacerun:yes'>  </span>It
+allows the actual JDBC driver to be specified at runtime.<span
+style='mso-spacerun:yes'>  </span>A Database element defines the JDBC driver it
+will use.</p>
+
+<p class=MsoBodyText style='margin-left:.5in'>The Model component in DBUML is
+an abstraction of the DB-UML profile.<span style='mso-spacerun:yes'> 
+</span>(the Model component in the ArgoUML Façade is the realization of the
+DB-UML profile using the ArgoUML Model)</p>
+
+<p class=MsoBodyText style='margin-left:.5in'><span style='background:yellow;
+mso-highlight:yellow'>DB-UML components have no dependencies on ArgoUML</span>.
+</p>
+
+<p class=MsoBodyText style='margin-left:.5in'>The above architecture can be
+extended to fit the needs of a particular database.<span
+style='mso-spacerun:yes'>  </span>The ArgoUML Façade components can be extended
+to provide additional ArgoUML GUI capabilities and additional model
+implementations.<span style='mso-spacerun:yes'>  </span>And DB-UML can be
+extended to provide additional model elements, controllers, transformers and
+database catalogs.<span style='mso-spacerun:yes'>  </span></p>
+
+<p class=MsoBodyText style='margin-left:.5in'>The above architecture implements
+several important goals:</p>
+
+<p class=MsoBodyText style='text-indent:-.25in;mso-list:l1 level1 lfo2;
+tab-stops:list .75in'><![if !supportLists]><span style='mso-fareast-font-family:
+Arial;mso-bidi-font-family:Arial'><span style='mso-list:Ignore'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>Tools
+for the DB-UML profile must be “pluggable” into an existing UML tool.<span
+style='mso-spacerun:yes'>  </span>This leverages the functionality of an
+existing tool and allows integration with future versions of a tool.</p>
+
+<p class=MsoBodyText style='text-indent:-.25in;mso-list:l1 level1 lfo2;
+tab-stops:list .75in'><![if !supportLists]><span style='mso-fareast-font-family:
+Arial;mso-bidi-font-family:Arial'><span style='mso-list:Ignore'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>The
+architecture must insulate controllers and transformers from a particular UML
+tool so that they be used with other tools.</p>
+
+<p class=MsoBodyText style='text-indent:-.25in;mso-list:l1 level1 lfo2;
+tab-stops:list .75in'><![if !supportLists]><span style='mso-fareast-font-family:
+Arial;mso-bidi-font-family:Arial'><span style='mso-list:Ignore'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>The
+architecture must insulate controllers and transformers from the implementation
+of the model.</p>
+
+<p class=MsoBodyText style='text-indent:-.25in;mso-list:l1 level1 lfo2;
+tab-stops:list .75in'><![if !supportLists]><span style='mso-fareast-font-family:
+Arial;mso-bidi-font-family:Arial'><span style='mso-list:Ignore'>4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>It
+should be possible to determine JDBC drivers at run-time.</p>
+
+<p class=MsoBodyText style='text-indent:-.25in;mso-list:l1 level1 lfo2;
+tab-stops:list .75in'><![if !supportLists]><span style='mso-fareast-font-family:
+Arial;mso-bidi-font-family:Arial'><span style='mso-list:Ignore'>5.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>It
+should be possible to extend the DB-UML GUI and the DB-UML model for additional
+database capabilities.</p>
+
+<p class=MsoBodyText><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText><o:p>&nbsp;</o:p></p>
+
+<h1 style='page-break-before:always'><a name="_Toc66860160"><sup><span
+style='font-size:18.0pt;mso-bidi-font-family:Arial;position:relative;
+top:0pt;mso-text-raise:0pt'>Package Structure</span></sup></a><sup><span
+style='font-size:18.0pt;mso-bidi-font-family:Arial;position:relative;
+top:0pt;mso-text-raise:0pt'><o:p></o:p></span></sup></h1>
+
+<p class=MsoBodyText style='margin-left:.5in'>The package structure of the
+modeling tool isw shown in the following diagram:</p>
+
+<p class=MsoBodyText style='margin-left:.5in'><!--[if gte vml 1]><v:shape id="_x0000_i1025"
+ type="#_x0000_t75" style='width:489.75pt;height:442.5pt'>
+ <v:imagedata src="DB_UML_dev_files/image012.gif" o:title="packages"/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=653 height=590
+src="DB_UML_dev_files/image012.gif" v:shapes="_x0000_i1025"><![endif]></p>
+
+<p class=MsoBodyText style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<h2><a name="_Toc66860161">org.argouml</a></h2>
+
+<p class=MsoBodyText>The org.argouml packages implement the ArgoUML tool
+providing a model implementation and a UML GUI.</p>
+
+<h4 style='text-indent:.5in'>uml.ui</h4>
+
+<p class=MsoBodyText>The uml.ui package loads menu items defined in the
+org.dbuml.argo package at initialization time.<span style='mso-spacerun:yes'> 
+</span>These menu items added when the module is initialized.<span
+style='mso-spacerun:yes'>  </span>ArgoUML loads all “modules” in<span
+style='mso-spacerun:yes'>  </span>jars located in its “ext” folder during
+initialization and call an initialization method.<span
+style='mso-spacerun:yes'>  </span>The method adds menu items to create database
+deployment and schema diagrams.</p>
+
+<p class=MsoBodyText>The actual name of the module class to load is defined in
+the manifest of the module jar. For example:</p>
+
+<p class=MsoBodyText><span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>Manifest-Version:
+2.0<br>
+Created-By: 1.4.1 (Sun Microsystem Inc.)<br>
+Name: org/dbuml/argo/uml/ui/DBModule.class<br>
+Specification-Title: ArgoUML Dynamic Load Module<br>
+Implementation-Title: DBUML Module<br>
+Specification-Vendor: <st1:place w:st="on"><st1:PlaceType w:st="on">University</st1:PlaceType>
+ of <st1:PlaceName w:st="on">California</st1:PlaceName></st1:place><br>
+Specification-Version: 0.9.10<br>
+Extension-name: module.tools.test<br>
+Implementation-Version: 0.9.10<br>
+Implementation-Vendor: test </span>In the above manifest the menu item to
+create is <span style='font-size:9.0pt;mso-bidi-font-size:10.0pt'>DBSchemaDiagramMenu.class.<span
+style='mso-spacerun:yes'>  </span><o:p></o:p></span></p>
+
+<h4 style='text-indent:.5in'>model</h4>
+
+<p class=MsoBodyText>Argo implements a Model based on the MOF. Access to the
+model is through the façade ModelFacade. </p>
+
+<p class=MsoBodyText><o:p>&nbsp;</o:p></p>
+
+<h2>org.dbuml.argo</h2>
+
+<h4 style='text-indent:.5in'>ui &amp; diagram</h4>
+
+<p class=MsoBodyText>The ui and diagram packages implement the GUI extensions
+for the DB-UML profile.<span style='mso-spacerun:yes'>  </span>Menu items are
+add during module initialization to create Database Schema diagrams and to
+create Database Deployment diagrams.<span style='mso-spacerun:yes'>  </span>The
+DBSchemaDiagram class pictures Schemas and their owned elements.<span
+style='mso-spacerun:yes'>  </span>It is the equivalent of a class diagram and
+extends the ArgoUML class diagram class<span style='mso-spacerun:yes'>  
+</span>The DBDeployment class pictures Database elements.<span
+style='mso-spacerun:yes'>  </span>It is the equivalent of a deployment diagrams
+and extends the ArgoUML deployment diagram class.</p>
+
+<p class=MsoBodyText>The diagrams define various actions to support the DB-UML
+profile.<span style='mso-spacerun:yes'>  </span>For example, a Database figure
+in a Database Deployment diagram has a “Connect to Catalog” action in its
+pop-up menu.<span style='mso-spacerun:yes'>  </span>Actions delegate the actual
+work to controllers in the org.dbuml.controller package.<span
+style='mso-spacerun:yes'>  </span>Actions can be defined as toolbars on
+diagrams and as popup menus in figures on diagrams.<span
+style='mso-spacerun:yes'>  </span></p>
+
+<p class=MsoBodyText>Actions can also be defined as Popup menus on the ArgoUML
+Explorer.<span style='mso-spacerun:yes'>  </span>However, this in not part of
+the “plug-in” architecture and currently, ArgoUML code must be changed to call
+these actions.</p>
+
+<h4 style='text-indent:.5in'>model</h4>
+
+<p class=MsoBodyText>org.dbuml.argo provides an implementation of the DB-UML
+profile using the ArgoUML model.<span style='mso-spacerun:yes'>  </span>ArgoDBModelFacade
+is the ArgoUML implementation of the interface DBModelFacadeInterface (defined
+in org.dbuml.model).<span style='mso-spacerun:yes'>  </span><span
+style='background:yellow;mso-highlight:yellow'>ArgoDBModelFacade is the only
+class to interface with ArgoUML’s model</span>.<span style='mso-spacerun:yes'> 
+</span>It actually only uses ArgoUML’s model façade classes and never directly
+uses ArgoUML’s model implementation.<span style='mso-spacerun:yes'>  </span></p>
+
+<h2><a name="_Toc66860163">org.dbuml</a>.base</h2>
+
+<p class=MsoBodyText>The org.dbuml.base packages implement the controllers,
+transformers and catalog interface needed by the modeling tool.<span
+style='mso-spacerun:yes'>  </span>It also contains an abstraction of the
+model.<span style='mso-spacerun:yes'>  </span><span style='background:yellow;
+mso-highlight:yellow'>The packages are not dependent on the UML tool, the model
+implementation or the database implementation.</span><span
+style='mso-spacerun:yes'>  </span></p>
+
+<h4 style='text-indent:.5in'>controller</h4>
+
+<p class=MsoBodyText><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText>DBUML components implement Controllers for the actions
+needed by the tool.<span style='mso-spacerun:yes'>  </span><span
+style='background:yellow;mso-highlight:yellow'>The Controllers implement
+particular actions using the other components of DB-UML as in a “Model, View
+Controller” pattern.</span></p>
+
+<p class=MsoBodyText><b style='mso-bidi-font-weight:normal'><i
+style='mso-bidi-font-style:normal'>NOTE: a review of the controller’s use of
+Swing is necessary</i>.<o:p></o:p></b></p>
+
+<h4 style='text-indent:.5in'>transfom</h4>
+
+<p class=MsoBodyText>The transform classes provide transformations between
+models or between models and implementations.<span style='mso-spacerun:yes'> 
+</span><span style='background:yellow;mso-highlight:yellow'>They access the
+model via the model package and they access the catalog via the database
+package.<span style='mso-spacerun:yes'>  </span>Transformers are invoked by
+controllers</span>.</p>
+
+<p class=MsoBodyText>The actual implementation of the transformers is defined
+by the implementation of the Factory interface.<span style='mso-spacerun:yes'> 
+</span><span style='background:yellow;mso-highlight:yellow'>A database supplier
+provides an implementation of transformers or they can use the generic
+implementation.</span><span style='mso-spacerun:yes'>  </span></p>
+
+<h3 align=left style='margin-left:.25in;text-align:left;text-indent:.5in'><a
+name="_Toc66860164">DBMetadataToDBUML</a></h3>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:Arial'>The <b>DBMetadataToDBUML </b>transformer
+generates a DBUML model based on catalog metadata.<span
+style='mso-spacerun:yes'>  </span>Catalog metadata is retrieved using the database
+package and the model is generated using the model package.<span
+style='mso-spacerun:yes'>   </span>The transformer is used by the following
+actions:<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l0 level1 lfo4;
+tab-stops:list 1.25in'><![if !supportLists]><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:Arial;mso-fareast-font-family:Arial'><span
+style='mso-list:Ignore'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Arial'>Import Schemas action from a Model Element.<span
+style='mso-spacerun:yes'>  </span>The buildSchema method is used to build a
+Schema model element.<span style='mso-spacerun:yes'>  </span>No owned elements
+of the Schema are built.<span style='mso-spacerun:yes'>  </span>These can be
+built using other actions.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l0 level1 lfo4;
+tab-stops:list 1.25in'><![if !supportLists]><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:Arial;mso-fareast-font-family:Arial'><span
+style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Arial'>Import Tables action from a Schema Element.<span
+style='mso-spacerun:yes'>  </span>The buildTable method is used to build a
+Table model element.<span style='mso-spacerun:yes'>  </span>All owned Column
+elements of the Table are built.<span style='mso-spacerun:yes'>  </span>Index
+constrains are added to the Table corresponding to Index definitions.<span
+style='mso-spacerun:yes'>  </span>If the Table completes any associations
+(foreign key, reference, generalization, derivation) the associations are
+added.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l0 level1 lfo4;
+tab-stops:list 1.25in'><![if !supportLists]><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:Arial;mso-fareast-font-family:Arial'><span
+style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:Arial'>Import Views action from a Schema Element.<span
+style='mso-spacerun:yes'>  </span>The buildView method is used to build a View
+model element.<span style='mso-spacerun:yes'>  </span>All owned Column elements
+of the View are built. If the View completes any derivation associations the
+associations are added.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.0in'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-tab-count:2'>                        </span></p>
+
+<h3 align=left style='margin-left:.75in;text-align:left'><a name="_Toc66860165">DBUMLToSQL</a></h3>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'>The <b style='mso-bidi-font-weight:normal'>DBUMLToSQL</b>
+provides methods for generating SQL statements from a DBUML model. It uses
+Velocity which is a Java-based template engine.<span style='mso-spacerun:yes'> 
+</span>We used DBUML model in Velocity context to produce DDL statements
+designed with a Velocity template. See <a
+href="http://velocity.apache.org/engine/releases/velocity-1.5/user-guide.html">Velocity
+User Guide</a> and <a
+href="http://velocity.apache.org/engine/releases/velocity-1.5/developer-guide.html">Velocity
+Developer’s Guide</a> for information about Velocity Template Language (VTL).<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'>To generate SQL DDL statements for tables we used a Velocity
+template similar to the following:<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'>## SQL 92 source template<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'>########################################################<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'>##<span style='mso-spacerun:yes'>       </span>Create Table<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'>########################################################<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'>#set($colnum = $Table.getColumnsVector().size())<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'>CREATE TABLE $Namespace.$Table.getFixedName()<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'>(<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'>#foreach ($col in $Table.getColumnsVector())<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'>#set($colSize = $col.getLength())<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'>#set($colScale = $col.getScale())<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'>#set($colDefault = $col.getDefault()) <o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'><span style='mso-spacerun:yes'>   
+</span>$col.getFixedName() $col.getTypeName()#if($velocityCount &lt; $colnum),<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'>#end<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'>#end<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'>);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'>The template generates the following DDL statement:<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<h3 align=left style='margin-left:.75in;text-align:left'><span
+style='mso-bidi-font-size:10.0pt;font-weight:normal'>CREATE TABLE
+ord.orderfacts<o:p></o:p></span></h3>
+
+<h3 align=left style='margin-left:.75in;text-align:left'><span
+style='mso-bidi-font-size:10.0pt;font-weight:normal'>(<o:p></o:p></span></h3>
+
+<h3 align=left style='margin-left:.5in;text-align:left;text-indent:.5in'><span
+style='mso-bidi-font-size:10.0pt;font-weight:normal'>order_k INT4,<o:p></o:p></span></h3>
+
+<h3 align=left style='margin-left:.75in;text-align:left;text-indent:.25in'><span
+style='mso-bidi-font-size:10.0pt;font-weight:normal'>orderstat_k INT4,<o:p></o:p></span></h3>
+
+<h3 align=left style='margin-left:.75in;text-align:left;text-indent:.25in'><span
+style='mso-bidi-font-size:10.0pt;font-weight:normal'>shiploc_k INT4,<o:p></o:p></span></h3>
+
+<h3 align=left style='margin-left:1.0in;text-align:left'><span
+style='mso-bidi-font-size:10.0pt;font-weight:normal'>part_k INT4,<o:p></o:p></span></h3>
+
+<h3 align=left style='margin-left:.75in;text-align:left'><span
+style='mso-bidi-font-size:10.0pt;font-weight:normal'><span
+style='mso-spacerun:yes'> </span><span style='mso-tab-count:1'>     </span>product_k
+INT4,<o:p></o:p></span></h3>
+
+<h3 align=left style='margin-left:.75in;text-align:left;text-indent:.25in'><span
+style='mso-bidi-font-size:10.0pt;font-weight:normal'>cust_k INT4,<o:p></o:p></span></h3>
+
+<h3 align=left style='margin-left:.75in;text-align:left;text-indent:.25in'><span
+style='mso-bidi-font-size:10.0pt;font-weight:normal'>order_date_k INT4,<o:p></o:p></span></h3>
+
+<h3 align=left style='margin-left:.75in;text-align:left;text-indent:.25in'><span
+style='mso-bidi-font-size:10.0pt;font-weight:normal'>request_ship_date_k INT4,<o:p></o:p></span></h3>
+
+<h3 align=left style='margin-left:.75in;text-align:left;text-indent:.25in'><span
+style='mso-bidi-font-size:10.0pt;font-weight:normal'>last_ship_date_k INT4,<o:p></o:p></span></h3>
+
+<h3 align=left style='margin-left:.75in;text-align:left;text-indent:.25in'><span
+style='mso-bidi-font-size:10.0pt;font-weight:normal'>qty_ordered NUMERIC,<o:p></o:p></span></h3>
+
+<h3 align=left style='margin-left:.75in;text-align:left;text-indent:.25in'><span
+style='mso-bidi-font-size:10.0pt;font-weight:normal'>unit_price NUMERIC,<o:p></o:p></span></h3>
+
+<h3 align=left style='margin-left:.75in;text-align:left;text-indent:.25in'><span
+style='mso-bidi-font-size:10.0pt;font-weight:normal;mso-bidi-font-weight:bold'>backorder_qty
+NUMERIC);<o:p></o:p></span></h3>
+
+<h3 align=left style='margin-left:.75in;text-align:left;text-indent:.25in'><span
+style='mso-bidi-font-size:10.0pt'><o:p>&nbsp;</o:p></span></h3>
+
+<h3 align=left style='margin-left:.75in;text-align:left'><span
+style='mso-bidi-font-size:10.0pt;font-weight:normal;mso-bidi-font-weight:bold'>We
+followed Velocity’s fundamental pattern in GenericDBUMLToSQL.genCreateSQL()
+method (see <a
+href="http://velocity.apache.org/engine/releases/velocity-1.5/developer-guide.html">Velocity
+Developer’s Guide</a> for more information about the pattern).<o:p></o:p></span></h3>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'><span style='mso-tab-count:1'>      </span><span
+style='mso-spacerun:yes'>       </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'>That is, we performed the following:<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l2 level1 lfo6;
+tab-stops:list 1.25in'><![if !supportLists]><span style='font-size:10.0pt;
+font-family:Arial;mso-fareast-font-family:Arial'><span style='mso-list:Ignore'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]><span
+style='font-size:10.0pt;font-family:Arial'>Initialized the Velocity engine.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.0in;text-indent:.25in'><span
+style='font-size:10.0pt;font-family:Arial'>VelocityEngine engine = new
+VelocityEngine();<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:75.0pt;text-indent:15.0pt'><span
+style='font-size:10.0pt;font-family:Arial'>engine.init(Properties);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.0in;text-indent:.25in'><span
+style='font-size:10.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l2 level1 lfo6;
+tab-stops:list 1.25in'><![if !supportLists]><span style='font-size:10.0pt;
+font-family:Arial;mso-fareast-font-family:Arial'><span style='mso-list:Ignore'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]><span
+style='font-size:10.0pt;font-family:Arial'>Created a velocity context.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.25in'><span style='font-size:10.0pt;
+font-family:Arial'>VelocityContext context = new VelocityContext();<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.25in'><span style='font-size:10.0pt;
+font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l2 level1 lfo6;
+tab-stops:list 1.25in'><![if !supportLists]><span style='font-size:10.0pt;
+font-family:Arial;mso-fareast-font-family:Arial'><span style='mso-list:Ignore'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]><span
+style='font-size:10.0pt;font-family:Arial'>Added DBUML model to the context.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.0in;text-indent:.25in'><span
+style='font-size:10.0pt;font-family:Arial'>context.put(&quot;Table&quot;,
+(Table) dbe);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.0in;text-indent:.25in'><span
+style='font-size:10.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l2 level1 lfo6;
+tab-stops:list 1.25in'><![if !supportLists]><span style='font-size:10.0pt;
+font-family:Arial;mso-fareast-font-family:Arial'><span style='mso-list:Ignore'>4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]><span
+style='font-size:10.0pt;font-family:Arial'>Chose a template.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.25in'><span style='font-size:10.0pt;
+font-family:Arial'>Template templateCreateTables =
+engine.getTemplate(&quot;org/dbuml/base/transform/GenericCreateTables.vm&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.25in'><span style='font-size:10.0pt;
+font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.25in;text-indent:-.25in;mso-list:l2 level1 lfo6;
+tab-stops:list 1.25in'><![if !supportLists]><span style='font-size:10.0pt;
+font-family:Arial;mso-fareast-font-family:Arial'><span style='mso-list:Ignore'>5.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]><span
+style='font-size:10.0pt;font-family:Arial'>Merged the template and DBUML model
+to produce the output.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.0in;text-indent:.25in'><span
+style='font-size:10.0pt;font-family:Arial'>StringWriter writer =<span
+style='mso-spacerun:yes'>  </span>new StringWriter();<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.0in;text-indent:.25in'><span
+style='font-size:10.0pt;font-family:Arial'>templateCreateTables.merge(context,
+writer);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in'><span style='font-size:10.0pt;
+font-family:Arial'><span style='mso-tab-count:1'>      </span><o:p></o:p></span></p>
+
+<h3 align=left style='margin-left:.75in;text-align:left'><span
+style='mso-bidi-font-size:10.0pt;font-weight:normal;mso-bidi-font-weight:bold'>Generic
+DBUML Velocity templates are located in &quot;org/dbuml/base/transform&quot;
+folder</span><span style='font-weight:normal;mso-bidi-font-weight:bold'>.<o:p></o:p></span></h3>
+
+<p class=MsoNormal style='margin-left:.75in'><o:p>&nbsp;</o:p></p>
+
+<h3 style='margin-left:.75in'><o:p>&nbsp;</o:p></h3>
+
+<h3 align=left style='margin-left:.75in;text-align:left'><a name="_Toc66860166">UMLToDBUML</a></h3>
+
+<p class=MsoNormal style='margin-left:.75in'>To be supplied.</p>
+
+<p class=MsoNormal style='margin-left:.75in'><o:p>&nbsp;</o:p></p>
+
+<h3 align=left style='margin-left:.75in;text-align:left'><a name="_Toc66860167">DBUMLClassToProxy</a></h3>
+
+<p class=MsoNormal style='margin-left:.75in'>To be supplied.</p>
+
+<p class=MsoNormal style='margin-left:.75in'><o:p>&nbsp;</o:p></p>
+
+<h3 align=left style='margin-left:.75in;text-align:left'><a name="_Toc66860168">CDCMetadataToDBUML</a></h3>
+
+<p class=MsoNormal style='margin-left:.75in'>To be supplied.</p>
+
+<p class=MsoNormal style='margin-left:.75in'><o:p>&nbsp;</o:p></p>
+
+<h3 align=left style='margin-left:.75in;text-align:left'><a name="_Toc66860169">DBUMLToCacheControl</a></h3>
+
+<p class=MsoNormal style='margin-left:.75in'>To be supplied.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<h3 align=left style='margin-left:.25in;text-align:left;text-indent:.5in'><a
+name="_Toc66860170">XMLSchematoUML</a></h3>
+
+<p class=MsoNormal style='margin-left:.75in'>To be supplied.</p>
+
+<p class=MsoBodyText><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText><o:p>&nbsp;</o:p></p>
+
+<h4 style='text-indent:.5in'>model</h4>
+
+<p class=MsoBodyText>The model package represents the UML profile, DBUML.<span
+style='mso-spacerun:yes'>  </span>It “models” the database specific profile and
+it serves as a façade to the model implementation.<span
+style='mso-spacerun:yes'>  </span>The DBModelFacade class is an abstract class
+implementing DBModelFacadeInterface.<span style='mso-spacerun:yes'>  </span>All
+classes use DBModelFacade to access the model.<span style='mso-spacerun:yes'>  
+</span></p>
+
+<p class=MsoBodyText>Information is exchanged between DBModelFacade and other
+components such as controllers or transformers is through DBElements.<span
+style='mso-spacerun:yes'>  </span>DBElements are contrainers for information
+about database entities.<span style='mso-spacerun:yes'>  </span>They are used
+only to pass data back and forth.<span style='mso-spacerun:yes'>  </span>They
+are not used as a complete model.<span style='mso-spacerun:yes'>  </span></p>
+
+<p class=MsoBodyText>The actual implementation of DBModelFacade is defined by
+the implementation of DBSchemaDiagramMenu which is loaded by ArgoUML as a
+pluggable module.<span style='mso-spacerun:yes'>  </span>Only one
+implementation of DBModelFacade can be in place for an instance of ArgoUML.</p>
+
+<h4 style='text-indent:.5in'>database</h4>
+
+<p class=MsoBodyText>The database package is the interface to a database catalog.<span
+style='mso-spacerun:yes'>  </span>The DBMetadata class keeps a database
+Connection and a DatabaseMetadata object for the metadata at connect time.</p>
+
+<p class=MsoBodyText>A DBMetadata object is created for a model element
+(representing a database) when the “Connect to Catalog” action is chosen from
+the element’s popup menu.<span style='mso-spacerun:yes'>  </span>The DBMetadata
+object is associated with the model element through the “database” attribute.</p>
+
+<p class=MsoBodyText>A database supplier provides an implementation of
+DBMetadata or they can use the generic implementation.<span
+style='mso-spacerun:yes'>  </span>The implementation is created by a database
+supplier’s implementation of the Factory interface.</p>
+
+<p class=MsoBodyText>DBMetadata objects are collected by the DBMetadataCache </p>
+
+<p class=MsoBodyText>DBMetadata uses Connectionfactory to connect to a
+catalog.<span style='mso-spacerun:yes'>  </span>The information needed to connect
+is in tagged values of the model element representing the database.<span
+style='mso-spacerun:yes'>  </span>For example, the following model element
+represents a Tiger database.<span style='mso-spacerun:yes'>  </span></p>
+
+<p class=MsoBodyText><!--[if gte vml 1]><v:shape id="_x0000_i1026" type="#_x0000_t75"
+ style='width:384pt;height:4in'>
+ <v:imagedata src="DB_UML_dev_files/image013.gif" o:title="databasetags"/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=512 height=384
+src="DB_UML_dev_files/image013.gif" v:shapes="_x0000_i1026"><![endif]></p>
+
+<h4 style='text-indent:.5in'>factory</h4>
+
+<p class=MsoBodyText>The factory package creates the actual implementations of
+DBMetadata and the transform interfaces.<span style='mso-spacerun:yes'> 
+</span>The database supplier provides a Factory implementation or they can use
+the generic implementation.<span style='mso-spacerun:yes'>  </span>The name of
+the Factory implementation is defined as a tagged value of the model element
+representing the database (see previous section).<span
+style='mso-spacerun:yes'>    </span></p>
+
+<p class=MsoBodyText>This provides the ability to use different types of
+catalogs (metadata implementations) and different types of transformers within
+the same instance of ArgoUML.</p>
+
+</div>
+
+</body>
+
+</html>

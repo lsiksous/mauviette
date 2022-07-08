@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<ruleset name="dbuml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="../etc/ruleset_xml_schema.xml">
+    <description> This rule set contains rules that are unobtrusive and 
+        important for code quality.</description>
+    <rule ref="rulesets/braces.xml"/>
+    <rule ref="rulesets/finalizers.xml"/>
+    <rule ref="rulesets/imports.xml"/>
+    <rule ref="rulesets/strings.xml"/>
+    <rule ref="rulesets/sunsecure.xml"/>
+    <rule ref="rulesets/unusedcode.xml"/>
+    <!-- Only use specific rules from the naming.xml ruleset. -->
+    <rule ref="rulesets/naming.xml/MethodNamingConventions"/>
+    <rule ref="rulesets/naming.xml/ClassNamingConventions"/>
+    <rule ref="rulesets/naming.xml/MethodWithSameNameAsEnclosingClass"/>
+    <rule ref="rulesets/naming.xml/SuspiciousConstantFieldName"/>
+    <rule ref="rulesets/naming.xml/AvoidFieldNameMatchingMethodName"/>
+    <rule ref="rulesets/naming.xml/PackageCase"/>
+    <!-- Only use specific rules from the optimizations.xml ruleset. -->
+
+    <!-- Use all rules from the basic rule set except the following. -->
+    <rule ref="rulesets/basic.xml">
+        <exclude name="JumbledIncrementer"/>
+        <exclude name="ForLoopShouldBeWhileLoop"/>
+        <exclude name="UnnecessaryConversionTemporary"/>
+        <exclude name="UnnecessaryReturn"/>
+        <exclude name="UnnecessaryFinalModifier"/>
+        <exclude name="CollapsibleIfStatements"/>
+    </rule>
+    <!-- The following is a list of the rules this rule set uses
+         AppendCharacterWithChar    												         DontImportJavaLang                                         
+                                                                     DoubleCheckedLocking                       
+         EmptyTryBlock                                               BooleanInstantiation                       
+         UseStringBufferLength                                       ReturnFromFinallyBlock                     
+         FinalizeOnlyCallsSuperFinalize                              EmptyFinallyBlock                          
+         OverrideBothEqualsAndHashcode                               UnusedPrivateMethod                        
+         EmptyIfStmt                                                 ImportFromSamePackage                      
+         EmptySynchronizedBlock                                      AvoidFieldNameMatchingMethodName           
+         UnnecessaryCaseChange                                       DuplicateImports                           
+         InefficientStringBuffering                                  MisplacedNullCheck                         
+         FinalizeShouldBeProtected                                   FinalizeDoesNotCallSuperFinalize           
+         EmptyWhileStmt                                              MethodReturnsInternalArray                 
+         UnusedFormalParameter                                       AvoidCallingFinalize                       
+         AvoidDecimalLiteralsInBigDecimalConstructor                 FinalizeOverloaded                         
+         EmptyCatchBlock                                             UnusedNullCheckInEquals                    
+         UseIndexOfChar                                              IfElseStmtsMustUseBraces                   
+         MethodWithSameNameAsEnclosingClass                          EmptyFinalizer                             
+         UnusedLocalVariable                                         ClassNamingConventions                     
+         IfStmtsMustUseBraces                                        UselessOverridingMethod                    
+         UnusedPrivateField                                          EmptyStaticInitializer                     
+         ForLoopsMustUseBraces                                       StringToString                             
+         ArrayIsStoredDirectly                                       AvoidDuplicateLiterals                     
+         ConsecutiveLiteralAppends                                   UnusedImports                              
+         UnconditionalIfStatement                                    UselessOperationOnImmutable                
+         PackageCase                                                 EmptySwitchStatements                      
+         ClassCastExceptionWithToArray                               StringInstantiation                        
+         EmptyStatementNotInLoop                                     SuspiciousConstantFieldName                
+         MethodNamingConventions                    
+         WhileLoopsMustUseBraces                                                               
+    	-->
+</ruleset>

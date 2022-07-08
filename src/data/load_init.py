@@ -5,6 +5,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, relationship
 
+CSV_DATA_PATH = "../../data/processed/movie_metadata_clean.csv"
+DATABASE = "sqlite:///../../data/db/movie.db"
 
 Base = declarative_base()
 
@@ -68,13 +70,51 @@ class Appearance(Base):
        Integer, 
        ForeignKey('Artist.id'), 
        primary_key = False)
-    
+
+
+class User(Base):
+    __tablename__ = 'User'
+    __table_args__ = {'sqlite_autoincrement': True}
+    id = Column(Integer, primary_key=True, nullable=False)
+    username = Column(String, unique=True)
+    email = Column(String(120), index=True, unique=True)
+    password_hash = Column(String(128))
+
+
+class seen_movies(Base):
+   __tablename__ = 'seen_movies'
+   __table_args__ = {'sqlite_autoincrement': True}
+   id =  Column(Integer, primary_key=True, nullable=False)
+   rating = Column(Integer)
+   movie_id = Column(
+       Integer, 
+       ForeignKey('Movie.id'), 
+       primary_key = False)
+   user_id = Column(
+       Integer, 
+       ForeignKey('User.id'), 
+       primary_key = False)
+
+class recommended_movies(Base):
+   __tablename__ = 'recommended_movies'
+   __table_args__ = {'sqlite_autoincrement': True}
+   id =  Column(Integer, primary_key=True, nullable=False)
+   date = Column(Date, nullable=False)
+   score = Column(Integer, nullable=False)
+   movie_id = Column(
+       Integer, 
+       ForeignKey('Movie.id'), 
+       primary_key = False)
+   user_id = Column(
+       Integer, 
+       ForeignKey('User.id'), 
+       primary_key = False)
+
 
 if __name__ == "__main__":
     t = time()
 
-    file_name = "./movie_metadata_clean.csv"
-    df = pd.read_csv(file_name)
+    df = pd.read_csv(CSV_DATA_PATH)
 
     df.set_index('id')
 
@@ -85,7 +125,7 @@ if __name__ == "__main__":
     genres = df.iloc[:,17:41].columns
 
     #Create the database
-    engine = create_engine('sqlite:///movie.db')
+    engine = create_engine(DATABASE)
     Base.metadata.create_all(engine)
     
     #Create the session
@@ -137,7 +177,6 @@ if __name__ == "__main__":
             s.add(appearance)
         
     for genre in genres:
-        print(genre)
         grp = df.groupby(genre)
  
         g = Genre(**{
@@ -153,7 +192,13 @@ if __name__ == "__main__":
             })
             s.add(a)
         
-              
+    u = User(**{
+        'username': 'charlie',
+        'email': 'charlie.chaplin@moviette.com',
+        'password_hash': ''
+    })
+    s.add(u)
+    
     s.commit() #Attempt to commit all the records
     s.close()
 

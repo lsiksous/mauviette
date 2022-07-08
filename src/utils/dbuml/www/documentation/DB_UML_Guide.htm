@@ -1,0 +1,2622 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="DB_UML_Guide_files/filelist.xml">
+<link rel=Edit-Time-Data href="DB_UML_Guide_files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>DB-UML Modeling Tool Users Guide</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Subject>Business Intelligence for SUPRA</o:Subject>
+  <o:Author>Cincom Systems, Inc.</o:Author>
+  <o:Template>Cincom tech content.dot</o:Template>
+  <o:LastAuthor>Jeff</o:LastAuthor>
+  <o:Revision>4</o:Revision>
+  <o:TotalTime>730</o:TotalTime>
+  <o:LastPrinted>2007-08-31T19:17:00Z</o:LastPrinted>
+  <o:Created>2007-09-07T16:57:00Z</o:Created>
+  <o:LastSaved>2007-09-07T17:03:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>1824</o:Words>
+  <o:Characters>10403</o:Characters>
+  <o:Company>Cincom Systems, Inc.</o:Company>
+  <o:Lines>86</o:Lines>
+  <o:Paragraphs>24</o:Paragraphs>
+  <o:CharactersWithSpaces>12203</o:CharactersWithSpaces>
+  <o:Version>11.6568</o:Version>
+ </o:DocumentProperties>
+ <o:CustomDocumentProperties>
+  <o:Release_x0020_date dt:dt="string">March 31, 2007</o:Release_x0020_date>
+  <o:Release_x0020_number dt:dt="string">1.0</o:Release_x0020_number>
+  <o:Publication_x0020_number dt:dt="string">P25-9508</o:Publication_x0020_number>
+  <o:Publication_x0020_revision dt:dt="string">-00</o:Publication_x0020_revision>
+  <o:Copyright dt:dt="string">2007</o:Copyright>
+  <o:Product dt:dt="string">Business Intelligence for SUPRA</o:Product>
+  <o:Date dt:dt="string"></o:Date>
+ </o:CustomDocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:DisplayHorizontalDrawingGridEvery>0</w:DisplayHorizontalDrawingGridEvery>
+  <w:DisplayVerticalDrawingGridEvery>0</w:DisplayVerticalDrawingGridEvery>
+  <w:UseMarginsForDrawingGridOrigin/>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:Compatibility>
+   <w:PrintBodyTextBeforeHeader/>
+   <w:SuppressBottomSpacing/>
+   <w:SuppressTopSpacing/>
+   <w:SuppressTopSpacingMac5/>
+   <w:SuppressTopSpacingWP/>
+   <w:SuppressSpBfAfterPgBrk/>
+   <w:WW6BorderRules/>
+   <w:FootnoteLayoutLikeWW8/>
+   <w:ShapeLayoutLikeWW8/>
+   <w:AlignTablesRowByRow/>
+   <w:ForgetLastTabAlignment/>
+   <w:LayoutRawTableWidth/>
+   <w:LayoutTableRowsApart/>
+   <w:UseWord97LineBreakingRules/>
+   <w:SelectEntireFieldWithStartOrEnd/>
+   <w:UseWord2002TableStyleRules/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:1627421319 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:536871559 0 0 0 415 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"CG Times \(W1\)";
+	panose-1:0 0 0 0 0 0 0 0 0 0;
+	mso-font-alt:"Times New Roman";
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-format:other;
+	mso-font-pitch:variable;
+	mso-font-signature:3 0 0 0 1 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin-top:0in;
+	margin-right:.5in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+h1
+	{mso-style-parent:"Heading Base";
+	mso-style-next:"Heading 2";
+	margin-top:0in;
+	margin-right:1.0in;
+	margin-bottom:6.0pt;
+	margin-left:.5in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:24.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	color:#333399;
+	mso-font-kerning:0pt;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+h2
+	{mso-style-parent:"Heading Base";
+	mso-style-next:"Body Text";
+	margin-top:14.0pt;
+	margin-right:.5in;
+	margin-bottom:1.5pt;
+	margin-left:.5in;
+	line-height:normal;
+	page-break-before:always;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	border:none;
+	mso-border-top-alt:solid #333399 2.25pt;
+	padding:0in;
+	mso-padding-alt:1.0pt 0in 0in 0in;
+	font-size:14.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+h3
+	{mso-style-parent:"Heading Base";
+	mso-style-next:"Body Text";
+	margin-top:12.0pt;
+	margin-right:1.0in;
+	margin-bottom:.7pt;
+	margin-left:1.0in;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+h4
+	{mso-style-parent:"Heading Base";
+	mso-style-next:"Body Text";
+	margin-top:7.0pt;
+	margin-right:1.0in;
+	margin-bottom:0in;
+	margin-left:1.5in;
+	margin-bottom:.0001pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:4;
+	font-size:11.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+h5
+	{mso-style-parent:"Heading Base";
+	mso-style-next:Definition;
+	margin-top:12.0pt;
+	margin-right:1.0in;
+	margin-bottom:.7pt;
+	margin-left:1.5in;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:5;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.MsoIndex1, li.MsoIndex1, div.MsoIndex1
+	{mso-style-update:auto;
+	mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:.5in;
+	margin-bottom:0in;
+	margin-left:10.0pt;
+	margin-bottom:.0001pt;
+	text-indent:-10.0pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoIndex2, li.MsoIndex2, div.MsoIndex2
+	{mso-style-noshow:yes;
+	mso-style-parent:"Index Base";
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:1.0in;
+	margin-bottom:0in;
+	margin-left:58.5pt;
+	margin-bottom:.0001pt;
+	text-indent:-.2in;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	font-size:9.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoIndex3, li.MsoIndex3, div.MsoIndex3
+	{mso-style-noshow:yes;
+	mso-style-parent:"Index Base";
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:1.0in;
+	margin-bottom:0in;
+	margin-left:63.0pt;
+	margin-bottom:.0001pt;
+	text-indent:-.1in;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	font-size:9.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoIndex4, li.MsoIndex4, div.MsoIndex4
+	{mso-style-noshow:yes;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:1.0in;
+	margin-bottom:0in;
+	margin-left:67.5pt;
+	margin-bottom:.0001pt;
+	text-indent:-4.5pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	tab-stops:right dotted 279.0pt;
+	font-size:9.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoToc1, li.MsoToc1, div.MsoToc1
+	{mso-style-noshow:yes;
+	mso-style-parent:"TOC Base";
+	mso-style-next:Normal;
+	margin-top:12.25pt;
+	margin-right:.5in;
+	margin-bottom:5.75pt;
+	margin-left:.5in;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	tab-stops:right dotted 6.5in;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:#333399;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;
+	mso-no-proof:yes;}
+p.MsoToc2, li.MsoToc2, div.MsoToc2
+	{mso-style-noshow:yes;
+	mso-style-parent:"TOC Base";
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:.5in;
+	margin-bottom:0in;
+	margin-left:.75in;
+	margin-bottom:.0001pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	tab-stops:right dotted 6.5in;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:#333399;
+	mso-no-proof:yes;}
+p.MsoToc3, li.MsoToc3, div.MsoToc3
+	{mso-style-noshow:yes;
+	mso-style-parent:"TOC Base";
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:.5in;
+	margin-bottom:0in;
+	margin-left:1.0in;
+	margin-bottom:.0001pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	tab-stops:right dotted 6.5in;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:#333399;
+	mso-no-proof:yes;}
+p.MsoToc4, li.MsoToc4, div.MsoToc4
+	{mso-style-noshow:yes;
+	mso-style-parent:"TOC Base";
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:.5in;
+	margin-bottom:0in;
+	margin-left:1.25in;
+	margin-bottom:.0001pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	tab-stops:right dotted 6.5in;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:#333399;}
+p.MsoFootnoteText, li.MsoFootnoteText, div.MsoFootnoteText
+	{mso-style-noshow:yes;
+	margin-top:0in;
+	margin-right:.5in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoCommentText, li.MsoCommentText, div.MsoCommentText
+	{mso-style-noshow:yes;
+	margin-top:0in;
+	margin-right:.5in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{margin-top:0in;
+	margin-right:.5in;
+	margin-bottom:12.0pt;
+	margin-left:.5in;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	tab-stops:right 6.75in;
+	border:none;
+	mso-border-bottom-alt:solid silver .75pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 1.0pt 0in;
+	font-size:8.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-style:italic;
+	mso-bidi-font-style:normal;}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-parent:"Header Base";
+	margin-top:6.0pt;
+	margin-right:.5in;
+	margin-bottom:6.0pt;
+	margin-left:.5in;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	tab-stops:right 6.5in;
+	border:none;
+	mso-border-top-alt:solid silver .75pt;
+	padding:0in;
+	mso-padding-alt:1.0pt 0in 0in 0in;
+	font-size:8.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-style:italic;
+	mso-bidi-font-style:normal;}
+p.MsoIndexHeading, li.MsoIndexHeading, div.MsoIndexHeading
+	{mso-style-noshow:yes;
+	mso-style-parent:"Heading Base";
+	mso-style-next:"Index 1";
+	margin-top:15.1pt;
+	margin-right:1.0in;
+	margin-bottom:6.1pt;
+	margin-left:.5in;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:#333399;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.MsoCaption, li.MsoCaption, div.MsoCaption
+	{mso-style-noshow:yes;
+	mso-style-parent:"Body Text";
+	mso-style-next:"Body Text";
+	margin-top:2.0pt;
+	margin-right:.5in;
+	margin-bottom:10.0pt;
+	margin-left:1.5in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	tab-stops:2.9in 3.15in;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+span.MsoFootnoteReference
+	{mso-style-noshow:yes;
+	vertical-align:super;}
+span.MsoCommentReference
+	{mso-style-noshow:yes;
+	mso-ansi-font-size:8.0pt;
+	mso-bidi-font-size:8.0pt;}
+p.MsoList, li.MsoList, div.MsoList
+	{mso-style-parent:"Body Text";
+	margin-top:4.0pt;
+	margin-right:.5in;
+	margin-bottom:6.0pt;
+	margin-left:1.75in;
+	text-indent:-.25in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoList2, li.MsoList2, div.MsoList2
+	{mso-style-parent:List;
+	margin-top:4.0pt;
+	margin-right:.5in;
+	margin-bottom:6.0pt;
+	margin-left:2.0in;
+	text-indent:-.25in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{mso-style-parent:"Heading Base";
+	margin-top:0in;
+	margin-right:2.75in;
+	margin-bottom:0in;
+	margin-left:1.0in;
+	margin-bottom:.0001pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	font-size:14.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{mso-style-link:"Char Char";
+	margin-top:4.0pt;
+	margin-right:.5in;
+	margin-bottom:6.0pt;
+	margin-left:1.5in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoSubtitle, li.MsoSubtitle, div.MsoSubtitle
+	{margin-top:0in;
+	margin-right:.5in;
+	margin-bottom:3.0pt;
+	margin-left:.5in;
+	text-align:center;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	mso-outline-level:2;
+	font-size:12.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:Arial;}
+a:link, span.MsoHyperlink
+	{color:#333399;
+	mso-text-animation:none;
+	text-decoration:none;
+	text-underline:none;
+	text-decoration:none;
+	text-line-through:none;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:#333399;
+	mso-text-animation:none;
+	text-decoration:none;
+	text-underline:none;
+	text-decoration:none;
+	text-line-through:none;}
+p
+	{margin:0in;
+	margin-bottom:.0001pt;
+	line-height:140%;
+	mso-pagination:widow-orphan;
+	font-size:8.5pt;
+	font-family:Verdana;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+pre
+	{margin:0in;
+	margin-bottom:.0001pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt;
+	font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoCommentSubject, li.MsoCommentSubject, div.MsoCommentSubject
+	{mso-style-noshow:yes;
+	mso-style-parent:"Comment Text";
+	mso-style-next:"Comment Text";
+	margin-top:0in;
+	margin-right:.5in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+	{mso-style-noshow:yes;
+	margin-top:0in;
+	margin-right:.5in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	font-size:8.0pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+span.CharChar
+	{mso-style-name:"Char Char";
+	mso-style-locked:yes;
+	mso-style-link:"Body Text";
+	font-family:"Trebuchet MS";
+	mso-ascii-font-family:"Trebuchet MS";
+	mso-hansi-font-family:"Trebuchet MS";
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;
+	mso-bidi-language:AR-SA;}
+p.HeadingBase, li.HeadingBase, div.HeadingBase
+	{mso-style-name:"Heading Base";
+	margin-top:0in;
+	margin-right:1.0in;
+	margin-bottom:0in;
+	margin-left:1.0in;
+	margin-bottom:.0001pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.Definition, li.Definition, div.Definition
+	{mso-style-name:Definition;
+	mso-style-parent:"Body Text";
+	margin-top:4.0pt;
+	margin-right:.5in;
+	margin-bottom:6.0pt;
+	margin-left:1.5in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.Arg, li.Arg, div.Arg
+	{mso-style-name:Arg;
+	mso-style-parent:"Body Text";
+	margin-top:4.0pt;
+	margin-right:.5in;
+	margin-bottom:6.0pt;
+	margin-left:2.5in;
+	text-indent:-1.0in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ArgMargin, li.ArgMargin, div.ArgMargin
+	{mso-style-name:"Arg Margin";
+	mso-style-parent:Arg;
+	margin-top:4.0pt;
+	margin-right:.5in;
+	margin-bottom:6.0pt;
+	margin-left:1.5in;
+	text-indent:-1.0in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ArgMarginParm, li.ArgMarginParm, div.ArgMarginParm
+	{mso-style-name:"Arg MarginParm";
+	mso-style-parent:"Arg Margin";
+	margin-top:4.0pt;
+	margin-right:.5in;
+	margin-bottom:6.0pt;
+	margin-left:2.5in;
+	text-indent:-2.0in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	tab-stops:1.5in;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.BodyTextTable, li.BodyTextTable, div.BodyTextTable
+	{mso-style-name:"Body Text Table";
+	mso-style-parent:"Body Text";
+	margin-top:2.0pt;
+	margin-right:.05in;
+	margin-bottom:2.0pt;
+	margin-left:0in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ByLine, li.ByLine, div.ByLine
+	{mso-style-name:ByLine;
+	mso-style-parent:Title;
+	margin-top:.25in;
+	margin-right:2.75in;
+	margin-bottom:0in;
+	margin-left:1.0in;
+	margin-bottom:.0001pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-variant:small-caps;}
+p.Note, li.Note, div.Note
+	{mso-style-name:Note;
+	mso-style-parent:"Body Text";
+	margin-top:4.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	background:#E6E6E6;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.Caution, li.Caution, div.Caution
+	{mso-style-name:Caution;
+	mso-style-parent:Note;
+	margin-top:4.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	background:#E6E6E6;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ChapNum, li.ChapNum, div.ChapNum
+	{mso-style-name:"Chap Num";
+	mso-style-parent:"Heading 1";
+	mso-style-next:"Heading 1";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-line-height-alt:12.0pt;
+	mso-pagination:widow-orphan lines-together;
+	font-size:24.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:#333399;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;
+	font-style:italic;
+	mso-bidi-font-style:normal;}
+p.CodeBase, li.CodeBase, div.CodeBase
+	{mso-style-name:"Code Base";
+	mso-style-parent:"Body Text";
+	margin-top:0in;
+	margin-right:.5in;
+	margin-bottom:6.0pt;
+	margin-left:1.5in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.CodeArg, li.CodeArg, div.CodeArg
+	{mso-style-name:"Code Arg";
+	mso-style-parent:"Code Base";
+	margin-top:0in;
+	margin-right:.5in;
+	margin-bottom:4.0pt;
+	margin-left:2.75in;
+	text-indent:-9.35pt;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	tab-stops:2.75in 3.0in 3.25in 3.5in 3.75in;
+	font-size:9.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.CodeBody, li.CodeBody, div.CodeBody
+	{mso-style-name:"Code Body";
+	mso-style-parent:"Code Base";
+	margin-top:0in;
+	margin-right:.5in;
+	margin-bottom:4.0pt;
+	margin-left:1.75in;
+	text-indent:-9.35pt;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	tab-stops:1.75in 2.0in 2.25in 2.5in 2.75in;
+	font-size:9.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.CodeArgMargin, li.CodeArgMargin, div.CodeArgMargin
+	{mso-style-name:"Code Arg Margin";
+	mso-style-parent:"Code Body";
+	margin-top:0in;
+	margin-right:.5in;
+	margin-bottom:4.0pt;
+	margin-left:1.75in;
+	text-indent:-9.35pt;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	tab-stops:1.75in 2.0in 2.25in 2.5in 2.75in;
+	font-size:9.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.CodeList, li.CodeList, div.CodeList
+	{mso-style-name:"Code List";
+	mso-style-parent:"Code Body";
+	margin-top:0in;
+	margin-right:.5in;
+	margin-bottom:4.0pt;
+	margin-left:2.0in;
+	text-indent:-9.35pt;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	tab-stops:2.0in 2.25in 2.5in 2.75in 3.0in;
+	font-size:9.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.CodeTable, li.CodeTable, div.CodeTable
+	{mso-style-name:"Code Table";
+	mso-style-parent:"Code Base";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:20.85pt;
+	text-indent:-9.35pt;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	tab-stops:29.7pt 47.7pt 65.7pt 83.7pt 101.7pt;
+	font-size:8.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.CodeListTable, li.CodeListTable, div.CodeListTable
+	{mso-style-name:"Code List Table";
+	mso-style-parent:"Code Table";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:38.15pt;
+	text-indent:-9.35pt;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	tab-stops:47.7pt 65.7pt 83.7pt 101.7pt;
+	font-size:8.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.CodeList2, li.CodeList2, div.CodeList2
+	{mso-style-name:"Code List2";
+	mso-style-parent:"Code Body";
+	margin-top:0in;
+	margin-right:.5in;
+	margin-bottom:4.0pt;
+	margin-left:2.25in;
+	text-indent:-9.35pt;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	tab-stops:2.25in 2.5in 2.75in 3.0in 3.25in;
+	font-size:9.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.CodeList2Table, li.CodeList2Table, div.CodeList2Table
+	{mso-style-name:"Code List2 Table";
+	mso-style-parent:"Code Table";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:56.15pt;
+	text-indent:-9.35pt;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	tab-stops:65.7pt 83.7pt 101.7pt 119.7pt 137.7pt;
+	font-size:8.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.CodeNote, li.CodeNote, div.CodeNote
+	{mso-style-name:"Code Note";
+	mso-style-parent:Note;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	tab-stops:.1in 16.2pt 34.2pt 52.2pt 70.2pt 88.2pt;
+	background:#E6E6E6;
+	font-size:8.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.Figures, li.Figures, div.Figures
+	{mso-style-name:Figures;
+	mso-style-parent:"Body Text";
+	mso-style-next:"Body Text";
+	margin-top:6.0pt;
+	margin-right:.5in;
+	margin-bottom:6.0pt;
+	margin-left:1.5in;
+	text-align:center;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	tab-stops:2.9in 3.15in;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.FiguresMargin, li.FiguresMargin, div.FiguresMargin
+	{mso-style-name:"Figures Margin";
+	mso-style-parent:Figures;
+	margin-top:6.0pt;
+	margin-right:.5in;
+	margin-bottom:6.0pt;
+	margin-left:1.0in;
+	text-align:right;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	tab-stops:2.9in 3.15in;
+	font-size:8.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.FiguresTable, li.FiguresTable, div.FiguresTable
+	{mso-style-name:"Figures Table";
+	mso-style-parent:Figures;
+	margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:center;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	tab-stops:2.9in 3.15in;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.HeaderBase, li.HeaderBase, div.HeaderBase
+	{mso-style-name:"Header Base";
+	mso-style-parent:"Heading Base";
+	margin-top:0in;
+	margin-right:1.0in;
+	margin-bottom:0in;
+	margin-left:1.0in;
+	margin-bottom:.0001pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.Footnote, li.Footnote, div.Footnote
+	{mso-style-name:Footnote;
+	mso-style-parent:"Body Text";
+	margin-top:0in;
+	margin-right:4.25in;
+	margin-bottom:10.0pt;
+	margin-left:.5in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	border:none;
+	mso-border-top-alt:solid windowtext .75pt;
+	padding:0in;
+	mso-padding-alt:1.0pt 0in 0in 0in;
+	font-size:9.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.IndexBase, li.IndexBase, div.IndexBase
+	{mso-style-name:"Index Base";
+	margin-top:0in;
+	margin-right:1.0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ListTable, li.ListTable, div.ListTable
+	{mso-style-name:"List Table";
+	mso-style-parent:List;
+	margin-top:2.0pt;
+	margin-right:0in;
+	margin-bottom:2.0pt;
+	margin-left:.25in;
+	text-indent:-.25in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.List2Table, li.List2Table, div.List2Table
+	{mso-style-name:"List 2 Table";
+	mso-style-parent:"List Table";
+	margin-top:2.0pt;
+	margin-right:0in;
+	margin-bottom:2.0pt;
+	margin-left:.55in;
+	text-indent:-.25in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ListArg, li.ListArg, div.ListArg
+	{mso-style-name:"List Arg";
+	mso-style-parent:List;
+	margin-top:4.0pt;
+	margin-right:.5in;
+	margin-bottom:6.0pt;
+	margin-left:2.75in;
+	text-indent:-.25in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ListArgMargin, li.ListArgMargin, div.ListArgMargin
+	{mso-style-name:"List Arg Margin";
+	mso-style-parent:"List Arg";
+	margin-top:4.0pt;
+	margin-right:.5in;
+	margin-bottom:6.0pt;
+	margin-left:1.75in;
+	text-indent:-1.25in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	tab-stops:1.5in;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+span.ListDiamondChar
+	{mso-style-name:"List Diamond Char";
+	mso-style-locked:yes;
+	mso-style-link:"List Diamond";
+	font-family:"Trebuchet MS";
+	mso-ascii-font-family:"Trebuchet MS";
+	mso-hansi-font-family:"Trebuchet MS";
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;
+	mso-bidi-language:AR-SA;}
+p.ListDiamond, li.ListDiamond, div.ListDiamond
+	{mso-style-name:"List Diamond";
+	mso-style-parent:List;
+	mso-style-link:"List Diamond Char";
+	margin-top:4.0pt;
+	margin-right:.5in;
+	margin-bottom:6.0pt;
+	margin-left:1.75in;
+	text-indent:-.25in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	mso-list:l5 level1 lfo2;
+	tab-stops:list 2.75in;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.List2Arg, li.List2Arg, div.List2Arg
+	{mso-style-name:"List2 Arg";
+	mso-style-parent:"List Arg";
+	margin-top:4.0pt;
+	margin-right:.5in;
+	margin-bottom:6.0pt;
+	margin-left:3.0in;
+	text-indent:-.25in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.List2ArgMargin, li.List2ArgMargin, div.List2ArgMargin
+	{mso-style-name:"List2 Arg Margin";
+	mso-style-parent:"List2 Arg";
+	margin-top:4.0pt;
+	margin-right:.5in;
+	margin-bottom:6.0pt;
+	margin-left:2.0in;
+	text-indent:-.25in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.List2H, li.List2H, div.List2H
+	{mso-style-name:List2H;
+	mso-style-parent:"List 2";
+	margin-top:4.0pt;
+	margin-right:.5in;
+	margin-bottom:6.0pt;
+	margin-left:2.0in;
+	text-indent:-.25in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	mso-list:l6 level1 lfo4;
+	tab-stops:list 381.0pt;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MarginNote, li.MarginNote, div.MarginNote
+	{mso-style-name:"Margin Note";
+	mso-style-parent:"Body Text";
+	margin-top:4.0pt;
+	margin-right:.2in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	font-size:9.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-style:italic;
+	mso-bidi-font-style:normal;}
+p.NoteIcon, li.NoteIcon, div.NoteIcon
+	{mso-style-name:"Note Icon";
+	mso-style-parent:"Margin Note";
+	margin-top:4.0pt;
+	margin-right:.2in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:right;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.Parameter, li.Parameter, div.Parameter
+	{mso-style-name:Parameter;
+	mso-style-parent:"Arg Margin";
+	margin-top:4.0pt;
+	margin-right:.5in;
+	margin-bottom:6.0pt;
+	margin-left:1.75in;
+	text-indent:-1.25in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	border:none;
+	mso-border-top-alt:solid #333399 1.5pt;
+	padding:0in;
+	mso-padding-alt:1.0pt 0in 0in 0in;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.ParameterIndent, li.ParameterIndent, div.ParameterIndent
+	{mso-style-name:"Parameter Indent";
+	mso-style-parent:Parameter;
+	margin-top:4.0pt;
+	margin-right:.5in;
+	margin-bottom:6.0pt;
+	margin-left:2.5in;
+	text-indent:-1.0in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	border:none;
+	mso-border-top-alt:solid #333399 1.5pt;
+	padding:0in;
+	mso-padding-alt:1.0pt 0in 0in 0in;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.Screen, li.Screen, div.Screen
+	{mso-style-name:Screen;
+	margin-top:0in;
+	margin-right:.5in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	tab-stops:1.25in 1.5in 1.75in 2.0in 2.25in 2.5in 2.75in 3.0in 3.25in 3.5in 3.75in 4.0in 4.25in 4.5in 4.75in 5.0in 5.25in 5.5in 5.75in 6.0in 6.25in 6.5in;
+	border:none;
+	mso-border-alt:solid windowtext 1.5pt;
+	padding:0in;
+	mso-padding-alt:1.0pt 1.0pt 1.0pt 1.0pt;
+	mso-border-shadow:yes;
+	font-size:8.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ScreenTop, li.ScreenTop, div.ScreenTop
+	{mso-style-name:ScreenTop;
+	mso-style-parent:Screen;
+	margin-top:0in;
+	margin-right:.5in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	line-height:9.0pt;
+	mso-line-height-rule:exactly;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-top-alt:solid windowtext .25pt;
+	mso-border-left-alt:solid windowtext .25pt;
+	mso-border-right-alt:solid windowtext .25pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 0in 0in;
+	font-size:8.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.SuperTitle, li.SuperTitle, div.SuperTitle
+	{mso-style-name:SuperTitle;
+	mso-style-parent:Title;
+	margin-top:.5in;
+	margin-right:2.75in;
+	margin-bottom:.25in;
+	margin-left:1.0in;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	font-size:18.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-variant:small-caps;
+	color:#333399;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.SUPRAsyntax, li.SUPRAsyntax, div.SUPRAsyntax
+	{mso-style-name:"SUPRA syntax";
+	margin-top:4.0pt;
+	margin-right:.5in;
+	margin-bottom:6.0pt;
+	margin-left:117.0pt;
+	text-indent:-8.65pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-top-alt:solid windowtext .75pt;
+	mso-border-bottom-alt:solid windowtext .75pt;
+	padding:0in;
+	mso-padding-alt:6.0pt 0in 6.0pt 0in;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.SUPRAsyntaxtable, li.SUPRAsyntaxtable, div.SUPRAsyntaxtable
+	{mso-style-name:"SUPRA syntax table";
+	mso-style-parent:"SUPRA syntax";
+	margin-top:4.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:8.65pt;
+	text-indent:-8.65pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-top-alt:solid windowtext .75pt;
+	mso-border-bottom-alt:solid windowtext .75pt;
+	padding:0in;
+	mso-padding-alt:6.0pt 0in 6.0pt 0in;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.TableFootnote, li.TableFootnote, div.TableFootnote
+	{mso-style-name:"Table Footnote";
+	mso-style-parent:Footnote;
+	margin-top:0in;
+	margin-right:1.0in;
+	margin-bottom:0in;
+	margin-left:1.75in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	font-size:9.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.TableLongFootnote, li.TableLongFootnote, div.TableLongFootnote
+	{mso-style-name:"Table Long Footnote";
+	mso-style-parent:"Table Footnote";
+	margin-top:0in;
+	margin-right:1.0in;
+	margin-bottom:0in;
+	margin-left:.75in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	font-size:9.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.TableBorder, li.TableBorder, div.TableBorder
+	{mso-style-name:TableBorder;
+	mso-style-next:Normal;
+	margin-top:2.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:2.65in;
+	margin-bottom:.0001pt;
+	line-height:2.0pt;
+	mso-line-height-rule:exactly;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"CG Times \(W1\)";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.TableHeading, li.TableHeading, div.TableHeading
+	{mso-style-name:TableHeading;
+	mso-style-parent:"Heading Base";
+	margin-top:0in;
+	margin-right:.05in;
+	margin-bottom:0in;
+	margin-left:.05in;
+	margin-bottom:.0001pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-top-alt:gray;
+	mso-border-left-alt:gray;
+	mso-border-bottom-alt:white;
+	mso-border-right-alt:white;
+	mso-border-style-alt:solid;
+	mso-border-width-alt:2.25pt;
+	padding:0in;
+	mso-padding-alt:1.0pt 1.0pt 1.0pt 1.0pt;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:#333399;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.Tip, li.Tip, div.Tip
+	{mso-style-name:Tip;
+	mso-style-parent:Note;
+	margin-top:4.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	background:#E6E6E6;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.Title2, li.Title2, div.Title2
+	{mso-style-name:"Title 2";
+	mso-style-parent:Title;
+	margin-top:0in;
+	margin-right:2.75in;
+	margin-bottom:0in;
+	margin-left:1.0in;
+	margin-bottom:.0001pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	font-size:14.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.TOCBase, li.TOCBase, div.TOCBase
+	{mso-style-name:"TOC Base";
+	margin-top:0in;
+	margin-right:.5in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	tab-stops:right 7.75in;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:#333399;}
+p.TOCTitle, li.TOCTitle, div.TOCTitle
+	{mso-style-name:TOCTitle;
+	mso-style-parent:"Heading Base";
+	margin-top:30.0pt;
+	margin-right:1.0in;
+	margin-bottom:30.0pt;
+	margin-left:.5in;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	font-size:24.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:#333399;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.Warning, li.Warning, div.Warning
+	{mso-style-name:Warning;
+	mso-style-parent:Note;
+	margin-top:4.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	line-height:normal;
+	mso-pagination:widow-orphan lines-together;
+	background:#E6E6E6;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.CropMark, li.CropMark, div.CropMark
+	{mso-style-name:CropMark;
+	margin-top:0in;
+	margin-right:.5in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	tab-stops:center 3.0in right 6.0in;
+	font-size:8.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+span.OperatingSystem
+	{mso-style-name:"Operating System";
+	mso-ansi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-ascii-font-family:"Trebuchet MS";
+	mso-hansi-font-family:"Trebuchet MS";
+	font-variant:small-caps;
+	border:solid windowtext 1.0pt;
+	padding:0in;
+	mso-border-shadow:yes;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+span.Option
+	{mso-style-name:Option;
+	font-family:"Times New Roman";
+	mso-ascii-font-family:"Times New Roman";
+	mso-hansi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+span.BodyTextChar
+	{mso-style-name:"Body Text Char";
+	font-family:"Trebuchet MS";
+	mso-ascii-font-family:"Trebuchet MS";
+	mso-hansi-font-family:"Trebuchet MS";
+	mso-ansi-language:EN-US;
+	mso-fareast-language:EN-US;
+	mso-bidi-language:AR-SA;}
+ /* Page Definitions */
+ @page
+	{mso-footnote-separator:url("DB_UML_Guide_files/header.htm") fs;
+	mso-footnote-continuation-separator:url("DB_UML_Guide_files/header.htm") fcs;
+	mso-endnote-separator:url("DB_UML_Guide_files/header.htm") es;
+	mso-endnote-continuation-separator:url("DB_UML_Guide_files/header.htm") ecs;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.25in .75in 1.25in .75in;
+	mso-header-margin:1.25in;
+	mso-footer-margin:1.25in;
+	mso-even-header:url("DB_UML_Guide_files/header.htm") eh1;
+	mso-header:url("DB_UML_Guide_files/header.htm") h1;
+	mso-even-footer:url("DB_UML_Guide_files/header.htm") ef1;
+	mso-footer:url("DB_UML_Guide_files/header.htm") f1;
+	mso-first-header:url("DB_UML_Guide_files/header.htm") fh1;
+	mso-first-footer:url("DB_UML_Guide_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+@page Section2
+	{size:8.5in 11.0in;
+	margin:1.25in .75in 1.25in .75in;
+	mso-header-margin:1.25in;
+	mso-footer-margin:1.25in;
+	mso-even-header:url("DB_UML_Guide_files/header.htm") eh2;
+	mso-header:url("DB_UML_Guide_files/header.htm") h1;
+	mso-even-footer:url("DB_UML_Guide_files/header.htm") ef1;
+	mso-footer:url("DB_UML_Guide_files/header.htm") f2;
+	mso-first-header:url("DB_UML_Guide_files/header.htm") fh1;
+	mso-first-footer:url("DB_UML_Guide_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section2
+	{page:Section2;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:64375724;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-452400694 -1426795544 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l0:level1
+	{mso-level-tab-stop:1.75in;
+	mso-level-number-position:left;
+	margin-left:1.75in;
+	text-indent:-.25in;}
+@list l0:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1
+	{mso-list-id:209922642;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1730428772 -958000082 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l1:level1
+	{mso-level-tab-stop:1.75in;
+	mso-level-number-position:left;
+	margin-left:1.75in;
+	text-indent:-.25in;}
+@list l1:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2
+	{mso-list-id:309289073;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1067398734 -1688731258 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l2:level1
+	{mso-level-tab-stop:1.75in;
+	mso-level-number-position:left;
+	margin-left:1.75in;
+	text-indent:-.25in;}
+@list l2:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3
+	{mso-list-id:346176036;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1029014988 -1378990812 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l3:level1
+	{mso-level-tab-stop:1.75in;
+	mso-level-number-position:left;
+	margin-left:1.75in;
+	text-indent:-.25in;}
+@list l3:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4
+	{mso-list-id:457333271;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1867893166 1489133242 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l4:level1
+	{mso-level-tab-stop:1.75in;
+	mso-level-number-position:left;
+	margin-left:1.75in;
+	text-indent:-.25in;}
+@list l4:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5
+	{mso-list-id:670959428;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1896928280 536780912 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l5:level1
+	{mso-level-number-format:bullet;
+	mso-level-style-link:"List Arg Margin";
+	mso-level-text:\F0A8;
+	mso-level-tab-stop:2.75in;
+	mso-level-number-position:left;
+	margin-left:2.5in;
+	text-indent:-.25in;
+	font-family:Symbol;
+	color:#333399;}
+@list l5:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6
+	{mso-list-id:1252927668;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-2057293742 194286350 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l6:level1
+	{mso-level-number-format:bullet;
+	mso-level-style-link:"List2 Arg Margin";
+	mso-level-text:-;
+	mso-level-tab-stop:381.0pt;
+	mso-level-number-position:left;
+	margin-left:381.0pt;
+	text-indent:-.25in;
+	font-family:Verdana;}
+@list l6:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7
+	{mso-list-id:1375691033;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1645638330 -1215030788 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l7:level1
+	{mso-level-tab-stop:1.75in;
+	mso-level-number-position:left;
+	margin-left:1.75in;
+	text-indent:-.25in;}
+@list l7:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8
+	{mso-list-id:2096433730;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-82518496 1874124566 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l8:level1
+	{mso-level-tab-stop:1.75in;
+	mso-level-number-position:left;
+	margin-left:1.75in;
+	text-indent:-.25in;}
+@list l8:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+table.MsoTableGrid
+	{mso-style-name:"Table Grid";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	border:solid windowtext 1.0pt;
+	mso-border-alt:solid windowtext .5pt;
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-border-insideh:.5pt solid windowtext;
+	mso-border-insidev:.5pt solid windowtext;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="5122"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="2"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body lang=EN-US link="#333399" vlink="#333399" style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=SuperTitle style='margin-left:.5in'><!--[if gte vml 1]><v:line id="_x0000_s2056"
+ style='position:absolute;left:0;text-align:left;flip:y;z-index:4' from="501.6pt,-158.4pt"
+ to="501.85pt,-86.1pt"/><![endif]--><![if !vml]><span style='mso-ignore:vglayout;
+position:relative;z-index:4'><span style='left:0px;position:absolute;
+left:668px;top:-212px;width:2px;height:98px'><img width=2 height=98
+src="DB_UML_Guide_files/image001.gif" v:shapes="_x0000_s2056"></span></span><![endif]><!--[if gte vml 1]><v:line
+ id="_x0000_s2054" style='position:absolute;left:0;text-align:left;flip:y;
+ z-index:3' from="-.8pt,-157.9pt" to="-.55pt,-85.6pt"/><![endif]--><![if !vml]><span
+style='mso-ignore:vglayout;position:relative;z-index:3'><span style='left:0px;
+position:absolute;left:-2px;top:-212px;width:2px;height:99px'><img width=2
+height=99 src="DB_UML_Guide_files/image002.gif" v:shapes="_x0000_s2054"></span></span><![endif]><!--[if gte vml 1]><v:line
+ id="_x0000_s2051" style='position:absolute;left:0;text-align:left;flip:x;
+ z-index:2' from="530.05pt,-67.7pt" to="556.3pt,-67.7pt"/><![endif]--><![if !vml]><span
+style='mso-ignore:vglayout;position:relative;z-index:2'><span style='left:0px;
+position:absolute;left:706px;top:-91px;width:37px;height:2px'><img width=37
+height=2 src="DB_UML_Guide_files/image003.gif" v:shapes="_x0000_s2051"></span></span><![endif]><!--[if gte vml 1]><v:line
+ id="_x0000_s2050" style='position:absolute;left:0;text-align:left;flip:x;
+ z-index:1' from="-53.25pt,-67.65pt" to="-27pt,-67.65pt"/><![endif]--><![if !vml]><span
+style='mso-ignore:vglayout;position:relative;z-index:1'><span style='left:0px;
+position:absolute;left:-72px;top:-91px;width:37px;height:2px'><img width=37
+height=2 src="DB_UML_Guide_files/image003.gif" v:shapes="_x0000_s2050"></span></span><![endif]><span
+style='text-transform:uppercase;mso-no-proof:yes'>DB-UML Modeling Tool</span><span
+style='text-transform:uppercase'><o:p></o:p></span></p>
+
+<p class=MsoTitle style='margin-left:.5in'><span style='mso-field-code:" TITLE  \\* MERGEFORMAT "'>Guide</span></p>
+
+<b style='mso-bidi-font-weight:normal'><span style='font-size:11.0pt;
+mso-bidi-font-size:10.0pt;font-family:"Trebuchet MS";mso-fareast-font-family:
+"Times New Roman";mso-bidi-font-family:"Times New Roman";mso-ansi-language:
+EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA'><br clear=all
+style='mso-special-character:line-break;page-break-before:always'>
+</span></b>
+
+<p class=MsoNormal style='line-height:10.0pt;mso-line-height-rule:exactly'><b
+style='mso-bidi-font-weight:normal'><span style='font-size:11.0pt;mso-bidi-font-size:
+10.0pt'><o:p>&nbsp;</o:p></span></b></p>
+
+<p class=MsoNormal style='line-height:7.0pt;mso-line-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>© <span style='mso-field-code:" DOCPROPERTY \0022Copyright\0022  \\* MERGEFORMAT "'>2007</span>
+Cincom Systems, Inc.</p>
+
+<p class=MsoNormal>All Rights Reserved</p>
+
+<p class=MsoNormal style='line-height:7.0pt;mso-line-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+
+</div>
+
+<b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-fareast-font-family:"Times New Roman";
+mso-bidi-font-family:"Times New Roman";color:#333399;mso-ansi-language:EN-US;
+mso-fareast-language:EN-US;mso-bidi-language:AR-SA'><br clear=all
+style='page-break-before:always;mso-break-type:section-break'>
+</span></b>
+
+<div class=Section2>
+
+<h1>Overview</h1>
+
+<p class=MsoBodyText>DB-UML is an open source modeling tool for creating,
+updating and visualizing relational database schemas.<span
+style='mso-spacerun:yes'>  </span>A UML profile is used to represent database
+elements (see the UML Database Modeling paper).<span style='mso-spacerun:yes'> 
+</span>Using the tool you can create a new model of database elements, import
+relational catalog meta-data into a model and generate SQL create statements from
+a model.</p>
+
+<p class=MsoBodyText>The tool is designed as an ArgoUML module.<span
+style='mso-spacerun:yes'>  </span>ArgoUML is the leading open UML modeling
+tool.<span style='mso-spacerun:yes'>  </span>For information on ArgoUML see <a
+href="http://argouml.tigris.org/">http://ArgoUML.tigris.org/</a><span
+style='mso-spacerun:yes'>  </span>DB-UML extends ArgoUML allowing you to create
+two new kinds of diagrams – database deployment diagrams and schema
+diagrams.<span style='mso-spacerun:yes'>  </span></p>
+
+<p class=MsoBodyText>Database deployment diagrams show the relationships
+between physical nodes and databases.<span style='mso-spacerun:yes'> 
+</span>They can also show the schemas defined in a database.</p>
+
+<p align=center>
+<img border=0 width=426 height=218
+src="DB_UML_Guide_files/image024.jpg" >
+</p>
+
+<p class=MsoBodyText>Database schema diagrams are similar to class
+diagrams.<span style='mso-spacerun:yes'>  </span>They show the structure and
+relationships of schemas, tables, views and other database entities.</p>
+
+<p class=MsoBodyText><o:p>&nbsp;</o:p></p>
+
+<p align=center>
+<img border=0 width=377 height=285
+src="DB_UML_Guide_files/image025.jpg" >
+</p>
+
+<span style='font-size:24.0pt;mso-bidi-font-size:10.0pt;font-family:"Trebuchet MS";
+mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman";
+color:#333399;mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language:
+AR-SA'><br clear=all style='page-break-before:always'>
+</span>
+
+<h1>Installation</h1>
+
+<p class=MsoBodyText>You can download and install DB-UML with an existing
+ArgoUML installation or you can download and install DB-UML bundled with
+ArgoUML.</p>
+
+<h3>Installing With Your Existing ArgoUML</h3>
+
+<p class=MsoBodyText>After downloading and expanding the DB-UML archive file,
+the following jars must be moved to ArgoUML’s ext folder:</p>
+
+<p class=MsoBodyText>dbuml.jar<br>
+commons-collections-3.0.jar<br>
+velocity-1.4.jar</p>
+
+<p class=MsoBodyText>When you run ArgoUML, it will then install DB-UML as a
+module.<span style='mso-spacerun:yes'>  </span>Be sure the DB-UML archive
+version number is compatible with your ArgoUML version.</p>
+
+<p class=MsoBodyText>You must also define any JDBC drivers needed to connect to
+databases for importing catalog information.<span style='mso-spacerun:yes'> 
+</span>For example, the following command defines the CLASSPATH for ArgoUML,
+the PostgreSQL JDBC driver and the DB-UML module and starts ArgoUML:</p>
+
+<p class=MsoBodyText>java –cp
+argouml.jar;c:\dbuml\lib\postgresql-8.2-505.jdbc2.jar;ext\dbuml.jar
+org.argouml.application.Main</p>
+
+<h3>Install Bundled With ArgoUML</h3>
+
+<p class=MsoBodyText>Download and expand the DB-UML archive file that is
+bundled with ArgoUML.<span style='mso-spacerun:yes'>    </span>You must define
+any JDBC drivers needed to connect to databases for importing catalog
+information.<span style='mso-spacerun:yes'>  </span>For example, the following
+command defines the CLASSPATH for ArgoUML, the PostgreSQL JDBC driver and the
+DB-UML module and starts ArgoUML:</p>
+
+<p class=MsoBodyText>java –cp
+argouml.jar;c:\dbuml\lib\postgresql-8.2-505.jdbc2.jar;ext\dbuml.jar
+org.argouml.application.Main</p>
+
+<p class=MsoBodyText><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText><o:p>&nbsp;</o:p></p>
+
+<span style='font-size:24.0pt;mso-bidi-font-size:10.0pt;font-family:"Trebuchet MS";
+mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman";
+color:#333399;mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language:
+AR-SA'><br clear=all style='page-break-before:always'>
+</span>
+
+<h1>Getting Started</h1>
+
+<h3>Try the Sample Project</h3>
+
+<p class=MsoBodyText>After staring ArgoUML you can view a sample project by
+opening sample.zargo distributed in the tests/projects file.<span
+style='mso-spacerun:yes'>  </span>The project contains elements from a
+PostgreSQL database and MicroSoft Access database.<span
+style='mso-spacerun:yes'>  </span>By selecting the Database Deployment Diagram
+you can view the database elements and the schemas they contain.</p>
+
+<p align=center><img border=0 width=425 height=293
+src="DB_UML_Guide_files/image026.jpg" ></p>
+
+<p class=MsoBodyText>In DB-UML, database elements must be contained in a schema
+(in UML terminology, they must have a schema namespace).<span
+style='mso-spacerun:yes'>  </span>If an element does not belong to a schema,
+the convention is to have element contained in a “default” schema having the
+same name as the database.<span style='mso-spacerun:yes'>  </span>Also, if the
+database does not support schemas, the convention is to have the element
+contained in a “default” schema having the same name as the database.</p>
+
+<p class=MsoBodyText>You can view the elements in the Pagila schema by
+selecting the Paliga Schema Diagram.<span style='mso-spacerun:yes'>  </span></p>
+
+<p align=center><img border=0 width=377 height=285
+src="DB_UML_Guide_files/image025.jpg" ></p>
+
+<p class=MsoNormal style='margin-left:1.5in;text-indent:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.5in'>This shows the tables, views and
+foreign key relationships in the schema.<span style='mso-spacerun:yes'> 
+</span></p>
+
+<p class=MsoNormal style='margin-left:1.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.5in'>By right clicking on elements in a
+diagram you can see the additional actions that are available.<span
+style='mso-spacerun:yes'>  </span>For example, right clicking on the Postgres
+database in the Database Deployment Diagram:</p>
+
+<p class=MsoNormal style='margin-left:1.5in'><o:p>&nbsp;</o:p></p>
+
+<p align=center><img border=0 width=293 height=249
+src="DB_UML_Guide_files/image027.jpg" ></p>
+
+<p class=MsoNormal style='margin-left:2.0in;text-indent:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.5in'>You will find the Connect to
+Catalog and the Generate Source actions.<span style='mso-spacerun:yes'> 
+</span>To connect you need to have a PostgreSQL database available and you must
+load the Pagila database elements.<span style='mso-spacerun:yes'>  </span>If
+you would like to do this, see the instructions in the Sample Schemas section.<span
+style='mso-spacerun:yes'>  </span></p>
+
+<p class=MsoNormal style='margin-left:1.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.5in'>If you select the Generate Source
+action you will be asked to name a file to store the SQL statements.<span
+style='mso-spacerun:yes'>  </span>Also a dialog will be shown for the generated
+source.<span style='mso-spacerun:yes'>  </span>When you generate source, SQL
+statements will be generated for the element selected and all the elements it
+contains.<span style='mso-spacerun:yes'>  </span>So if you generate source for
+a database, SQL statements will be generated for the database, the schemas it
+contains, the tables contained by the schemas, etc.<span
+style='mso-spacerun:yes'>  </span>Also, the SQL statements will be created in
+the correct order.<span style='mso-spacerun:yes'>  </span>For example, a SQL
+create statement for a schema will be generated before the create statement for
+a table contained by the schema.</p>
+
+<p class=MsoNormal style='margin-left:1.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.5in'>DB-UML only displays actions if
+they are available for use.<span style='mso-spacerun:yes'>  </span>For,
+example, if you are not connected to a database catalog, then you will not see
+the “Import from Catalog” or “Update Catalog” actions.<span
+style='mso-spacerun:yes'>  </span>Also, actions will only be shown for database
+elements if they part of a well-formed model.<span style='mso-spacerun:yes'> 
+</span>A model is well-formed if:</p>
+
+<p class=MsoNormal style='margin-left:1.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.75in;text-indent:-.25in;mso-list:l7 level1 lfo6;
+tab-stops:list 1.75in'><![if !supportLists]><span style='mso-fareast-font-family:
+"Trebuchet MS";mso-bidi-font-family:"Trebuchet MS"'><span style='mso-list:Ignore'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>Schemas
+are related to a Database through a dependency.</p>
+
+<p class=MsoNormal style='margin-left:1.75in;text-indent:-.25in;mso-list:l7 level1 lfo6;
+tab-stops:list 1.75in'><![if !supportLists]><span style='mso-fareast-font-family:
+"Trebuchet MS";mso-bidi-font-family:"Trebuchet MS"'><span style='mso-list:Ignore'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>Other
+database elements are contained in a Schema (in the Schema namespace).</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<div style='mso-element:para-border-div;border:none;border-top:solid #333399 2.25pt;
+padding:1.0pt 0in 0in 0in;margin-left:.5in;margin-right:.5in'>
+
+<h2 style='margin-top:14.0pt;margin-right:0in;margin-bottom:1.5pt;margin-left:
+0in'>Develop a New Project</h2>
+
+</div>
+
+<p class=MsoBodyText>We will now show how you can import databases elements
+from a catalog to your project, add more elements to the project and update the
+database catalog.<span style='mso-spacerun:yes'>  </span>We will be using
+PostgreSQL and the Pagila database but you can follow the steps using another
+database.<span style='mso-spacerun:yes'>  </span>Be sure your CLASSPATH has the
+jar file for the JDBC driver you need.</p>
+
+<p class=MsoBodyText>In your new project:</p>
+
+<p class=MsoBodyText style='margin-left:1.75in;text-indent:-.25in;mso-list:
+l3 level1 lfo8;tab-stops:list 1.75in'><![if !supportLists]><span
+style='mso-fareast-font-family:"Trebuchet MS";mso-bidi-font-family:"Trebuchet MS"'><span
+style='mso-list:Ignore'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Select Tools &gt; New Database Deployment
+Diagram.</p>
+
+<p class=MsoBodyText style='margin-left:1.75in;text-indent:-.25in;mso-list:
+l3 level1 lfo8;tab-stops:list 1.75in'><![if !supportLists]><span
+style='mso-fareast-font-family:"Trebuchet MS";mso-bidi-font-family:"Trebuchet MS"'><span
+style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Add a Node figure to the diagram and name the
+Node “localhost”.</p>
+
+<p class=MsoBodyText style='margin-left:1.75in;text-indent:-.25in;mso-list:
+l3 level1 lfo8;tab-stops:list 1.75in'><![if !supportLists]><span
+style='mso-fareast-font-family:"Trebuchet MS";mso-bidi-font-family:"Trebuchet MS"'><span
+style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Add a Database figure to the diagram inside the
+localhost Node and name it “Postgres”.</p>
+
+<p class=MsoBodyText>Your diagram should now look like:</p>
+
+<p align=center><img border=0 width=222 height=199
+src="DB_UML_Guide_files/image028.jpg" ></p>
+
+<p class=MsoBodyText>It is not necessary to use Nodes in your deployment
+diagrams but they serve to document your physical database configuration.</p>
+
+<p class=MsoBodyText>Now select the Database figure and choose the “Tagged
+Values” tab.<span style='mso-spacerun:yes'>  </span>DB-UML uses tagged values
+to store the properties of elements.<span style='mso-spacerun:yes'>  </span></p>
+
+<p class=MsoBodyText><o:p>&nbsp;</o:p></p>
+
+<p align=center><img border=0 width=557 height=168
+src="DB_UML_Guide_files/image029.jpg"></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.5in'>For Database elements the
+properties describe how to connect to the database and database specific
+implementation classes. To connect to the database you must supply a Driver
+class name, a connection URL, a User name and a Password.<span
+style='mso-spacerun:yes'>  </span>You also need to specify if the database
+supports schemas.</p>
+
+<p class=MsoNormal style='margin-left:1.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.5in'>As databases may implement non-standard
+features and may not strictly follow SQL standards you can also specify
+database specific implementation classes.<span style='mso-spacerun:yes'> 
+</span>These classes are created by a factory class.<span
+style='mso-spacerun:yes'>  </span>The current choices are:</p>
+
+<p class=MsoNormal style='margin-left:1.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.75in;text-indent:-.25in;mso-list:l2 level1 lfo10;
+tab-stops:list 1.75in'><![if !supportLists]><span style='mso-fareast-font-family:
+"Trebuchet MS";mso-bidi-font-family:"Trebuchet MS"'><span style='mso-list:Ignore'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>PostgresSQL
+– org.dbuml.base.factory.PGSFactory;</p>
+
+<p class=MsoNormal style='margin-left:1.75in;text-indent:-.25in;mso-list:l2 level1 lfo10;
+tab-stops:list 1.75in'><![if !supportLists]><span style='mso-fareast-font-family:
+"Trebuchet MS";mso-bidi-font-family:"Trebuchet MS"'><span style='mso-list:Ignore'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>MySQL
+- org.dbuml.base.factory.MySQLFactory;</p>
+
+<p class=MsoNormal style='margin-left:1.75in;text-indent:-.25in;mso-list:l2 level1 lfo10;
+tab-stops:list 1.75in'><![if !supportLists]><span style='mso-fareast-font-family:
+"Trebuchet MS";mso-bidi-font-family:"Trebuchet MS"'><span style='mso-list:Ignore'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>Oracle
+- org.dbuml.base.factory.OraFactory;</p>
+
+<p class=MsoNormal style='margin-left:1.75in;text-indent:-.25in;mso-list:l2 level1 lfo10;
+tab-stops:list 1.75in'><![if !supportLists]><span style='mso-fareast-font-family:
+"Trebuchet MS";mso-bidi-font-family:"Trebuchet MS"'><span style='mso-list:Ignore'>4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>Generic
+- org.dbuml.base.factory.GenericFactory;</p>
+
+<p class=MsoNormal style='margin-left:1.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.5in'>If a database specific factory is
+not available you can use the generic factory.</p>
+
+<p class=MsoNormal style='margin-left:1.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.5in'>Now select the Database figure and
+choose “Connect to Catalog”.<span style='mso-spacerun:yes'>  </span>If
+connection is successful the Database figure outline will change colors.<span
+style='mso-spacerun:yes'>  </span></p>
+
+<p class=MsoNormal style='margin-left:1.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.5in'>Next select “Import from Catalog
+&gt; Import Schemas” and choose a Schema to import.<span
+style='mso-spacerun:yes'>  </span>If you loaded the Pagila sample database you
+can choose the “pagila” schema.<span style='mso-spacerun:yes'>  </span>The
+Schema will appear in the explorer beneath the Database and you can drag it to
+the diagram.<span style='mso-spacerun:yes'>  </span>Your diagram should now
+look like:</p>
+
+<p class=MsoNormal style='margin-left:1.5in'><o:p>&nbsp;</o:p></p>
+
+<p align=center><img border=0 width=251 height=258
+src="DB_UML_Guide_files/image030.jpg" ></p>
+
+<p class=MsoNormal style='margin-left:2.0in;text-indent:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.5in'>If your database catalog does not
+have schemas defined or does not support schemas you can add a default schema to
+your project:</p>
+
+<p class=MsoNormal style='margin-left:1.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.75in;text-indent:-.25in;mso-list:l8 level1 lfo12;
+tab-stops:list 1.75in'><![if !supportLists]><span style='mso-fareast-font-family:
+"Trebuchet MS";mso-bidi-font-family:"Trebuchet MS"'><span style='mso-list:Ignore'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>Select
+the Schema figure in the toolbar and add the figure to the diagram;</p>
+
+<p class=MsoNormal style='margin-left:1.75in;text-indent:-.25in;mso-list:l8 level1 lfo12;
+tab-stops:list 1.75in'><![if !supportLists]><span style='mso-fareast-font-family:
+"Trebuchet MS";mso-bidi-font-family:"Trebuchet MS"'><span style='mso-list:Ignore'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>Give
+the Schema the same name as the Database.<span style='mso-spacerun:yes'> 
+</span>This defines it as the “default” schema.</p>
+
+<p class=MsoNormal style='margin-left:1.75in;text-indent:-.25in;mso-list:l8 level1 lfo12;
+tab-stops:list 1.75in'><![if !supportLists]><span style='mso-fareast-font-family:
+"Trebuchet MS";mso-bidi-font-family:"Trebuchet MS"'><span style='mso-list:Ignore'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>Add
+a dependency between the Schema and the Database.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.5in'>You can now select the Schema
+figure and import tables or views to the model.<span style='mso-spacerun:yes'> 
+</span>For the Pagila Schema we can import the “actor” table.<span
+style='mso-spacerun:yes'>  </span>After the import the table will appear in the
+explorer beneath the Schema.</p>
+
+<p class=MsoNormal style='margin-left:1.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.5in'>We are now ready to work on
+modifications to the Pagila Schema so we create a “Database Schema Diagram”
+from the tools menu.<span style='mso-spacerun:yes'>  </span>You can then drag
+the Schema and Table to the diagram.<span style='mso-spacerun:yes'> 
+</span>Your Database Schema diagram should now look like:</p>
+
+<p class=MsoNormal style='margin-left:1.5in'><o:p>&nbsp;</o:p></p>
+
+<p align=center><img border=0 width=282 height=229
+src="DB_UML_Guide_files/image031.jpg" ></p>
+
+<p class=MsoNormal style='margin-left:1.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.5in'>In our project, the “actor” Table
+is contained in the “pagila” Schema.<span style='mso-spacerun:yes'>  </span>This
+relationship was established when the Table was imported.<span
+style='mso-spacerun:yes'>  </span>In the diagram it is not necessary to have
+the Schema figure contain the Table figure but this helps to document the
+relationship.</p>
+
+<p class=MsoNormal style='margin-left:1.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.5in'>Let’s say we want to add an
+“agency” Table to our database so that we know the agency representing the
+actors.<span style='mso-spacerun:yes'>  </span>We select a Table with the
+toolbar and add the Table to the diagram and name the Table “agency”.<span
+style='mso-spacerun:yes'>  </span>If we place the “agency” Table inside the
+Schema figure, the Table will be contained in the Schema.<span
+style='mso-spacerun:yes'>  </span>Another way to do this is:</p>
+
+<p class=MsoNormal style='margin-left:1.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.75in;text-indent:-.25in;mso-list:l4 level1 lfo14;
+tab-stops:list 1.75in'><![if !supportLists]><span style='mso-fareast-font-family:
+"Trebuchet MS";mso-bidi-font-family:"Trebuchet MS"'><span style='mso-list:Ignore'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>Select
+the “agency” Table and choose the Properties tab.</p>
+
+<p class=MsoNormal style='margin-left:1.75in;text-indent:-.25in;mso-list:l4 level1 lfo14;
+tab-stops:list 1.75in'><![if !supportLists]><span style='mso-fareast-font-family:
+"Trebuchet MS";mso-bidi-font-family:"Trebuchet MS"'><span style='mso-list:Ignore'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>Select
+the “pagila” Schema as the Namespace.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.5in'>To establish a relationship
+between actors and agencies we draw a Foreign Key relationship between the
+“actor” and “agency” Tables.<span style='mso-spacerun:yes'>  </span>So far, the
+diagram looks like the following:</p>
+
+<p class=MsoNormal style='margin-left:1.5in'><o:p>&nbsp;</o:p></p>
+
+<p align=center><img border=0 width=342 height=313
+src="DB_UML_Guide_files/image032.jpg" ></p>
+
+<p class=MsoNormal style='margin-left:2.0in;text-indent:.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.5in'>When we added the Foreign Key
+relationship a Foreign Key Column was added to the “actor” table and a Primary
+Key Column was added to the “agency” table.<span style='mso-spacerun:yes'> 
+</span>We can re-name the Foreign Key Column to “agency” and the Primary Key
+Column to “agency-name”.<span style='mso-spacerun:yes'>  </span>We can also
+rename the relationship to “my-agency”.</p>
+
+<p class=MsoNormal style='margin-left:1.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.5in'>To complete the “agency” table we
+will add an address column.<span style='mso-spacerun:yes'>  </span>Right click
+on the “agency” Table and select “Add &gt; New Column”.<span
+style='mso-spacerun:yes'>  </span>We can rename this to “address” and select
+LONGVARCHAR as the type.<span style='mso-spacerun:yes'>  </span>Note that if
+your database supports additional types you can import the types.<span
+style='mso-spacerun:yes'>  </span>From the Database, select “Import from
+Catalog &gt; Import Attribute Types”.</p>
+
+<p class=MsoNormal style='margin-left:1.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.5in'>To show an example of a View, we
+can construct a View that shows actors with information updated this year:</p>
+
+<p class=MsoNormal style='margin-left:1.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.75in;text-indent:-.25in;mso-list:l1 level1 lfo16;
+tab-stops:list 1.75in'><![if !supportLists]><span style='mso-fareast-font-family:
+"Trebuchet MS";mso-bidi-font-family:"Trebuchet MS"'><span style='mso-list:Ignore'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>Add
+a View to the diagram from the toolbar and rename the view to “actors-updated”.</p>
+
+<p class=MsoNormal style='margin-left:1.75in;text-indent:-.25in;mso-list:l1 level1 lfo16;
+tab-stops:list 1.75in'><![if !supportLists]><span style='mso-fareast-font-family:
+"Trebuchet MS";mso-bidi-font-family:"Trebuchet MS"'><span style='mso-list:Ignore'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>Draw
+a Derived relationship between the View and the “actor” table.</p>
+
+<p class=MsoNormal style='margin-left:1.75in;text-indent:-.25in;mso-list:l1 level1 lfo16;
+tab-stops:list 1.75in'><![if !supportLists]><span style='mso-fareast-font-family:
+"Trebuchet MS";mso-bidi-font-family:"Trebuchet MS"'><span style='mso-list:Ignore'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>Right
+click on the View and select “Add &gt; Column(s) from base(s)”.<span
+style='mso-spacerun:yes'>  </span></p>
+
+<p class=MsoNormal style='margin-left:1.75in;text-indent:-.25in;mso-list:l1 level1 lfo16;
+tab-stops:list 1.75in'><![if !supportLists]><span style='mso-fareast-font-family:
+"Trebuchet MS";mso-bidi-font-family:"Trebuchet MS"'><span style='mso-list:Ignore'>4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>Choose
+the name columns to add to the View.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.5in'>The diagram should now look like:</p>
+
+<p class=MsoNormal style='margin-left:1.5in'><o:p>&nbsp;</o:p></p>
+
+<p align=center><img border=0 width=401 height=316
+src="DB_UML_Guide_files/image033.jpg" ></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.5in'>The select statement for a View is
+stored in the tagged value SQL_QUERY.<span style='mso-spacerun:yes'>  </span>To
+select actors changed this year we use:</p>
+
+<p class=MsoNormal style='margin-left:1.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.5in'><span style='font-size:8.0pt'>SELECT
+last_name, first_name FROM actor WHERE<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.5in'><span style='font-size:8.0pt'>EXTRACT(YEAR
+FROM last_update) = EXTRACT(YEAR FROM CURRENT_TIMESTAMP)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.5in'><span style='font-size:8.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.5in'>Now we have completed our changes
+to the pagila schema and we would like to update the database catalog.<span
+style='mso-spacerun:yes'>  </span>You can review the SQL statements used to
+create elements by selecting the source tab and choosing the SQL language.<span
+style='mso-spacerun:yes'>  </span>For example, the SQL statements needed to
+create the View we added are:</p>
+
+<p class=MsoNormal style='margin-left:1.5in'><span style='font-size:9.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.5in'><span style='font-size:8.0pt'>/*
+Create View pagila.actor_updated */<span style='mso-spacerun:yes'>   </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.5in'><span style='font-size:8.0pt'>CREATE
+VIEW pagila.actor_updated<span style='mso-tab-count:1'>     </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.5in'><span style='font-size:8.0pt'>(last_name
+, first_name<span style='mso-spacerun:yes'>  </span>)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.5in'><span style='font-size:8.0pt'>as<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.5in'><span style='font-size:8.0pt'>SELECT
+last_name, first_name FROM actor WHERE EXTRACT(YEAR FROM last_update) =
+EXTRACT(YEAR FROM CURRENT_TIMESTAMP) <o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.5in'><span style='font-size:8.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.5in'>You can also generate a file of
+SQL statements used to create elements by right clicking the element and
+choosing Generate Source.<span style='mso-spacerun:yes'>  </span>This generates
+statements to replace the elements in the database catalog.<span
+style='mso-spacerun:yes'>  </span>SQL DROP statements are generated followed by
+SQL CREATE statements.</p>
+
+<p class=MsoNormal style='margin-left:1.5in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.5in'>You can also execute the generated
+statements by selecting the Update Catalog action.</p>
+
+<p class=MsoNormal style='margin-left:1.5in'><o:p>&nbsp;</o:p></p>
+
+<span style='font-size:8.0pt;font-family:"Trebuchet MS";mso-fareast-font-family:
+"Times New Roman";mso-bidi-font-family:"Times New Roman";mso-ansi-language:
+EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA'><br clear=all
+style='mso-special-character:line-break;page-break-before:always'>
+</span>
+
+<p class=MsoNormal style='margin-left:1.5in'><span style='font-size:8.0pt'><o:p>&nbsp;</o:p></span></p>
+
+<h1>Sample Schemas</h1>
+
+<div style='mso-element:para-border-div;border:none;border-top:solid #333399 2.25pt;
+padding:1.0pt 0in 0in 0in;margin-left:.5in;margin-right:.5in'>
+
+<h2 style='margin-top:14.0pt;margin-right:0in;margin-bottom:1.5pt;margin-left:
+0in'><o:p>&nbsp;</o:p></h2>
+
+</div>
+
+<p class=MsoBodyText>Several sample database schemas are provided that are used
+by the sample.zargo project.<span style='mso-spacerun:yes'>  </span>The schemas
+can be found in the tests\databases folder.</p>
+
+<p class=MsoBodyText>The Pagila schema demonstrates many of the features of
+PostgesSQL.<span style='mso-spacerun:yes'>  </span>You can load the schema
+using:</p>
+
+<p class=MsoBodyText>psql -f pagila-schema.sql -h localhost -p 5432 postgres
+&quot;postgres&quot;</p>
+
+<p class=MsoBodyText>This uses a database named “postgres” on port 5432 with
+the user “postgres”.<span style='mso-spacerun:yes'>  </span></p>
+
+<p class=MsoBodyText>When you open the sample.zargo project, you can connect to
+the database using the “Postgres” Database element.<span
+style='mso-spacerun:yes'>  </span>If you use a different database name, port
+number or user name, you can change the tagged values of the Database element
+to match.</p>
+
+<p class=MsoBodyText>The NorthWind database is often used to demonstrate
+Microsoft tools.<span style='mso-spacerun:yes'>  </span>The sample.zargo
+project uses this database with Microsoft Access.<span
+style='mso-spacerun:yes'>  </span>To set up the database:</p>
+
+<p class=MsoBodyText style='margin-left:1.75in;text-indent:-.25in;mso-list:
+l0 level1 lfo18;tab-stops:list 1.75in'><![if !supportLists]><span
+style='mso-fareast-font-family:"Trebuchet MS";mso-bidi-font-family:"Trebuchet MS"'><span
+style='mso-list:Ignore'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>In Windows choose Control Panel &gt;
+Administrative Tools &gt; Data Sources (ODBC)</p>
+
+<p class=MsoBodyText style='margin-left:1.75in;text-indent:-.25in;mso-list:
+l0 level1 lfo18;tab-stops:list 1.75in'><![if !supportLists]><span
+style='mso-fareast-font-family:"Trebuchet MS";mso-bidi-font-family:"Trebuchet MS"'><span
+style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Create a new data source choosing the MicroSoft
+Access Driver.</p>
+
+<p class=MsoBodyText style='margin-left:1.75in;text-indent:-.25in;mso-list:
+l0 level1 lfo18;tab-stops:list 1.75in'><![if !supportLists]><span
+style='mso-fareast-font-family:"Trebuchet MS";mso-bidi-font-family:"Trebuchet MS"'><span
+style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Name the data source “MS Access Database” and
+select the sample database tests\databases\NorthWind\northwind.mdb.</p>
+
+<p class=MsoBodyText>When you open the sample.zargo project, you can connect to
+the database using the “MS Access” Database element.<span
+style='mso-spacerun:yes'>  </span>This uses the Sun JDBC-ODBC driver to bridge
+JDBC requests issued by DB-UML to the Access ODBC driver.<span
+style='mso-spacerun:yes'>  </span></p>
+
+<p class=MsoNormal style='margin-left:1.5in'><span style='font-size:9.0pt'><o:p>&nbsp;</o:p></span></p>
+
+</div>
+
+</body>
+
+</html>
