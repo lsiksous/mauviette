@@ -10,7 +10,8 @@ from src.app.models import User
 @app.route('/index')
 @login_required
 def index():
-    return render_template('index.html', title='Home')
+    posters = ['tt0011549', 'tt0069089', 'tt0067992', 'tt0085871', 'tt0100827']
+    return render_template('index.html', title='Home', posters=posters)
 
 
 @app.route('/login', methods=['GET', 'POST'])

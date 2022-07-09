@@ -2,20 +2,25 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-
 <div class="jumbotron">
   <h1 class="display-4" style="font-size: 42px">Hi there, welcome!</h1>
-  <p class="lead" style="font-size: 18px">Please meet the <strong>Moviette</strong>.</p>
-  <hr class="my-4">
-  <p style="font-size: 16px">Hi, welcome!</p>
-  <p style="font-size: 18px">
-    Ready? Go!
-  </p>
+  <p class="lead" style="font-size: 18px">Meet <strong>Moviette</strong>, a novel
+    approach to movie recommendation.</p>
+          <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+        <lottie-player src="https://assets1.lottiefiles.com/packages/lf20_puwecidm.json"
+                       background="transparent"  speed="1"  style="width: 150px;
+                                                                   height: 150px;"  loop autoplay></lottie-player>
 </div>
 
     {% if form %}
         {{ wtf.quick_form(form) }}
     {% endif %}
+
+
+{% for poster in posters %}
+     <img src="{{url_for("static", filename="posters/" + poster + ".jpg")}}"
+     width="224" height="300">
+{% endfor %}
 
 
 {% endblock %}

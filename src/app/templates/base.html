@@ -10,8 +10,10 @@
     recommender system{% endif %}
 {% endblock %}
 
-{% block navbar %}
-<nav class="navbar navbar-light bg-light">
+  {% block navbar %}
+      <img src="{{url_for('.static', filename='img/logo.png')}}" width="200"
+           class="d-inline-block align-top" alt="">
+      <nav class="navbar navbar-light bg-light">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -19,25 +21,24 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-</button>
-  <a class="navbar-brand" href="https://www.linkedin.com/in/lsiksous/">
-    <img src="{{url_for('.static', filename='img/logo.png')}}" height="120" class="d-inline-block align-top" alt="">
-  </a>
-  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-  <lottie-player src="https://assets1.lottiefiles.com/packages/lf20_puwecidm.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop  autoplay></lottie-player>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <!-- <ul class="nav navbar-nav"> -->
-                <!--      <li><a href="{{ url_for('index') }}">Home</a></li> -->
-                <!-- </ul> -->
-                <ul class="nav navbar-nav navbar-right">
-                </ul>
+                </button>
+                <a class="navbar-brand" href="https://www.linkedin.com/in/lsiksous/">
+                </a>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <!-- <ul class="nav navbar-nav"> -->
+                    <!-- <li><a href="{{ url_for('index') }}">Home</a></li> -->
+                    <!-- </ul> -->
+                  <ul class="nav navbar-nav navbar-right">
+                  </ul>
+                </div>
             </div>
-        </div>
-    </nav>
+      </nav>
 {% endblock %}
 
+
+
 {% block content %}
-    <div class="container">
+      <div class="container">
         {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for message in messages %}
@@ -48,5 +49,7 @@
 
         {# application content needs to be provided in the app_content block #}
         {% block app_content %}{% endblock %}
-    </div>
+</div>
 {% endblock %}
+
+
